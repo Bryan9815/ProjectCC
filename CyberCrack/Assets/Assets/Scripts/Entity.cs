@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     protected float hp;
     protected float damage;
     protected float speed;
+    protected float fireRate;
     protected bool isDead = false;
     protected AudioSource sound;
     protected Animator anim;
@@ -19,4 +20,9 @@ public class Entity : MonoBehaviour
 	void Update () {
 		
 	}
+
+    public void ReduceHP(float reduction)
+    {
+        hp -= reduction;
+    }
 }
