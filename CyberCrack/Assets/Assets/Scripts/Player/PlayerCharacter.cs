@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCharacter : Entity
 {
     Transform projectileSpawn;
+    bool isHit;
 
     bool projectileCooldown;
     bool usable = false;
@@ -18,9 +19,11 @@ public class PlayerCharacter : Entity
         speed = 5;
         fireRate = 0.33f;
         projectileCooldown = false;
+        isHit = false;
 
         projectileSpawn = transform.GetChild(0);
-	}
+        UpdateHealthDisplay();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -28,6 +31,45 @@ public class PlayerCharacter : Entity
         Movement();
         Shooting();
 	}
+
+    public void IsHit(float damage)
+    {
+        if (!isHit)
+        {
+            isHit = true;
+            hp -= damage;
+            StartCoroutine(ResetInvincibility());
+            UpdateHealthDisplay();
+            // Play damage flashing anim
+        }
+    }
+
+    private IEnumerator ResetInvincibility()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        isHit = false;
+        Debug.Log("HP reset");
+    }
+
+    void UpdateHealthDisplay()
+    {
+        GameObject heartContainer = GameController.instance.uiCanvas.GetChild(0).gameObject;
+        if(hp != heartContainer.transform.childCount)
+        {
+            if (heartContainer.transform.childCount != 0)
+            {
+                for (int i = 0; i < heartContainer.transform.childCount; i++)
+                {
+                    Destroy(heartContainer.transform.GetChild(i).gameObject);
+                }
+            }            
+            for (int i = 0; i < hp; i++)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
+            }
+        }
+    }
 
     void Movement()
     {
@@ -220,8 +262,8 @@ public class PlayerCharacter : Entity
         {
             if(transform.childCount > 1)
             {
-                Destroy(transform.GetChild(1));
-                Destroy(transform.GetChild(2));
+                Destroy(transform.GetChild(1).gameObject);
+                Destroy(transform.GetChild(2).gameObject);
             }
             GameObject projectileSpawnL = Instantiate<GameObject>(projectileSpawn.gameObject, projectileSpawn.parent);
             Vector3 spawnLpos = new Vector3(-1.25f, projectileSpawn.localPosition.y, 0);
