@@ -16,7 +16,7 @@ public class PlayerCharacter : Entity
     {
         hp = 3;
         damage = 1;
-        speed = 5;
+        speed = 1;
         fireRate = 0.33f;
         projectileCooldown = false;
         isHit = false;
@@ -39,7 +39,7 @@ public class PlayerCharacter : Entity
             isHit = true;
             hp -= damage;
             StartCoroutine(ResetInvincibility());
-            UpdateHealthDisplay();
+            //UpdateHealthDisplay();
             // Play damage flashing anim
         }
     }

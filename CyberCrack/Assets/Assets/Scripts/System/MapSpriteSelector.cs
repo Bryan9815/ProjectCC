@@ -26,55 +26,92 @@ public class MapSpriteSelector : MonoBehaviour
 	void PickSprite()
     { 
         //picks correct sprite based on the four door bools
-		if (up){
-			if (down){
-				if (right){
-					if (left){
+		if (up)
+        {
+			if (down)
+            {
+				if (right)
+                {
+					if (left)
+                    {
 						rend.sprite = spUDRL;
-					}else{
+					}
+                    else
+                    {
 						rend.sprite = spDRU;
 					}
-				}else if (left){
+				}
+                else if (left)
+                {
 					rend.sprite = spULD;
-				}else{
+				}
+                else
+                {
 					rend.sprite = spUD;
 				}
-			}else{
-				if (right){
-					if (left){
+			}
+            else
+            {
+				if (right)
+                {
+					if (left)
+                    {
 						rend.sprite = spRUL;
-					}else{
+					}
+                    else
+                    {
 						rend.sprite = spUR;
 					}
-				}else if (left){
+				}
+                else if (left)
+                {
 					rend.sprite = spUL;
-				}else{
+				}
+                else
+                {
 					rend.sprite = spU;
 				}
 			}
 			return;
 		}
-		if (down){
-			if (right){
-				if(left){
+
+		if (down)
+        {
+			if (right)
+            {
+				if(left)
+                {
 					rend.sprite = spLDR;
-				}else{
+				}
+                else
+                {
 					rend.sprite = spDR;
 				}
-			}else if (left){
+			}
+            else if (left)
+            {
 				rend.sprite = spDL;
-			}else{
+			}
+            else
+            {
 				rend.sprite = spD;
 			}
 			return;
 		}
-		if (right){
-			if (left){
+
+		if (right)
+        {
+			if (left)
+            {
 				rend.sprite = spRL;
-			}else{
+			}
+            else
+            {
 				rend.sprite = spR;
 			}
-		}else{
+		}
+        else
+        {
 			rend.sprite = spL;
 		}
 	}
