@@ -30,7 +30,17 @@ public class PlayerCharacter : Entity
     {
         Movement();
         Shooting();
-	}
+
+        //Debug
+        if(Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 109, transform.position.z);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - 109, transform.position.z);
+        }
+    }
 
     public void IsHit(float damage)
     {

@@ -10,8 +10,10 @@ public class RoomInstance : MonoBehaviour
 	public int type; // 0: normal, 1: enter
 	[HideInInspector]
 	public bool doorTop, doorBot, doorLeft, doorRight;
-	[SerializeField]
-	GameObject doorU, doorD, doorL, doorR, doorWall;
+    [HideInInspector]
+    public GameObject doorU, doorD, doorL, doorR;
+    [SerializeField]
+	GameObject door, doorWall;
 	[SerializeField]
 	ColorToGameObject[] mappings;
 	float tileSize = 16;
@@ -34,30 +36,62 @@ public class RoomInstance : MonoBehaviour
     {
 		//top door, get position then spawn
 		Vector3 spawnPos = transform.position + Vector3.up*(roomSizeInTiles.y/4 * tileSize) - Vector3.up*(tileSize/4);
-		PlaceDoor(spawnPos, doorTop, doorU);
+        if(doorTop)
+        {
+            GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
+            spawnedDoor.name = "doorTop";
+            doorU = spawnedDoor;
+        }
+        else
+            Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+        
 		//bottom door
 		spawnPos = transform.position + Vector3.down*(roomSizeInTiles.y/4 * tileSize) - Vector3.down*(tileSize/4);
-		PlaceDoor(spawnPos, doorBot, doorD);
+        if (doorBot)
+        {
+            GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
+            spawnedDoor.name = "doorBot";
+            doorD = spawnedDoor;
+        }
+        else
+            Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+
 		//right door
 		spawnPos = transform.position + Vector3.right*(roomSizeInTiles.x * tileSize) - Vector3.right*(tileSize);
-		PlaceDoor(spawnPos, doorRight, doorR);
-		//left door
-		spawnPos = transform.position + Vector3.left*(roomSizeInTiles.x * tileSize) - Vector3.left*(tileSize);
-		PlaceDoor(spawnPos, doorLeft, doorL);
-	}
-
-	void PlaceDoor(Vector3 spawnPos, bool door, GameObject doorSpawn)
-    {
-		// check whether its a door or wall, then spawn
-		if (door)
+        if (doorRight)
         {
-			Instantiate(doorSpawn, spawnPos, Quaternion.identity).transform.parent = transform;
-		}
+            GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
+            spawnedDoor.name = "doorRight";
+            doorR = spawnedDoor;
+        }
         else
+            Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+
+        //left door
+        spawnPos = transform.position + Vector3.left*(roomSizeInTiles.x * tileSize) - Vector3.left*(tileSize);
+        if (doorLeft)
         {
-			Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
-		}
-	}
+            GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
+            spawnedDoor.name = "doorLeft";
+            doorL = spawnedDoor;
+        }
+        else
+            Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+    }
+
+	//void PlaceDoor(Vector3 spawnPos, bool door, GameObject position)
+    //{
+	//	// check whether its a door or wall, then spawn
+	//	if (door)
+    //    {
+	//		GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
+    //        position = spawnedDoor;
+    //    }
+    //    else
+    //    {
+	//		Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+	//	}
+	//}
 
 	void GenerateRoomTiles()
     {

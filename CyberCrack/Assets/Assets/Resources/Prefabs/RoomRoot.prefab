@@ -63,6 +63,7 @@ MonoBehaviour:
   doorD: {fileID: 1152370622949468, guid: 71ef14862abca91428027002fc9c0b20, type: 2}
   doorL: {fileID: 1152370622949468, guid: 71ef14862abca91428027002fc9c0b20, type: 2}
   doorR: {fileID: 1152370622949468, guid: 71ef14862abca91428027002fc9c0b20, type: 2}
+  door: {fileID: 1152370622949468, guid: 71ef14862abca91428027002fc9c0b20, type: 2}
   doorWall: {fileID: 1348133729177994, guid: 526cda0fd54858c44b466001f90b3db2, type: 2}
   mappings:
   - color: {r: 0, g: 0, b: 0, a: 1}

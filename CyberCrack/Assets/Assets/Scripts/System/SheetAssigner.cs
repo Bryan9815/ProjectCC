@@ -32,7 +32,7 @@ public class SheetAssigner : MonoBehaviour
 			RoomInstance myRoom = Instantiate(RoomObj, pos, Quaternion.identity).GetComponent<RoomInstance>();
             if(room.type == 1)
             {
-                GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"), myRoom.transform);
+                GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"));
                 GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
             }
 			myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
