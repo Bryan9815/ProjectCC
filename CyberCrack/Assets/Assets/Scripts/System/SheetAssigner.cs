@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class SheetAssigner : MonoBehaviour
 {
-	[SerializeField]
+    public GameObject roomParent;
+
+    [SerializeField]
 	Texture2D[] sheetsNormal;
 	[SerializeField]
 	GameObject RoomObj;
-	public Vector2 roomDimensions = new Vector2(16*17,16*9);
+
+    public Vector2 roomDimensions = new Vector2(16*17,16*9);
 	public Vector2 gutterSize = new Vector2(16*9,16*4);
 
 	public void Assign(Room[,] rooms)
     {
+        int i = 0;
 		foreach (Room room in rooms)
         {
 			//skip point where there is no room
@@ -32,6 +36,11 @@ public class SheetAssigner : MonoBehaviour
                 GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
             }
 			myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+
+            // Name the room and parent it to canvas
+            i++;
+            myRoom.name = "Room" + i;
+            myRoom.transform.parent = roomParent.transform;
 		}
 	}
 }

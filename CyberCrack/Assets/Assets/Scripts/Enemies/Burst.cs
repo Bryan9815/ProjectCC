@@ -36,7 +36,7 @@ public class Burst : Entity
     {
         for(int i = 0; i < transform.childCount; i ++)
         {
-            Debug.Log("Target: " + i);
+            Debug.Log("Target: " + (i+1));
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
 
             Vector3 direction = (transform.GetChild(i).position - transform.position) * 7.5f;
