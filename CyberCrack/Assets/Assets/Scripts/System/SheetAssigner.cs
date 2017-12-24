@@ -34,7 +34,6 @@ public class SheetAssigner : MonoBehaviour
             {
                 GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"));
                 GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
-                //room.playerInside = true;
             }
             myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
             myRoom.thisRoom = room;

@@ -197,11 +197,12 @@ public class LevelGeneration : MonoBehaviour
 			}
 
 			Vector2 drawPos = room.gridPos;
-			drawPos.x *= 16;//aspect ratio of map sprite
-			drawPos.y *= 8;
+			drawPos.x *= 16*16;//aspect ratio of map sprite
+			drawPos.y *= 8*16;
 			//create map obj and assign its variables
 			MapSpriteSelector mapper = Object.Instantiate(roomWhiteObj, drawPos, Quaternion.identity).GetComponent<MapSpriteSelector>();
-			mapper.type = room.type;
+            mapper.transform.localScale *= 16;
+            mapper.type = room.type;
 			mapper.up = room.doorTop;
 			mapper.down = room.doorBot;
 			mapper.right = room.doorRight;

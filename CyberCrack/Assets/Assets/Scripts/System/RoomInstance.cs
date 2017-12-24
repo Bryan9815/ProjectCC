@@ -142,16 +142,4 @@ public class RoomInstance : MonoBehaviour
 		ret = new Vector3(tileSize * (float) x, -tileSize * (float) y, 0) + offset + transform.position;
 		return ret;
 	}
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!playerInside)
-        {
-            if (collision.tag == "Player")
-            {
-                playerInside = true;
-                thisRoom.playerInside = true;
-            }
-        }
-    }
 }

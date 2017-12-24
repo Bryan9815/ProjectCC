@@ -134,11 +134,6 @@ public class MapSpriteSelector : MonoBehaviour
         //        break;
         //}
 
-        if (playerInside)
-            mainColor = activeColor;
-        else
-            mainColor = emptyColor;
-
         rend.color = mainColor;
     }
 }
