@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
         uiCanvas = GameObject.Find("UI_Canvas").transform;
 
         debugEnemyPanel = uiCanvas.GetChild(1).gameObject;
-        playerCharacter = gameplayCanvas.GetChild(1).gameObject;
+        playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
 	
 	// Update is called once per frame

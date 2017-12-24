@@ -49,7 +49,7 @@ public class PlayerCharacter : Entity
             isHit = true;
             hp -= damage;
             StartCoroutine(ResetInvincibility());
-            //UpdateHealthDisplay();
+            UpdateHealthDisplay();
             // Play damage flashing anim
         }
     }
@@ -59,7 +59,7 @@ public class PlayerCharacter : Entity
         yield return new WaitForSeconds(1.0f);
 
         isHit = false;
-        Debug.Log("HP reset");
+        Debug.Log("Invincibility reset");
     }
 
     void UpdateHealthDisplay()
@@ -194,6 +194,9 @@ public class PlayerCharacter : Entity
                     Vector3 direction = (projectileSpawn.transform.position - transform.position) * 7.5f;
 
                     bullet.GetComponent<PC_Projectile>().Init(projectileSpawn.transform.position, projectileSpawn.transform.rotation, direction, damage, 1.0f);
+
+                    // Parent the bullet to the room
+                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
                 }
                 break;
             case 1: // Spread Shot
@@ -205,6 +208,9 @@ public class PlayerCharacter : Entity
                         Vector3 direction = (transform.GetChild(i).position - transform.position) * 7.5f;
 
                         bullet.GetComponent<PC_Projectile>().Init(transform.GetChild(i).position, transform.GetChild(i).rotation, direction, damage, 1.0f);
+
+                        // Parent the bullet to the room
+                        bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
                     }
                 }
                 break;
@@ -215,6 +221,9 @@ public class PlayerCharacter : Entity
                     Vector3 direction = (projectileSpawn.transform.position - transform.position) * 7.5f;
 
                     bullet.GetComponent<PC_Projectile>().Init(projectileSpawn.transform.position, projectileSpawn.transform.rotation, direction, damage, 1.0f);
+
+                    // Parent the bullet to the room
+                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
 
                     yield return new WaitForSeconds(0.05f);
 
@@ -249,10 +258,16 @@ public class PlayerCharacter : Entity
                     bulletL.transform.parent = bullet.transform.parent;
                     bulletL.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
 
+                    // Parent the bullet to the room
+                    bulletL.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+
                     bulletR.transform.position = posR;
                     bulletR.transform.localScale = new Vector3(1, 1, 1);
                     bulletR.transform.parent = bullet.transform.parent;
                     bulletR.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
+
+                    // Parent the bullet to the room
+                    bulletR.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
                 }
                 break;
         }        
