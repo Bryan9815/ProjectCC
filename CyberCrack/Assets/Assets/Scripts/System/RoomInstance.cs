@@ -7,9 +7,11 @@ public class RoomInstance : MonoBehaviour
 	public Texture2D tex;
 	[HideInInspector]
 	public Vector2 gridPos;
-	public int type; // 0: normal, 1: enter
-	[HideInInspector]
-	public bool doorTop, doorBot, doorLeft, doorRight;
+    public Room.roomType type;
+    [HideInInspector]
+    public bool doorTop, doorBot, doorLeft, doorRight;
+    [HideInInspector]
+    public bool playerInside = false;
     [HideInInspector]
     public GameObject doorU, doorD, doorL, doorR;
     [SerializeField]
@@ -19,7 +21,9 @@ public class RoomInstance : MonoBehaviour
 	float tileSize = 16;
 	Vector2 roomSizeInTiles = new Vector2(9,17);
 
-	public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
+    public Room thisRoom;
+
+	public void Setup(Texture2D _tex, Vector2 _gridPos, Room.roomType _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
 		tex = _tex;
 		gridPos = _gridPos;
@@ -28,7 +32,7 @@ public class RoomInstance : MonoBehaviour
 		doorBot = _doorBot;
 		doorLeft = _doorLeft;
 		doorRight = _doorRight;
-		MakeDoors();
+        MakeDoors();
 		GenerateRoomTiles();
 	}
 
@@ -138,4 +142,16 @@ public class RoomInstance : MonoBehaviour
 		ret = new Vector3(tileSize * (float) x, -tileSize * (float) y, 0) + offset + transform.position;
 		return ret;
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!playerInside)
+        {
+            if (collision.tag == "Player")
+            {
+                playerInside = true;
+                thisRoom.playerInside = true;
+            }
+        }
+    }
 }

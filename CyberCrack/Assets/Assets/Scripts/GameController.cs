@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour
     public GameObject debugEnemyPanel;
     public GameObject playerCharacter;
 
+    Transform miniMap;
+    Vector3 mmOriginal;
+
     void Awake()
     {
         // if the singleton hasn't been initialized yet
@@ -27,6 +30,8 @@ public class GameController : MonoBehaviour
     void Start ()
     {
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
+        miniMap = gameplayCanvas.GetChild(0).transform;
+        mmOriginal = miniMap.localPosition;
         uiCanvas = GameObject.Find("UI_Canvas").transform;
 
         debugEnemyPanel = uiCanvas.GetChild(1).gameObject;
@@ -36,8 +41,29 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(playerCharacter == null)
+            playerCharacter = GameObject.FindGameObjectWithTag("Player");
+
+        UI_Input();
+
         DebugMode();
 	}
+
+    void UI_Input()
+    {
+        #region minimap toggle
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            miniMap.localPosition = Vector3.zero;
+            miniMap.localScale *= 4;
+        }
+        else if (Input.GetKeyUp(KeyCode.M))
+        {
+            miniMap.localPosition = mmOriginal;
+            miniMap.localScale /= 4;
+        }
+        #endregion
+    }
 
     void DebugMode()
     {

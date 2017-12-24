@@ -9,16 +9,16 @@ public class MapSpriteSelector : MonoBehaviour
 			spUD, spRL, spUR, spUL, spDR, spDL,
 			spULD, spRUL, spDRU, spLDR, spUDRL;
 
-	public bool up, down, left, right;
-	public int type; // 0: normal, 1: enter
-	public Color normalColor, enterColor;
+	public bool up, down, left, right, playerInside;
+    public Room.roomType type;
+    public Color emptyColor, activeColor;
 	Color mainColor;
 	SpriteRenderer rend;
 
-	void Start ()
+	public void Start ()
     {
 		rend = GetComponent<SpriteRenderer>();
-		mainColor = normalColor;
+		mainColor = emptyColor;
 		PickSprite();
 		PickColor();
 	}
@@ -117,16 +117,28 @@ public class MapSpriteSelector : MonoBehaviour
 	}
 
 	void PickColor()
-    { 
+    {
         //changes color based on what type the room is
-		if (type == 0)
-        {
-			mainColor = normalColor;
-		}
-        else if (type == 1)
-        {
-			mainColor = enterColor;
-		}
-		rend.color = mainColor;
-	}
+        //switch(type)
+        //{
+        //    case Room.roomType.normal:
+        //        mainColor = emptyColor;
+        //        break;
+        //    case Room.roomType.enter:
+        //        mainColor = activeColor;
+        //        break;
+        //    case Room.roomType.item:
+        //        break;
+        //    default:
+        //        mainColor = emptyColor;
+        //        break;
+        //}
+
+        if (playerInside)
+            mainColor = activeColor;
+        else
+            mainColor = emptyColor;
+
+        rend.color = mainColor;
+    }
 }

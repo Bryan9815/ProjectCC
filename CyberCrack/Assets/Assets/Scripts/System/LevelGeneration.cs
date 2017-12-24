@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelGeneration : MonoBehaviour {
+public class LevelGeneration : MonoBehaviour
+{
 	public Vector2 worldSize = new Vector2(4,4);
     public int numberOfRooms = 20;
-	Room[,] rooms;
+    Room[,] rooms;
 	List<Vector2> takenPositions = new List<Vector2>();
+    [HideInInspector]
     int gridSizeX, gridSizeY; 
 	public GameObject roomWhiteObj;
 	public Transform mapRoot;
-	void Start ()
+
+    public List<Room> roomList = new List<Room>();
+
+    void Start ()
     {
 		if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         { 
@@ -22,15 +27,15 @@ public class LevelGeneration : MonoBehaviour {
 
 		CreateRooms(); //lays out the actual map
 		SetRoomDoors(); //assigns the doors where rooms would connect
-		DrawMap(); //instantiates objects to make up a map
-		GetComponent<SheetAssigner>().Assign(rooms); //passes room info to another script which handles generatating the level geometry
+        GetComponent<SheetAssigner>().Assign(rooms); //passes room info to another script which handles generatating the level geometry
+        DrawMap(); //instantiates objects to make up a map
 	}
 
-	void CreateRooms()
+    void CreateRooms()
     {
 		//setup
 		rooms = new Room[gridSizeX * 2,gridSizeY * 2];
-		rooms[gridSizeX,gridSizeY] = new Room(Vector2.zero, 1);
+		rooms[gridSizeX,gridSizeY] = new Room(Vector2.zero, Room.roomType.enter);
 
 		takenPositions.Insert(0,Vector2.zero);
 		Vector2 checkPos = Vector2.zero;
@@ -182,7 +187,7 @@ public class LevelGeneration : MonoBehaviour {
 		return ret;
 	}
 
-	void DrawMap()
+	public void DrawMap()
     {
 		foreach (Room room in rooms)
         {
@@ -201,9 +206,18 @@ public class LevelGeneration : MonoBehaviour {
 			mapper.down = room.doorBot;
 			mapper.right = room.doorRight;
 			mapper.left = room.doorLeft;
+            mapper.playerInside = room.playerInside;
 			mapper.gameObject.transform.parent = mapRoot;
 		}
 	}
+
+    public void ClearMap()
+    {
+        for(int i = 0; i < mapRoot.childCount - 1; i++)
+        {
+            Destroy(mapRoot.GetChild(i).gameObject);
+        }
+    }
 
 	void SetRoomDoors()
     {
