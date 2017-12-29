@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCharacter : Entity
 {
+    public static PlayerCharacter instance;
     Transform projectileSpawn;
     bool isHit;
 
@@ -11,8 +12,22 @@ public class PlayerCharacter : Entity
     bool usable = false;
     int shotStyle = 0;
     string fireDirection = "";
-	// Use this for initialization
-	void Start ()
+
+    void Awake()
+    {
+        // if the singleton hasn't been initialized yet
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;//Avoid doing anything else
+        }
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         hp = 3;
         damage = 1;
