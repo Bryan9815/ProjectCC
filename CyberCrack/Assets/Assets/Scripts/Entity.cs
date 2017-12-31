@@ -64,8 +64,6 @@ public class Entity : MonoBehaviour
     {
         powerUps.Add(newPowerUp);
         powerUps[powerUps.Count - 1].transform.parent = powerUpList;
-        Debug.Log("Activating power up, attack = " + damage);
         powerUps[powerUps.Count - 1].ActivateEffect();
-        Debug.Log("Power up activated, attack = " + damage);
     }
 }

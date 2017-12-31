@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public GameObject originalItem;
     protected bool used;
-
-    // Use this for initialization
+    
     public virtual void PickUp(GameObject newParent)
     {
         // Disable collider and renderer
@@ -19,5 +17,5 @@ public class PowerUp : MonoBehaviour
     }
 
     public virtual void ActivateEffect(){}
-    public virtual void DeactivateEffect() { }
+    public virtual void DeactivateEffect() {}
 }

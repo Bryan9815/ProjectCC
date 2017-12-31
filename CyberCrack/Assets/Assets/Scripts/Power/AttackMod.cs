@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackUp : PowerUp
+public class AttackMod : PowerUp
 {
     public float attackMod;
 
     public override void ActivateEffect()
     {
-        Debug.Log("Activating attack up, parent is: " + gameObject.name);
         GetComponentInParent<Entity>().ModifyDamage(attackMod);
     }
 
@@ -19,9 +18,8 @@ public class AttackUp : PowerUp
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!used && collision.tag == "Player")
+        if(collision.tag == "Player")
         {
-            used = true;
             PickUp(collision.gameObject);
         }
     }
