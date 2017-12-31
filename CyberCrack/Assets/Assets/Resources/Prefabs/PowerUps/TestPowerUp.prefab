@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114708898441165886}
   m_Layer: 0
   m_Name: TestPowerUp
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8969f182180859d4285a9bb81b7f8665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalItem: {fileID: 1864472389956204}
   attackMod: 2.5
 --- !u!212 &212470522961602340
 SpriteRenderer:

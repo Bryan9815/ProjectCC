@@ -46,16 +46,6 @@ public class PlayerCharacter : Entity
     {
         Movement();
         Shooting();
-
-        //Debug
-        if(Input.GetKeyDown(KeyCode.Keypad8))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 109, transform.position.z);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 109, transform.position.z);
-        }
     }
 
     public void IsHit(float damage)
@@ -207,26 +197,26 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (target.transform.position - transform.position) * 7.5f;
+                    Vector3 direction = (target.GetChild(0).position - transform.position) * 7.5f;
 
-                    bullet.GetComponent<PC_Projectile>().Init(target.transform.position, target.transform.rotation, direction, damage, 1.0f);
+                    bullet.GetComponent<PC_Projectile>().Init(target.GetChild(0).position, target.GetChild(0).rotation, direction, damage, 1.0f);
 
                     // Parent the bullet to the room
-                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
                 }
                 break;
             case 1: // Spread Shot
                 {
-                    for (int i = 0; i < transform.childCount; i++)
+                    for (int i = 0; i < target.childCount; i++)
                     {
                         GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                        Vector3 direction = (transform.GetChild(i).position - transform.position) * 7.5f;
+                        Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
 
-                        bullet.GetComponent<PC_Projectile>().Init(transform.GetChild(i).position, transform.GetChild(i).rotation, direction, damage, 1.0f);
+                        bullet.GetComponent<PC_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, damage, 1.0f);
 
                         // Parent the bullet to the room
-                        bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+                        bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
                     }
                 }
                 break;
@@ -234,12 +224,12 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (target.transform.position - transform.position) * 7.5f;
+                    Vector3 direction = (target.GetChild(0).position - transform.position) * 7.5f;
 
-                    bullet.GetComponent<PC_Projectile>().Init(target.transform.position, target.transform.rotation, direction, damage, 1.0f);
+                    bullet.GetComponent<PC_Projectile>().Init(target.GetChild(0).position, target.GetChild(0).rotation, direction, damage, 1.0f);
 
                     // Parent the bullet to the room
-                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
 
                     yield return new WaitForSeconds(0.05f);
 
@@ -251,20 +241,20 @@ public class PlayerCharacter : Entity
                     switch (tempFireStyle)
                     {
                         case "Horizontal":
-                            posL = new Vector3(bullet.transform.position.x, bullet.transform.position.y - 0.5f, 0);
-                            posR = new Vector3(bullet.transform.position.x, bullet.transform.position.y + 0.5f, 0);
+                            posL = new Vector3(bullet.transform.position.x, bullet.transform.position.y - 0.5f * 15, 0);
+                            posR = new Vector3(bullet.transform.position.x, bullet.transform.position.y + 0.5f * 15, 0);
                             break;
                         case "Vertical":
-                            posL = new Vector3(bullet.transform.position.x - 0.5f, bullet.transform.position.y, 0);
-                            posR = new Vector3(bullet.transform.position.x + 0.5f, bullet.transform.position.y, 0);
+                            posL = new Vector3(bullet.transform.position.x - 0.5f * 15, bullet.transform.position.y, 0);
+                            posR = new Vector3(bullet.transform.position.x + 0.5f * 15, bullet.transform.position.y, 0);
                             break;
                         case "Diagonal_LtR":
-                            posL = new Vector3(bullet.transform.position.x - 0.33f, bullet.transform.position.y + 0.33f, 0);
-                            posR = new Vector3(bullet.transform.position.x + 0.33f, bullet.transform.position.y - 0.33f, 0);
+                            posL = new Vector3(bullet.transform.position.x - 0.33f * 15, bullet.transform.position.y + 0.33f * 15, 0);
+                            posR = new Vector3(bullet.transform.position.x + 0.33f * 15, bullet.transform.position.y - 0.33f * 15, 0);
                             break;
                         case "Diagonal_RtL":
-                            posL = new Vector3(bullet.transform.position.x + 0.33f, bullet.transform.position.y + 0.33f, 0);
-                            posR = new Vector3(bullet.transform.position.x - 0.33f, bullet.transform.position.y - 0.33f, 0);
+                            posL = new Vector3(bullet.transform.position.x + 0.33f * 15, bullet.transform.position.y + 0.33f * 15, 0);
+                            posR = new Vector3(bullet.transform.position.x - 0.33f * 15, bullet.transform.position.y - 0.33f * 15, 0);
                             break;
                     }
                     Debug.Log("tempFireStyle: " + tempFireStyle);
@@ -275,7 +265,7 @@ public class PlayerCharacter : Entity
                     bulletL.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
 
                     // Parent the bullet to the room
-                    bulletL.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+                    bulletL.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
 
                     bulletR.transform.position = posR;
                     bulletR.transform.localScale = new Vector3(1, 1, 1);
@@ -283,7 +273,7 @@ public class PlayerCharacter : Entity
                     bulletR.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
 
                     // Parent the bullet to the room
-                    bulletR.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
+                    bulletR.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
                 }
                 break;
         }        
@@ -303,15 +293,15 @@ public class PlayerCharacter : Entity
         {
             if(target.childCount > 1)
             {
-                Destroy(transform.GetChild(2).gameObject);
-                Destroy(transform.GetChild(3).gameObject);
+                Destroy(target.GetChild(1).gameObject);
+                Destroy(target.GetChild(2).gameObject);
             }
-            GameObject projectileSpawnL = Instantiate<GameObject>(target.gameObject, target.parent);
-            Vector3 spawnLpos = new Vector3(-1.25f, target.localPosition.y, 0);
+            GameObject projectileSpawnL = Instantiate<GameObject>(target.gameObject, target);
+            Vector3 spawnLpos = new Vector3(-1.25f, target.GetChild(0).localPosition.y, 0);
             projectileSpawnL.transform.localPosition = spawnLpos;
 
-            GameObject projectileSpawnR = Instantiate<GameObject>(target.gameObject, target.parent);
-            Vector3 spawnRpos = new Vector3(1.25f, target.localPosition.y, 0);
+            GameObject projectileSpawnR = Instantiate<GameObject>(target.gameObject, target);
+            Vector3 spawnRpos = new Vector3(1.25f, target.GetChild(0).localPosition.y, 0);
             projectileSpawnR.transform.localPosition = spawnRpos;
         }
     }
