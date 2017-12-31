@@ -30,11 +30,12 @@ public class SheetAssigner : MonoBehaviour
             //find position to place room
             Vector3 pos = new Vector3(room.gridPos.x * (roomDimensions.x + gutterSize.x), room.gridPos.y * (roomDimensions.y + gutterSize.y), 0);
             RoomInstance myRoom = Instantiate(RoomObj, pos, Quaternion.identity).GetComponent<RoomInstance>();
-            //if (room.type == Room.roomType.enter)
-            //{
-            //    GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"));
-            //    GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
-            //}
+            if (room.type == Room.roomType.enter)
+            {
+                //GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"));
+                GameObject testPowerUp = Instantiate(Resources.Load<GameObject>("Prefabs/PowerUps/TestPowerUp"), myRoom.transform);
+                //GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
+            }
             myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
             myRoom.thisRoom = room;
             GetComponent<LevelGeneration>().roomList.Add(room);

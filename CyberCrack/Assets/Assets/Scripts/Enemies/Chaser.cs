@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Chaser : Entity
 {
-    GameObject target;
     // Use this for initialization
     void Start()
     {
+        Init();
+
         hp = 3;
         damage = 1;
         speed = 0.01f;
         fireRate = 0.33f;
 
-        target = transform.parent.GetChild(1).gameObject;
+        target = GameController.instance.playerCharacter.transform;
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class Chaser : Entity
             Destroy(gameObject);
 
         Vector3 dir = new Vector3();
-        dir = (target.transform.position - transform.position).normalized;
+        dir = (target.position - transform.position).normalized;
 
         transform.position += dir * speed;
         transform.Rotate(0, 0, transform.rotation.z + 5);

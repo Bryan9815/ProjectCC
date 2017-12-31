@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerCharacter : Entity
 {
     public static PlayerCharacter instance;
-    Transform projectileSpawn;
-    bool isHit;
 
+    bool isHit;
     bool projectileCooldown;
     bool usable = false;
+
     int shotStyle = 0;
     string fireDirection = "";
 
@@ -29,14 +29,15 @@ public class PlayerCharacter : Entity
     // Use this for initialization
     void Start ()
     {
-        hp = 3;
+        Init();
+
+        maxHP = hp = 3;
         damage = 1;
         speed = 1;
         fireRate = 0.33f;
         projectileCooldown = false;
         isHit = false;
-
-        projectileSpawn = transform.GetChild(0);
+        
         UpdateHealthDisplay();
     }
 	
@@ -206,9 +207,9 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (projectileSpawn.transform.position - transform.position) * 7.5f;
+                    Vector3 direction = (target.transform.position - transform.position) * 7.5f;
 
-                    bullet.GetComponent<PC_Projectile>().Init(projectileSpawn.transform.position, projectileSpawn.transform.rotation, direction, damage, 1.0f);
+                    bullet.GetComponent<PC_Projectile>().Init(target.transform.position, target.transform.rotation, direction, damage, 1.0f);
 
                     // Parent the bullet to the room
                     bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
@@ -233,9 +234,9 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (projectileSpawn.transform.position - transform.position) * 7.5f;
+                    Vector3 direction = (target.transform.position - transform.position) * 7.5f;
 
-                    bullet.GetComponent<PC_Projectile>().Init(projectileSpawn.transform.position, projectileSpawn.transform.rotation, direction, damage, 1.0f);
+                    bullet.GetComponent<PC_Projectile>().Init(target.transform.position, target.transform.rotation, direction, damage, 1.0f);
 
                     // Parent the bullet to the room
                     bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(0);
@@ -300,17 +301,17 @@ public class PlayerCharacter : Entity
         }
         else
         {
-            if(transform.childCount > 1)
+            if(target.childCount > 1)
             {
-                Destroy(transform.GetChild(1).gameObject);
                 Destroy(transform.GetChild(2).gameObject);
+                Destroy(transform.GetChild(3).gameObject);
             }
-            GameObject projectileSpawnL = Instantiate<GameObject>(projectileSpawn.gameObject, projectileSpawn.parent);
-            Vector3 spawnLpos = new Vector3(-1.25f, projectileSpawn.localPosition.y, 0);
+            GameObject projectileSpawnL = Instantiate<GameObject>(target.gameObject, target.parent);
+            Vector3 spawnLpos = new Vector3(-1.25f, target.localPosition.y, 0);
             projectileSpawnL.transform.localPosition = spawnLpos;
 
-            GameObject projectileSpawnR = Instantiate<GameObject>(projectileSpawn.gameObject, projectileSpawn.parent);
-            Vector3 spawnRpos = new Vector3(1.25f, projectileSpawn.localPosition.y, 0);
+            GameObject projectileSpawnR = Instantiate<GameObject>(target.gameObject, target.parent);
+            Vector3 spawnRpos = new Vector3(1.25f, target.localPosition.y, 0);
             projectileSpawnR.transform.localPosition = spawnRpos;
         }
     }

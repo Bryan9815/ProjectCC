@@ -8,6 +8,8 @@ public class Continuous : Entity
     // Use this for initialization
     void Start()
     {
+        Init();
+
         hp = 3;
         damage = 1;
         speed = 5;

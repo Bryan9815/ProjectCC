@@ -35,7 +35,7 @@ public class PC_Projectile : Projectile
         switch (collision.gameObject.tag)
         {
             case "Enemy":
-                collision.gameObject.GetComponent<Entity>().ReduceHP(damage);
+                collision.gameObject.GetComponent<Entity>().ModifyHP(-damage);
                 Destroy(gameObject);
                 break;
             case "Object":
