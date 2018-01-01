@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Chaser : Entity
 {
+    private void Awake()
+    {
+        Start();
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -11,10 +16,11 @@ public class Chaser : Entity
 
         hp = 3;
         damage = 1;
-        speed = 0.01f;
+        speed = 0.1f;
         fireRate = 0.33f;
 
         target = GameController.instance.playerCharacter.transform;
+        //target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -27,7 +33,8 @@ public class Chaser : Entity
         dir = (target.position - transform.position).normalized;
 
         transform.position += dir * speed;
-        transform.Rotate(0, 0, transform.rotation.z + 5);
+        //transform.Rotate(0, 0, transform.rotation.z + 5);
+        transform.localEulerAngles += new Vector3(0, 0, 7.5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

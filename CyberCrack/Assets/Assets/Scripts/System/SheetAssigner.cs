@@ -33,8 +33,8 @@ public class SheetAssigner : MonoBehaviour
             if (room.type == Room.roomType.enter)
             {
                 //GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCharacter"));
-                GameObject testPowerUp = Instantiate(Resources.Load<GameObject>("Prefabs/PowerUps/TestPowerUp"), myRoom.transform);
-                //GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), myRoom.transform);
+                //GameObject testPowerUp = Instantiate(Resources.Load<GameObject>("Prefabs/PowerUps/TestPowerUp"), myRoom.transform);
+                //GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), myRoom.transform);
             }
             myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
             myRoom.thisRoom = room;
