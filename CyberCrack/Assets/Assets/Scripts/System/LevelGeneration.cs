@@ -13,8 +13,6 @@ public class LevelGeneration : MonoBehaviour
 	public GameObject roomWhiteObj;
 	public Transform mapRoot;
 
-    public List<Room> roomList = new List<Room>();
-
     void Start ()
     {
 		if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
@@ -43,29 +41,57 @@ public class LevelGeneration : MonoBehaviour
 		//magic numbers
 		float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
 		//add rooms
-		for (int i =0; i < numberOfRooms -1; i++)
+		for (int i = 1; i <= numberOfRooms; i++)
         {
-			float randomPerc = ((float) i) / (((float)numberOfRooms - 1));
-			randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
-			//grab new position
-			checkPos = NewPosition();
-			//test new position
-			if (NumberOfNeighbors(checkPos, takenPositions) > 1 && Random.value > randomCompare)
+            // Leave the last 2 rooms for upgrade & boss
+            if (i < numberOfRooms - 2)
             {
-				int iterations = 0;
-				do
+                float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
+                randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
+                //grab new position
+                checkPos = NewPosition();
+                //test new position
+                if (NumberOfNeighbors(checkPos, takenPositions) > 1 && Random.value > randomCompare)
                 {
-					checkPos = SelectiveNewPosition();
-					iterations++;
-				}
-                while (NumberOfNeighbors(checkPos, takenPositions) > 1 && iterations < 100);
-				if (iterations >= 50)
-					print("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
-			}
-			//finalize position
-			rooms[(int) checkPos.x + gridSizeX, (int) checkPos.y + gridSizeY] = new Room(checkPos, 0);
-			takenPositions.Insert(0,checkPos);
-		}	
+                    int iterations = 0;
+                    do
+                    {
+                        checkPos = SelectiveNewPosition();
+                        iterations++;
+                    }
+                    while (NumberOfNeighbors(checkPos, takenPositions) > 1 && iterations < 100);
+                    if (iterations >= 50)
+                        Debug.Log("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
+                }
+                //finalize position
+                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.normal);
+                takenPositions.Insert(0, checkPos);
+            }
+            else
+            {
+                checkPos = NewPosition();
+                // Make sure it has only one neighbor
+                if (NumberOfNeighbors(checkPos, takenPositions) > 1)
+                {
+                    int iterations = 0;
+                    do
+                    {
+                        checkPos = SelectiveNewPosition();
+                        iterations++;
+                    }
+                    while (NumberOfNeighbors(checkPos, takenPositions) > 1 && iterations < 100);
+                    if (iterations >= 50)
+                        Debug.Log("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
+                }
+                //finalize position
+                if (i == numberOfRooms - 1)
+                    rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.upgrade);
+                else if (i == numberOfRooms)
+                    rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
+
+                takenPositions.Insert(0, checkPos);
+            }
+        }	
 	}
 
 	Vector2 NewPosition()
@@ -120,8 +146,7 @@ public class LevelGeneration : MonoBehaviour
 			inc = 0;
 			do
             { 
-				//instead of getting a room to find an adject empty space, we start with one that only 
-				//as one neighbor. This will make it more likely that it returns a room that branches out
+				//instead of getting a room to find an adject empty space, we start with one that only has one neighbor. This will make it more likely that it returns a room that branches out
 				index = Mathf.RoundToInt(Random.value * (takenPositions.Count - 1));
 				inc ++;
 			}

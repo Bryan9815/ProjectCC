@@ -21,8 +21,6 @@ public class RoomInstance : MonoBehaviour
 	float tileSize = 16;
 	Vector2 roomSizeInTiles = new Vector2(9,17);
 
-    public Room thisRoom;
-
 	public void Setup(Texture2D _tex, Vector2 _gridPos, Room.roomType _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
 		tex = _tex;
@@ -122,13 +120,13 @@ public class RoomInstance : MonoBehaviour
         {
 			if (mapping.color.Equals(pixelColor))
             {
-				Vector3 spawnPos = positionFromTileGrid(x,y);
-				Instantiate(mapping.prefab, spawnPos, Quaternion.identity).transform.parent = this.transform;
+				Vector3 spawnPos = PositionFromTileGrid(x,y);
+				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, Quaternion.identity, this.transform);
 			}
 		}
 	}
 
-	Vector3 positionFromTileGrid(int x, int y)
+	Vector3 PositionFromTileGrid(int x, int y)
     {
 		Vector3 ret;
 		//find difference between the corner of the texture and the center of this object

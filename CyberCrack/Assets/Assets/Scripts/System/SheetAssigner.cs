@@ -37,8 +37,6 @@ public class SheetAssigner : MonoBehaviour
                 //GameObject testEnemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), myRoom.transform);
             }
             myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
-            myRoom.thisRoom = room;
-            GetComponent<LevelGeneration>().roomList.Add(room);
 
             // Name the room and parent it to canvas
             roomNumber++;
