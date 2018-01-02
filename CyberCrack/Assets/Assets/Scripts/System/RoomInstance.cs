@@ -21,6 +21,8 @@ public class RoomInstance : MonoBehaviour
 	float tileSize = 16;
 	Vector2 roomSizeInTiles = new Vector2(9,17);
 
+    List<GameObject> mobList = new List<GameObject>();
+
 	public void Setup(Texture2D _tex, Vector2 _gridPos, Room.roomType _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
 		tex = _tex;
@@ -81,20 +83,6 @@ public class RoomInstance : MonoBehaviour
             Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
     }
 
-	//void PlaceDoor(Vector3 spawnPos, bool door, GameObject position)
-    //{
-	//	// check whether its a door or wall, then spawn
-	//	if (door)
-    //    {
-	//		GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
-    //        position = spawnedDoor;
-    //    }
-    //    else
-    //    {
-	//		Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
-	//	}
-	//}
-
 	void GenerateRoomTiles()
     {
         //loop through every pixel of the texture
@@ -122,6 +110,8 @@ public class RoomInstance : MonoBehaviour
             {
 				Vector3 spawnPos = PositionFromTileGrid(x,y);
 				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, Quaternion.identity, this.transform);
+                if (entity.tag == "Enemy")
+                    mobList.Add(entity);
 			}
 		}
 	}

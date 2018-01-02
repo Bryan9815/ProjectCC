@@ -71,17 +71,13 @@ public class LevelGeneration : MonoBehaviour
             {
                 checkPos = NewPosition();
                 // Make sure it has only one neighbor
-                if (NumberOfNeighbors(checkPos, takenPositions) > 1)
+                if (NumberOfNeighbors(checkPos, takenPositions) != 1)
                 {
-                    int iterations = 0;
                     do
                     {
                         checkPos = SelectiveNewPosition();
-                        iterations++;
                     }
-                    while (NumberOfNeighbors(checkPos, takenPositions) > 1 && iterations < 100);
-                    if (iterations >= 50)
-                        Debug.Log("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
+                    while (NumberOfNeighbors(checkPos, takenPositions) != 1);
                 }
                 //finalize position
                 if (i == numberOfRooms - 1)
