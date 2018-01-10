@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     protected float damage;
     protected float speed;
     protected float fireRate;
+    protected bool isActive = false;
     protected bool isDead = false;
     protected AudioSource sound;
     protected Animator anim;
@@ -34,6 +35,19 @@ public class Entity : MonoBehaviour
 	void Update () {
 		
 	}
+
+    public bool GetIsDead()
+    {
+        return isDead;
+    }
+
+    public void ToggleActive(bool active)
+    {
+        if (active)
+            isActive = true;
+        else
+            isActive = false;
+    }
 
     public void ModifyHP(float mod)
     {

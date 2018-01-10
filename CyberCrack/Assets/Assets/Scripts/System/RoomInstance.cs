@@ -22,6 +22,7 @@ public class RoomInstance : MonoBehaviour
 	Vector2 roomSizeInTiles = new Vector2(9,17);
 
     List<GameObject> mobList = new List<GameObject>();
+    List<Door> doorList = new List<Door>();
 
 	public void Setup(Texture2D _tex, Vector2 _gridPos, Room.roomType _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
@@ -36,7 +37,27 @@ public class RoomInstance : MonoBehaviour
 		GenerateRoomTiles();
 	}
 
-	void MakeDoors()
+    private void Update()
+    {
+        if(mobList.Count == 0)
+        {
+            foreach (Door door in doorList)
+                door.ToggleActive(true);
+        }
+        else
+        {
+            foreach (GameObject mob in mobList)
+            {
+                if (mob.GetComponent<Entity>().GetIsDead())
+                {
+                    mobList.Remove(mob);
+                    Destroy(mob);
+                }
+            }
+        }
+    }
+
+    void MakeDoors()
     {
 		//top door, get position then spawn
 		Vector3 spawnPos = transform.position + Vector3.up*(roomSizeInTiles.y/4 * tileSize) - Vector3.up*(tileSize/4);
@@ -45,6 +66,7 @@ public class RoomInstance : MonoBehaviour
             GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
             spawnedDoor.name = "doorTop";
             doorU = spawnedDoor;
+            doorList.Add(spawnedDoor.GetComponent<Door>());
         }
         else
             Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
@@ -56,6 +78,7 @@ public class RoomInstance : MonoBehaviour
             GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
             spawnedDoor.name = "doorBot";
             doorD = spawnedDoor;
+            doorList.Add(spawnedDoor.GetComponent<Door>());
         }
         else
             Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
@@ -67,6 +90,7 @@ public class RoomInstance : MonoBehaviour
             GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
             spawnedDoor.name = "doorRight";
             doorR = spawnedDoor;
+            doorList.Add(spawnedDoor.GetComponent<Door>());
         }
         else
             Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
@@ -78,6 +102,7 @@ public class RoomInstance : MonoBehaviour
             GameObject spawnedDoor = Instantiate(Resources.Load<GameObject>("Prefabs/DoorTrigger"), spawnPos, Quaternion.identity, transform);
             spawnedDoor.name = "doorLeft";
             doorL = spawnedDoor;
+            doorList.Add(spawnedDoor.GetComponent<Door>());
         }
         else
             Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
@@ -125,4 +150,19 @@ public class RoomInstance : MonoBehaviour
 		ret = new Vector3(tileSize * (float) x, -tileSize * (float) y, 0) + offset + transform.position;
 		return ret;
 	}
+
+    void ToggleRoomActive()
+    {
+        foreach (GameObject mob in mobList)
+            mob.GetComponent<Entity>().ToggleActive(true);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            Debug.Log(mobList);
+            ToggleRoomActive();
+        }
+    }
 }

@@ -20,17 +20,20 @@ public class Burst : Entity
     // Update is called once per frame
     void Update()
     {
-        if (hp <= 0)
-            Destroy(gameObject);
+        if (isActive)
+        {
+            if (hp <= 0)
+                isDead = true;
 
-        if(timer < fireRate)
-        {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            timer = 0;
-            FireProjectile();
+            if (timer < fireRate)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                timer = 0;
+                FireProjectile();
+            }
         }
     }
 

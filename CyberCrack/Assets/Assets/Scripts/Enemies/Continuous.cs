@@ -20,17 +20,20 @@ public class Continuous : Entity
     // Update is called once per frame
     void Update()
     {
-        if (hp <= 0)
-            Destroy(gameObject);
+        if (isActive)
+        {
+            if (hp <= 0)
+                Destroy(gameObject);
 
-        if (timer < fireRate)
-        {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            timer = 0;
-            StartCoroutine(FireProjectile());
+            if (timer < fireRate)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                timer = 0;
+                StartCoroutine(FireProjectile());
+            }
         }
     }
 

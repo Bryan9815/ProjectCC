@@ -24,33 +24,36 @@ public class Hex : Entity
     // Update is called once per frame
     void Update()
     {
-        // HP
-        if (hp <= 0)
-            Destroy(gameObject);
-
-        #region Attacks
-        if (timer < fireRate)
+        if (isActive)
         {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            timer = 0;
-            spawnCounter++;
-            FireProjectile();
-        }
+            // HP
+            if (hp <= 0)
+                Destroy(gameObject);
 
-        if (spawnCounter > 5)
-        {
-            spawnCounter = 0;
-            if (HelperFunctions.RandomBool())
-                SpawnAdds();
-        }
-        #endregion
+            #region Attacks
+            if (timer < fireRate)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                timer = 0;
+                spawnCounter++;
+                FireProjectile();
+            }
 
-        //Movement
-        transform.localPosition += dirVec * speed;
-        transform.localEulerAngles += new Vector3(0, 0, 0.25f);
+            if (spawnCounter > 5)
+            {
+                spawnCounter = 0;
+                if (HelperFunctions.RandomBool())
+                    SpawnAdds();
+            }
+            #endregion
+
+            //Movement
+            transform.localPosition += dirVec * speed;
+            transform.localEulerAngles += new Vector3(0, 0, 0.25f);
+        }
     }
 
     void FireProjectile()

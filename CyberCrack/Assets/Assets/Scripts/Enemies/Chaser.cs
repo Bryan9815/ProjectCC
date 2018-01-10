@@ -26,15 +26,18 @@ public class Chaser : Entity
     // Update is called once per frame
     void Update()
     {
-        if (hp <= 0)
-            Destroy(gameObject);
+        if (isActive)
+        {
+            if (hp <= 0)
+                Destroy(gameObject);
 
-        Vector3 dir = new Vector3();
-        dir = (target.position - transform.position).normalized;
+            Vector3 dir = new Vector3();
+            dir = (target.position - transform.position).normalized;
 
-        transform.position += dir * speed;
-        //transform.Rotate(0, 0, transform.rotation.z + 5);
-        transform.localEulerAngles += new Vector3(0, 0, 7.5f);
+            transform.position += dir * speed;
+            //transform.Rotate(0, 0, transform.rotation.z + 5);
+            transform.localEulerAngles += new Vector3(0, 0, 7.5f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
