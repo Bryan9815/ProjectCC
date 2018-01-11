@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,8 +22,10 @@ public class RoomInstance : MonoBehaviour
 	float tileSize = 16;
 	Vector2 roomSizeInTiles = new Vector2(9,17);
 
-    List<GameObject> mobList = new List<GameObject>();
-    List<Door> doorList = new List<Door>();
+    [HideInInspector]
+    public List<GameObject> mobList = new List<GameObject>();
+    [HideInInspector]
+    public List<Door> doorList = new List<Door>();
 
 	public void Setup(Texture2D _tex, Vector2 _gridPos, Room.roomType _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
@@ -39,22 +42,26 @@ public class RoomInstance : MonoBehaviour
 
     private void Update()
     {
-        if(mobList.Count == 0)
+        try
         {
-            foreach (Door door in doorList)
-                door.ToggleActive(true);
-        }
-        else
-        {
-            foreach (GameObject mob in mobList)
+            if (mobList.Count == 0)
             {
-                if (mob.GetComponent<Entity>().GetIsDead())
+                foreach (Door door in doorList)
+                    door.ToggleActive(true);
+            }
+            else
+            {
+                foreach (GameObject mob in mobList)
                 {
-                    mobList.Remove(mob);
-                    Destroy(mob);
+                    if (mob.GetComponent<Entity>().GetIsDead())
+                    {
+                        mobList.Remove(mob);
+                        Destroy(mob);
+                    }
                 }
             }
         }
+        catch(Exception e) { Debug.Log(e); }
     }
 
     void MakeDoors()
@@ -136,7 +143,10 @@ public class RoomInstance : MonoBehaviour
 				Vector3 spawnPos = PositionFromTileGrid(x,y);
 				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, Quaternion.identity, this.transform);
                 if (entity.tag == "Enemy")
+                {
                     mobList.Add(entity);
+                    entity.GetComponent<Entity>().ToggleActive(false);
+                }
 			}
 		}
 	}

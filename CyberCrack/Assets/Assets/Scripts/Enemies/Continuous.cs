@@ -10,7 +10,7 @@ public class Continuous : Entity
     {
         Init();
 
-        hp = 3;
+        maxHP = hp = 3;
         damage = 1;
         speed = 5;
         fireRate = 0.8f;
@@ -23,7 +23,7 @@ public class Continuous : Entity
         if (isActive)
         {
             if (hp <= 0)
-                Destroy(gameObject);
+                isDead = true;
 
             if (timer < fireRate)
             {

@@ -10,7 +10,7 @@ public class Burst : Entity
     {
         Init();
 
-        hp = 3;
+        maxHP = hp = 3;
         damage = 1;
         speed = 5;
         fireRate = 1.5f;

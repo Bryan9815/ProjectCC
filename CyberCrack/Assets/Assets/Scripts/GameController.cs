@@ -7,7 +7,11 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     public Transform gameplayCanvas;
     public Transform uiCanvas;
+    [HideInInspector]
+    public Transform bossHPBar;
+    [HideInInspector]
     public GameObject debugEnemyPanel;
+    [HideInInspector]
     public GameObject playerCharacter;
 
     Transform miniMap;
@@ -24,18 +28,24 @@ public class GameController : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-    }
 
-    // Use this for initialization
-    void Start ()
-    {
+        // Init
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
         miniMap = gameplayCanvas.GetChild(0).transform;
         mmOriginal = miniMap.localPosition;
         uiCanvas = GameObject.Find("UI_Canvas").transform;
 
+        bossHPBar = uiCanvas.Find("BossHP");
+        bossHPBar.gameObject.SetActive(false);
+
         debugEnemyPanel = uiCanvas.GetChild(1).gameObject;
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    // Use this for initialization
+    void Start ()
+    {
+        
     }
 	
 	// Update is called once per frame

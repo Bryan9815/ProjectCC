@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
     protected float damage;
     protected float speed;
     protected float fireRate;
-    protected bool isActive = false;
+    protected bool isActive = true;
     protected bool isDead = false;
     protected AudioSource sound;
     protected Animator anim;
@@ -41,7 +41,7 @@ public class Entity : MonoBehaviour
         return isDead;
     }
 
-    public void ToggleActive(bool active)
+    public virtual void ToggleActive(bool active)
     {
         if (active)
             isActive = true;

@@ -54,6 +54,7 @@ public class SheetAssigner : MonoBehaviour
             {
                 case Room.roomType.enter:
                     myRoom.Setup(normalTemplates[0], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+                    //Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Hex"), myRoom.transform);
                     break;
                 case Room.roomType.normal:
                     randTemplate = Mathf.RoundToInt(Random.value * (normalTemplates.Count - 1));
@@ -74,5 +75,11 @@ public class SheetAssigner : MonoBehaviour
             myRoom.name = "Room" + roomNumber;
             myRoom.transform.parent = roomParent.transform;
         }
+    }
+
+    IEnumerator Debug(float seconds, RoomInstance myRoom)
+    {
+        yield return new WaitForSeconds(seconds);
+        Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Hex"), myRoom.transform);
     }
 }

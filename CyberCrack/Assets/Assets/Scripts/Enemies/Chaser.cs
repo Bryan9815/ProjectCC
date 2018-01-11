@@ -14,7 +14,7 @@ public class Chaser : Entity
     {
         Init();
 
-        hp = 3;
+        maxHP = hp = 3;
         damage = 1;
         speed = 0.1f;
         fireRate = 0.33f;
@@ -29,7 +29,7 @@ public class Chaser : Entity
         if (isActive)
         {
             if (hp <= 0)
-                Destroy(gameObject);
+                isDead = true;
 
             Vector3 dir = new Vector3();
             dir = (target.position - transform.position).normalized;

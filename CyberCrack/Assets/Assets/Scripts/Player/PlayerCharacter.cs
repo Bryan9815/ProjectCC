@@ -257,7 +257,7 @@ public class PlayerCharacter : Entity
                             posR = new Vector3(bullet.transform.position.x - 0.33f * 15, bullet.transform.position.y - 0.33f * 15, 0);
                             break;
                     }
-                    Debug.Log("tempFireStyle: " + tempFireStyle);
+                    //Debug.Log("tempFireStyle: " + tempFireStyle);
 
                     bulletL.transform.position = posL;
                     bulletL.transform.localScale = new Vector3(1, 1, 1);

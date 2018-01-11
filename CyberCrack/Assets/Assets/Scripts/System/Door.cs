@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
     {
         startColor = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = Color.gray;
+        GetComponent<Collider2D>().isTrigger = false;
 
         rooms = transform.parent.parent;
 
@@ -42,11 +43,13 @@ public class Door : MonoBehaviour
         if (active)
         {
             GetComponent<SpriteRenderer>().color = startColor;
+            GetComponent<Collider2D>().isTrigger = true;
             isActive = true;
         }
         else
         {
             GetComponent<SpriteRenderer>().color = Color.gray;
+            GetComponent<Collider2D>().isTrigger = false;
             isActive = false;
         }
     }

@@ -13,12 +13,26 @@ public class Hex : Entity
     {
         Init();
 
-        hp = 30;
+        maxHP = hp = 30;
         damage = 1;
         speed = 0.5f;
         fireRate = 1.5f;
         timer = 0;
         dirVec = new Vector3(1, 1, 0);
+    }
+
+    public override void ToggleActive(bool active)
+    {
+        if (active)
+        {
+            isActive = true;
+            GameController.instance.bossHPBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            isActive = false;
+            GameController.instance.bossHPBar.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -28,7 +42,16 @@ public class Hex : Entity
         {
             // HP
             if (hp <= 0)
-                Destroy(gameObject);
+                isDead = true;
+
+            // Update HP Bar
+            float hpBarScale = 800 * (hp / maxHP);
+            hpBarScale = Mathf.Max(0.01f, hpBarScale);
+            Mathf.Clamp(hpBarScale, 0.01f, 80.0f);
+            if (hp >= maxHP)
+                hpBarScale = 800;
+
+            GameController.instance.bossHPBar.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(hpBarScale, 100);
 
             #region Attacks
             if (timer < fireRate)
@@ -69,9 +92,9 @@ public class Hex : Entity
 
     void SpawnAdds()
     {
-        Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(1).position, target.GetChild(0).rotation, transform.parent);
-        Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(3).position, target.GetChild(0).rotation, transform.parent);
-        Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(4).position, target.GetChild(0).rotation, transform.parent);
+        transform.parent.GetComponent<RoomInstance>().mobList.Add(Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(1).position, target.GetChild(0).rotation, transform.parent));
+        transform.parent.GetComponent<RoomInstance>().mobList.Add(Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(3).position, target.GetChild(0).rotation, transform.parent));
+        transform.parent.GetComponent<RoomInstance>().mobList.Add(Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Chaser"), target.GetChild(4).position, target.GetChild(0).rotation, transform.parent));
     }
 
     void ChangeMovement()
