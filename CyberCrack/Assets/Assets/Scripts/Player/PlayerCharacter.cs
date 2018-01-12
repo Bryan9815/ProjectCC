@@ -12,6 +12,7 @@ public class PlayerCharacter : Entity
 
     int shotStyle = 0;
     string fireDirection = "";
+    float projectileSpeed;
 
     void Awake()
     {
@@ -31,13 +32,15 @@ public class PlayerCharacter : Entity
     {
         Init();
 
+        // Stats
         maxHP = hp = 3;
         damage = 1;
         speed = 1;
         fireRate = 0.33f;
         projectileCooldown = false;
         isHit = false;
-        
+        projectileSpeed = 10.0f;
+
         UpdateHealthDisplay();
     }
 	
@@ -197,7 +200,7 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (target.GetChild(0).position - transform.position) * 7.5f;
+                    Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
                     bullet.GetComponent<PC_Projectile>().Init(target.GetChild(0).position, target.GetChild(0).rotation, direction, damage, 1.0f);
 
@@ -211,7 +214,7 @@ public class PlayerCharacter : Entity
                     {
                         GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                        Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
+                        Vector3 direction = (target.GetChild(i).position - transform.position) * projectileSpeed;
 
                         bullet.GetComponent<PC_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, damage, 1.0f);
 
@@ -224,7 +227,7 @@ public class PlayerCharacter : Entity
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
 
-                    Vector3 direction = (target.GetChild(0).position - transform.position) * 7.5f;
+                    Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
                     bullet.GetComponent<PC_Projectile>().Init(target.GetChild(0).position, target.GetChild(0).rotation, direction, damage, 1.0f);
 
