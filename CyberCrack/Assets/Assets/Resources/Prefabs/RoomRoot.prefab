@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61210350407858582}
   m_Layer: 0
   m_Name: RoomRoot
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,8 @@ MonoBehaviour:
     prefab: {fileID: 1950168259769766, guid: d69e1930873b93c419028d2f153ee949, type: 2}
   - color: {r: 0.49019608, g: 0, b: 1, a: 1}
     prefab: {fileID: 1940333035060016, guid: e703b8be6cf30bd49aae072b9bd4bbef, type: 2}
+  mobList: []
+  doorList: []
 --- !u!212 &212522987513716332
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCharacter : Entity
 {
     public static PlayerCharacter instance;
+    RoomInstance currentRoom;
 
     bool isHit;
     bool projectileCooldown;
@@ -47,8 +48,11 @@ public class PlayerCharacter : Entity
 	// Update is called once per frame
 	void Update ()
     {
-        Movement();
-        Shooting();
+        if (isActive)
+        {
+            Movement();
+            Shooting();
+        }
     }
 
     public void IsHit(float damage)
@@ -306,6 +310,18 @@ public class PlayerCharacter : Entity
             GameObject projectileSpawnR = Instantiate<GameObject>(target.gameObject, target);
             Vector3 spawnRpos = new Vector3(1.25f, target.GetChild(0).localPosition.y, 0);
             projectileSpawnR.transform.localPosition = spawnRpos;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch(collision.tag)
+        {
+            case "Room":
+                currentRoom = collision.GetComponent<RoomInstance>();
+                break;
+            default:
+                break;
         }
     }
 }

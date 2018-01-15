@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4232132393388834}
   - component: {fileID: 212470522961602340}
   - component: {fileID: 61066563362882404}
+  - component: {fileID: 114529775680149170}
   m_Layer: 0
   m_Name: RandPowerUp
   m_TagString: Untagged
@@ -66,6 +67,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114529775680149170
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864472389956204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da83005c8fde204d94a8efd2f118a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpList: []
 --- !u!212 &212470522961602340
 SpriteRenderer:
   m_ObjectHideFlags: 1

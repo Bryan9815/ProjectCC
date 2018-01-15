@@ -10,9 +10,11 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Transform bossHPBar;
     [HideInInspector]
-    public GameObject debugEnemyPanel;
+    public GameObject pausePanel;
     [HideInInspector]
     public GameObject playerCharacter;
+    [HideInInspector]
+    public RoomInstance currentRoom;
 
     Transform miniMap;
     Vector3 mmOriginal;
@@ -38,7 +40,8 @@ public class GameController : MonoBehaviour
         bossHPBar = uiCanvas.Find("BossHP");
         bossHPBar.gameObject.SetActive(false);
 
-        debugEnemyPanel = uiCanvas.GetChild(1).gameObject;
+        pausePanel = uiCanvas.Find("Pause_Panel").gameObject;
+        pausePanel.SetActive(false);
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -56,7 +59,7 @@ public class GameController : MonoBehaviour
 
         UI_Input();
 
-        DebugMode();
+        //DebugMode();
 	}
 
     void UI_Input()
@@ -73,66 +76,94 @@ public class GameController : MonoBehaviour
             miniMap.localScale /= 4;
         }
         #endregion
+        #region Pause Game
+        // Controls
+        if (pausePanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) { PauseGame(false); }
+
+        }
+        // Toggle
+        else { if (Input.GetKeyDown(KeyCode.Escape)) PauseGame(true); }
+        #endregion
     }
 
-    void DebugMode()
+    void PauseGame(bool pause)
     {
-        if(Input.GetKey(KeyCode.Tab))
+        // Pause all entities
+        playerCharacter.GetComponent<Entity>().ToggleActive(!pause);
+        foreach (GameObject mob in currentRoom.mobList)
         {
-            string input = Input.inputString;
-
-            if (input != "")
-                Debug.Log(input);
-
-            switch(input)
-            {
-                case "g":
-                   debugEnemyPanel.SetActive(true);
-                    break;
-                case "p":
-                    // Gives/Spawns power up
-                    playerCharacter.GetComponent<PlayerCharacter>().ActivateTripleShot();
-                    break;
-                case "u":
-                    // Give/Spawns usable item
-                    break;
-                case "h":
-                    // Gives/Spawns health
-                    break;
-            }
+            mob.GetComponent<Entity>().ToggleActive(!pause);
         }
 
-        if (debugEnemyPanel.activeSelf)
-        {
-            string input = Input.inputString;
+        if (pause)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
 
-            if (input != "")
-                Debug.Log(input);
-
-            switch (input)
-            {
-                case "1":
-                    GameObject testDummy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/TestDummy"), gameplayCanvas);
-                    debugEnemyPanel.SetActive(false);
-                    break;
-                case "2":
-                    GameObject chaser = Instantiate(Resources.Load <GameObject> ("Prefabs/Enemies/Chaser"), gameplayCanvas);
-                    debugEnemyPanel.SetActive(false);
-                    break;
-                case "3":
-                    GameObject burst = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), gameplayCanvas);
-                    debugEnemyPanel.SetActive(false);
-                    break;
-                case "4":
-                    GameObject continuous = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Continuous"), gameplayCanvas);
-                    debugEnemyPanel.SetActive(false);
-                    break;
-            }
-
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                debugEnemyPanel.SetActive(false);
-            }
-        }
+        // Toggle the menu
+        pausePanel.SetActive(pause);
     }
+
+    //void DebugMode()
+    //{
+    //    if(Input.GetKey(KeyCode.Tab))
+    //    {
+    //        string input = Input.inputString;
+
+    //        if (input != "")
+    //            Debug.Log(input);
+
+    //        switch(input)
+    //        {
+    //            case "g":
+    //               debugEnemyPanel.SetActive(true);
+    //                break;
+    //            case "p":
+    //                // Gives/Spawns power up
+    //                playerCharacter.GetComponent<PlayerCharacter>().ActivateTripleShot();
+    //                break;
+    //            case "u":
+    //                // Give/Spawns usable item
+    //                break;
+    //            case "h":
+    //                // Gives/Spawns health
+    //                break;
+    //        }
+    //    }
+
+    //    if (debugEnemyPanel.activeSelf)
+    //    {
+    //        string input = Input.inputString;
+
+    //        if (input != "")
+    //            Debug.Log(input);
+
+    //        switch (input)
+    //        {
+    //            case "1":
+    //                GameObject testDummy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/TestDummy"), gameplayCanvas);
+    //                debugEnemyPanel.SetActive(false);
+    //                break;
+    //            case "2":
+    //                GameObject chaser = Instantiate(Resources.Load <GameObject> ("Prefabs/Enemies/Chaser"), gameplayCanvas);
+    //                debugEnemyPanel.SetActive(false);
+    //                break;
+    //            case "3":
+    //                GameObject burst = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), gameplayCanvas);
+    //                debugEnemyPanel.SetActive(false);
+    //                break;
+    //            case "4":
+    //                GameObject continuous = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Continuous"), gameplayCanvas);
+    //                debugEnemyPanel.SetActive(false);
+    //                break;
+    //        }
+
+    //        if (Input.GetKey(KeyCode.Escape))
+    //        {
+    //            debugEnemyPanel.SetActive(false);
+    //        }
+    //    }
+    //}
 }

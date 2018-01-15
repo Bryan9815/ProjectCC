@@ -173,6 +173,7 @@ public class RoomInstance : MonoBehaviour
         {
             Debug.Log(mobList);
             ToggleRoomActive();
+            GameController.instance.currentRoom = GetComponent<RoomInstance>();
         }
     }
 }
