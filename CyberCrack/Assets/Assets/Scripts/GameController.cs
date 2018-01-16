@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public RoomInstance currentRoom;
 
-    Transform miniMap;
+    Transform miniMap, pauseDisplay, pauseOptions, pauseSelector;
+    int pauseSelectNum = 0;
     Vector3 mmOriginal;
 
     void Awake()
@@ -41,6 +43,9 @@ public class GameController : MonoBehaviour
         bossHPBar.gameObject.SetActive(false);
 
         pausePanel = uiCanvas.Find("Pause_Panel").gameObject;
+        pauseDisplay = pausePanel.transform.Find("Display");
+        pauseOptions = pausePanel.transform.Find("Options");
+        pauseSelector = pauseOptions.Find("Selector");
         pausePanel.SetActive(false);
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
@@ -58,9 +63,22 @@ public class GameController : MonoBehaviour
             playerCharacter = GameObject.FindGameObjectWithTag("Player");
 
         UI_Input();
+        UI_Update();
 
         //DebugMode();
 	}
+
+    void UI_Update()
+    {
+        if(pausePanel.activeSelf)
+        {
+            // Stat update
+            pauseDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + playerCharacter.GetComponent<Entity>().GetDamage();
+            pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + playerCharacter.GetComponent<Entity>().GetSpeed();
+            pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + playerCharacter.GetComponent<Entity>().GetFireRate();
+            pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + playerCharacter.GetComponent<Entity>().GetProjectileSpeed();
+        }
+    }
 
     void UI_Input()
     {
@@ -80,8 +98,42 @@ public class GameController : MonoBehaviour
         // Controls
         if (pausePanel.activeSelf)
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) { PauseGame(false); }
+            #region Menu Selection
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (pauseSelectNum < 2)
+                {
+                    pauseSelectNum++;
+                    pauseSelector.transform.localPosition += new Vector3(0, -90, 0);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (pauseSelectNum > 0)
+                {
+                    pauseSelectNum--;
+                    pauseSelector.transform.localPosition += new Vector3(0, 90, 0);
+                }
+            }
+            #endregion
 
+            #region Buttons
+            switch(pauseSelectNum)
+            {
+                case 0: // Resume
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        PauseGame(false);
+                    break;
+                case 1: // Power Ups
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        break;
+                    break;
+                case 2: // Quit
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        Application.Quit();
+                    break;
+            }
+            #endregion
         }
         // Toggle
         else { if (Input.GetKeyDown(KeyCode.Escape)) PauseGame(true); }

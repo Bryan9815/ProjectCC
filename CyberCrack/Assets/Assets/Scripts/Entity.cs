@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     protected float damage;
     protected float speed;
     protected float fireRate;
+    protected float projectileSpeed;
     protected bool isActive = true;
     protected bool isDead = false;
     protected AudioSource sound;
@@ -35,6 +36,36 @@ public class Entity : MonoBehaviour
 	void Update () {
 		
 	}
+
+    public float GetMaxHP()
+    {
+        return maxHP;
+    }
+
+    public float GetHP()
+    {
+        return hp;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public float GetFireRate()
+    {
+        return fireRate;
+    }
+
+    public float GetProjectileSpeed()
+    {
+        return projectileSpeed;
+    }
 
     public bool GetIsDead()
     {

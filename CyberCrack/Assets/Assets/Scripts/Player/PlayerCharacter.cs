@@ -13,7 +13,6 @@ public class PlayerCharacter : Entity
 
     int shotStyle = 0;
     string fireDirection = "";
-    float projectileSpeed;
 
     void Awake()
     {
