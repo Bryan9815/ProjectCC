@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     bool isActive = false;
-    Color32 startColor;
+    public Color32 startColor;
 
     Transform rooms;
     GameObject minimapIcon, player;
@@ -13,7 +13,6 @@ public class Door : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        startColor = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = Color.gray;
         GetComponent<Collider2D>().isTrigger = false;
 
@@ -42,7 +41,9 @@ public class Door : MonoBehaviour
     {
         if (active)
         {
+            Debug.Log("door active, changing from: " + GetComponent<SpriteRenderer>().color + " to: " + startColor);
             GetComponent<SpriteRenderer>().color = startColor;
+            Debug.Log("Color changed, color is now: " + GetComponent<SpriteRenderer>().color);
             GetComponent<Collider2D>().isTrigger = true;
             isActive = true;
         }

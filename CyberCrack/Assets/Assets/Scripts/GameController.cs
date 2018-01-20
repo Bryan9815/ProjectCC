@@ -99,8 +99,34 @@ public class GameController : MonoBehaviour
         }
     }
 
+    IEnumerator Respawn()
+    {
+        playerCharacter.SetActive(false);
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
+
+        foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
+        {
+            room.RefreshRooms();
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
+        playerCharacter.transform.position = new Vector3(0, 0, 0);
+        playerCharacter.GetComponent<PlayerCharacter>().InitializePlayer();
+        playerCharacter.GetComponent<PlayerCharacter>().RefreshPowerUp();
+        playerCharacter.SetActive(true);
+    }
+
     void UI_Input()
     {
+        #region debug
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StartCoroutine(Respawn());
+        }
+        #endregion
+
         #region minimap toggle
         if (Input.GetKeyDown(KeyCode.M))
         {

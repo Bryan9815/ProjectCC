@@ -40,6 +40,18 @@ public class RoomInstance : MonoBehaviour
 		GenerateRoomTiles();
 	}
 
+    public void RefreshRooms()
+    {
+        mobList.Clear();
+        doorList.Clear();
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        MakeDoors();
+        GenerateRoomTiles();
+    }
+
     private void Update()
     {
         try

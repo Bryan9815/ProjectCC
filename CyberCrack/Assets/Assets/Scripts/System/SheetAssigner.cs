@@ -14,6 +14,8 @@ public class SheetAssigner : MonoBehaviour
     List<Texture2D> upgradeTemplates = new List<Texture2D>();
     [SerializeField]
 	GameObject RoomObj;
+    [HideInInspector]
+    public List<RoomInstance> roomList = new List<RoomInstance>();
 
     public Vector2 roomDimensions = new Vector2(16*17,16*9);
 	public Vector2 gutterSize = new Vector2(16*9,16*4);
@@ -70,6 +72,7 @@ public class SheetAssigner : MonoBehaviour
                     myRoom.Setup(upgradeTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
                     break;
             }
+            roomList.Add(myRoom);
 
             // Name the room and parent it to canvas
             roomNumber++;

@@ -421,7 +421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &117765590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1039,7 +1039,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 474944077}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0525513, y: -0.5181885, z: 0.20609283}
+  m_LocalPosition: {x: -1.0526123, y: -0.5181885, z: 0.20609283}
   m_LocalScale: {x: 0.18518518, y: 0.18518518, z: 0.18518518}
   m_Children:
   - {fileID: 1395862201}
@@ -1506,6 +1506,7 @@ MonoBehaviour:
   upgradeTemplates:
   - {fileID: 2800000, guid: 564d6ca77f8ea7041bf378157f5feba0, type: 3}
   RoomObj: {fileID: 1038065722679700, guid: 092b915af527d594aa11083a065a8de8, type: 2}
+  roomList: []
   roomDimensions: {x: 272, y: 144}
   gutterSize: {x: 144, y: 64}
 --- !u!114 &678893743
@@ -1523,8 +1524,14 @@ MonoBehaviour:
   uiCanvas: {fileID: 474944081}
   bossHPBar: {fileID: 0}
   pausePanel: {fileID: 0}
+  deathPanel: {fileID: 0}
   playerCharacter: {fileID: 0}
   currentRoom: {fileID: 0}
+  respawnCount: 0
+  mobsKilled: 0
+  roomsCleared: 0
+  bossesDefeated: 0
+  powerUpsObtained: 0
 --- !u!114 &678893744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &679718504
 MonoBehaviour:
   m_ObjectHideFlags: 0

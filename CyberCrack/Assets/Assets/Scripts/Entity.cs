@@ -111,4 +111,12 @@ public class Entity : MonoBehaviour
         powerUps[powerUps.Count - 1].transform.parent = powerUpList;
         powerUps[powerUps.Count - 1].ActivateEffect();
     }
+
+    public void RefreshPowerUp()
+    {
+        foreach(PowerUp powerUp in powerUps)
+        {
+            powerUp.ActivateEffect();
+        }
+    }
 }

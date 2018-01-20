@@ -32,6 +32,11 @@ public class PlayerCharacter : Entity
     // Use this for initialization
     void Start ()
     {
+        InitializePlayer();
+    }
+
+    public void InitializePlayer()
+    {
         Init();
 
         // Stats
@@ -42,7 +47,7 @@ public class PlayerCharacter : Entity
         projectileCooldown = false;
         isHit = false;
         projectileSpeed = 10.0f;
-        
+
         UpdateHealthDisplay();
     }
 	
