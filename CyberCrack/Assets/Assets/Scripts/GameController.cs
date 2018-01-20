@@ -13,11 +13,17 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public GameObject pausePanel;
     [HideInInspector]
+    public GameObject deathPanel;
+    [HideInInspector]
     public GameObject playerCharacter;
     [HideInInspector]
     public RoomInstance currentRoom;
+    [HideInInspector]
+    public int respawnCount, mobsKilled, roomsCleared, bossesDefeated, powerUpsObtained;
 
-    Transform miniMap, pauseDisplay, pauseOptions, pauseSelector;
+    Transform miniMap;
+    Transform pauseDisplay, pauseOptions, pauseSelector;
+    Transform deathDisplay, deathOptions, deathSelector;
     int pauseSelectNum = 0;
     Vector3 mmOriginal;
 
@@ -47,6 +53,14 @@ public class GameController : MonoBehaviour
         pauseOptions = pausePanel.transform.Find("Options");
         pauseSelector = pauseOptions.Find("Selector");
         pausePanel.SetActive(false);
+
+        deathPanel = uiCanvas.Find("Death_Panel").gameObject;
+        deathDisplay = deathPanel.transform.Find("Display");
+        deathOptions = deathPanel.transform.Find("Options");
+        deathSelector = deathOptions.Find("Selector");
+        deathPanel.SetActive(false);
+
+        respawnCount = 3;
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -77,6 +91,11 @@ public class GameController : MonoBehaviour
             pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + playerCharacter.GetComponent<Entity>().GetSpeed();
             pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + playerCharacter.GetComponent<Entity>().GetFireRate();
             pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + playerCharacter.GetComponent<Entity>().GetProjectileSpeed();
+        }
+        if(deathPanel.activeSelf)
+        {
+            // Stat update
+
         }
     }
 

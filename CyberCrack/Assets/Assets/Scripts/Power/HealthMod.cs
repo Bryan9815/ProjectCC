@@ -15,12 +15,4 @@ public class HealthMod : PowerUp
     {
         GetComponentInParent<Entity>().ModifyMaxHP(-healthMod);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            PickUp(collision.gameObject);
-        }
-    }
 }

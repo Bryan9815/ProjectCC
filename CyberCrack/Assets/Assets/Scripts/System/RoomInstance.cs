@@ -57,6 +57,7 @@ public class RoomInstance : MonoBehaviour
                     {
                         mobList.Remove(mob);
                         Destroy(mob);
+                        GameController.instance.mobsKilled++;
                     }
                 }
             }

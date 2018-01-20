@@ -11,6 +11,8 @@ public class PlayerCharacter : Entity
     bool projectileCooldown;
     bool usable = false;
 
+    int respawns;
+
     int shotStyle = 0;
     string fireDirection = "";
 
@@ -40,7 +42,7 @@ public class PlayerCharacter : Entity
         projectileCooldown = false;
         isHit = false;
         projectileSpeed = 10.0f;
-
+        
         UpdateHealthDisplay();
     }
 	

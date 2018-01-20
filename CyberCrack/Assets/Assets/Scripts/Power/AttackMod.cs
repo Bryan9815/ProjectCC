@@ -15,12 +15,4 @@ public class AttackMod : PowerUp
     {
         GetComponentInParent<Entity>().ModifyDamage(-attackMod);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Player")
-        {
-            PickUp(collision.gameObject);
-        }
-    }
 }

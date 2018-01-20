@@ -15,12 +15,4 @@ public class SpeedMod : PowerUp
     {
         GetComponentInParent<Entity>().ModifySpeed(-speedMod);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            PickUp(collision.gameObject);
-        }
-    }
 }

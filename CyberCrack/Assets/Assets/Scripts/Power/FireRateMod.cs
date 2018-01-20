@@ -15,12 +15,4 @@ public class FireRateMod : PowerUp
     {
         GetComponentInParent<Entity>().ModifyFireRate(-fireRateMod);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            PickUp(collision.gameObject);
-        }
-    }
 }
