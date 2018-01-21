@@ -41,9 +41,7 @@ public class Door : MonoBehaviour
     {
         if (active)
         {
-            Debug.Log("door active, changing from: " + GetComponent<SpriteRenderer>().color + " to: " + startColor);
             GetComponent<SpriteRenderer>().color = startColor;
-            Debug.Log("Color changed, color is now: " + GetComponent<SpriteRenderer>().color);
             GetComponent<Collider2D>().isTrigger = true;
             isActive = true;
         }

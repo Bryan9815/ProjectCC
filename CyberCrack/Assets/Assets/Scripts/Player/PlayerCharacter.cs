@@ -67,18 +67,30 @@ public class PlayerCharacter : Entity
         {
             isHit = true;
             hp -= damage;
-            StartCoroutine(ResetInvincibility());
             UpdateHealthDisplay();
-            // Play damage flashing anim
+
+            if (hp > 0)
+                StartCoroutine(ResetInvincibility());
+            else
+                StartCoroutine(PlayerDeath());
         }
     }
 
     private IEnumerator ResetInvincibility()
     {
+        // Maybe replace this with an animator function instead
+        // Play damage flashing anim
         yield return new WaitForSeconds(1.0f);
 
         isHit = false;
         Debug.Log("Invincibility reset");
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        // Play death animation
+        yield return new WaitForSeconds(0.5f);
+        GameController.instance.OpenRespawnMenu();
     }
 
     void UpdateHealthDisplay()

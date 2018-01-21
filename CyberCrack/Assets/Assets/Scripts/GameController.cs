@@ -24,7 +24,8 @@ public class GameController : MonoBehaviour
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
     Transform deathDisplay, deathOptions, deathSelector;
-    int pauseSelectNum = 0;
+    int pauseSelectNum, deathSelectNum;
+    bool menuOpen;
     Vector3 mmOriginal;
 
     void Awake()
@@ -60,6 +61,10 @@ public class GameController : MonoBehaviour
         deathSelector = deathOptions.Find("Selector");
         deathPanel.SetActive(false);
 
+        pauseSelectNum = deathSelectNum = 0;
+
+        menuOpen = false;
+
         respawnCount = 3;
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
@@ -84,38 +89,7 @@ public class GameController : MonoBehaviour
 
     void UI_Update()
     {
-        if(pausePanel.activeSelf)
-        {
-            // Stat update
-            pauseDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + playerCharacter.GetComponent<Entity>().GetDamage();
-            pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + playerCharacter.GetComponent<Entity>().GetSpeed();
-            pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + playerCharacter.GetComponent<Entity>().GetFireRate();
-            pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + playerCharacter.GetComponent<Entity>().GetProjectileSpeed();
-        }
-        if(deathPanel.activeSelf)
-        {
-            // Stat update
 
-        }
-    }
-
-    IEnumerator Respawn()
-    {
-        playerCharacter.SetActive(false);
-        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
-
-        foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
-        {
-            room.RefreshRooms();
-        }
-
-        yield return new WaitForSeconds(1.0f);
-
-        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
-        playerCharacter.transform.position = new Vector3(0, 0, 0);
-        playerCharacter.GetComponent<PlayerCharacter>().InitializePlayer();
-        playerCharacter.GetComponent<PlayerCharacter>().RefreshPowerUp();
-        playerCharacter.SetActive(true);
     }
 
     void UI_Input()
@@ -127,6 +101,13 @@ public class GameController : MonoBehaviour
         }
         #endregion
 
+        MinimapInput();
+        PauseInput();
+        RespawnMenuInput();
+    }
+
+    void MinimapInput()
+    {
         #region minimap toggle
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -139,12 +120,45 @@ public class GameController : MonoBehaviour
             miniMap.localScale /= 4;
         }
         #endregion
+    }
+
+    void PauseGame(bool pause)
+    {
+        // Pause all entities
+        playerCharacter.GetComponent<Entity>().ToggleActive(!pause);
+        foreach (GameObject mob in currentRoom.mobList)
+        {
+            mob.GetComponent<Entity>().ToggleActive(!pause);
+        }
+
+        if (pause)
+        {
+            menuOpen = true;
+            Time.timeScale = 0;
+            // Stat update
+            pauseDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + playerCharacter.GetComponent<Entity>().GetDamage();
+            pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + playerCharacter.GetComponent<Entity>().GetSpeed();
+            pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + playerCharacter.GetComponent<Entity>().GetFireRate();
+            pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + playerCharacter.GetComponent<Entity>().GetProjectileSpeed();
+        }
+        else
+        {
+            menuOpen = false;
+            Time.timeScale = 1;
+        }
+
+        // Toggle the menu
+        pausePanel.SetActive(pause);
+    }
+
+    void PauseInput()
+    {
         #region Pause Game
         // Controls
         if (pausePanel.activeSelf)
         {
             #region Menu Selection
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
                 if (pauseSelectNum < 2)
                 {
@@ -152,7 +166,7 @@ public class GameController : MonoBehaviour
                     pauseSelector.transform.localPosition += new Vector3(0, -90, 0);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
                 if (pauseSelectNum > 0)
                 {
@@ -163,7 +177,7 @@ public class GameController : MonoBehaviour
             #endregion
 
             #region Buttons
-            switch(pauseSelectNum)
+            switch (pauseSelectNum)
             {
                 case 0: // Resume
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -180,87 +194,111 @@ public class GameController : MonoBehaviour
             }
             #endregion
         }
-        // Toggle
-        else { if (Input.GetKeyDown(KeyCode.Escape)) PauseGame(true); }
+        // Toggle menu on
+        else { if (Input.GetKeyDown(KeyCode.Escape) && !menuOpen) PauseGame(true); }
         #endregion
     }
 
-    void PauseGame(bool pause)
+    public void OpenRespawnMenu()
     {
-        // Pause all entities
-        playerCharacter.GetComponent<Entity>().ToggleActive(!pause);
-        foreach (GameObject mob in currentRoom.mobList)
-        {
-            mob.GetComponent<Entity>().ToggleActive(!pause);
-        }
-
-        if (pause)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
+        playerCharacter.SetActive(false);
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
 
         // Toggle the menu
-        pausePanel.SetActive(pause);
+        deathPanel.SetActive(true);
+        menuOpen = true;
+
+        // Stat update
+        deathDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Kills: ";
+        deathDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Rooms Cleared: ";
+        deathDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Bosses Defeated: ";
+        deathDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Power Ups: ";
+        deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Respawn: " + respawnCount;
+        if (respawnCount <= 0)
+        {
+            deathSelectNum = 1;
+            deathSelector.transform.localPosition += new Vector3(0, -90, 0);
+            deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
     }
 
-    //void DebugMode()
-    //{
-    //    if(Input.GetKey(KeyCode.Tab))
-    //    {
-    //        string input = Input.inputString;
+    void RespawnMenuInput()
+    {
+        // Controls
+        if (deathPanel.activeSelf)
+        {
+            #region Menu Selection
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if (deathSelectNum < 2)
+                {
+                    deathSelectNum++;
+                    deathSelector.transform.localPosition += new Vector3(0, -90, 0);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                if (respawnCount > 0)
+                {
+                    if (deathSelectNum > 0)
+                    {
+                        deathSelectNum--;
+                        deathSelector.transform.localPosition += new Vector3(0, 90, 0);
+                    }
+                }
+                else
+                {
+                    if (deathSelectNum > 1)
+                    {
+                        deathSelectNum--;
+                        deathSelector.transform.localPosition += new Vector3(0, 90, 0);
+                    }
+                }
+            }
+            #endregion
 
-    //        if (input != "")
-    //            Debug.Log(input);
+            #region Buttons
+            switch (deathSelectNum)
+            {
+                case 0: // Resume
+                    if (Input.GetKeyDown(KeyCode.Space) && respawnCount > 0)
+                        StartCoroutine(Respawn());
+                    break;
+                case 1: // Power Ups
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        break;
+                    break;
+                case 2: // Quit
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        Application.Quit();
+                    break;
+            }
+            #endregion
+        }
+    }
 
-    //        switch(input)
-    //        {
-    //            case "g":
-    //               debugEnemyPanel.SetActive(true);
-    //                break;
-    //            case "p":
-    //                // Gives/Spawns power up
-    //                playerCharacter.GetComponent<PlayerCharacter>().ActivateTripleShot();
-    //                break;
-    //            case "u":
-    //                // Give/Spawns usable item
-    //                break;
-    //            case "h":
-    //                // Gives/Spawns health
-    //                break;
-    //        }
-    //    }
+    IEnumerator Respawn()
+    {
+        respawnCount--;
+        menuOpen = false;
+        deathPanel.SetActive(false);
 
-    //    if (debugEnemyPanel.activeSelf)
-    //    {
-    //        string input = Input.inputString;
+        foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
+        {
+            room.RefreshRooms();
+        }
 
-    //        if (input != "")
-    //            Debug.Log(input);
+        yield return new WaitForSeconds(1.0f);
 
-    //        switch (input)
-    //        {
-    //            case "1":
-    //                GameObject testDummy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/TestDummy"), gameplayCanvas);
-    //                debugEnemyPanel.SetActive(false);
-    //                break;
-    //            case "2":
-    //                GameObject chaser = Instantiate(Resources.Load <GameObject> ("Prefabs/Enemies/Chaser"), gameplayCanvas);
-    //                debugEnemyPanel.SetActive(false);
-    //                break;
-    //            case "3":
-    //                GameObject burst = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Burst"), gameplayCanvas);
-    //                debugEnemyPanel.SetActive(false);
-    //                break;
-    //            case "4":
-    //                GameObject continuous = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Continuous"), gameplayCanvas);
-    //                debugEnemyPanel.SetActive(false);
-    //                break;
-    //        }
+        // Move rooms back to starting position
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
+        // Give power up to enemy in room that player died in, if player has any power ups
+        // TBA
 
-    //        if (Input.GetKey(KeyCode.Escape))
-    //        {
-    //            debugEnemyPanel.SetActive(false);
-    //        }
-    //    }
-    //}
+        // Respawn the player
+        playerCharacter.transform.position = new Vector3(0, 0, 0);
+        playerCharacter.SetActive(true);
+        playerCharacter.GetComponent<PlayerCharacter>().InitializePlayer();
+        playerCharacter.GetComponent<PlayerCharacter>().RefreshPowerUp();
+    }
 }
