@@ -29,9 +29,17 @@ public class PowerUp : MonoBehaviour
     public virtual void ActivateEffect(){}
     public virtual void DeactivateEffect() {}
 
-    public virtual void OnTriggerEnter2D(Collider2D collision)
+    //public virtual void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "Player")
+    //    {
+    //        PickUp(collision.gameObject);
+    //    }
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             PickUp(collision.gameObject);
         }

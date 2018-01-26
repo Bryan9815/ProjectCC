@@ -36,6 +36,7 @@ public class PlayerCharacter : Entity
     public void InitializePlayer()
     {
         Init();
+        transform.position = new Vector3(0, -GameController.instance.GetComponent<SheetAssigner>().verticalOffset / 5.4f, 0);
 
         // Stats
         maxHP = hp = 3;
