@@ -19,6 +19,7 @@ public class SheetAssigner : MonoBehaviour
 
     public Vector2 roomDimensions = new Vector2(16*17,16*9);
 	public Vector2 gutterSize = new Vector2(16*9,16*4);
+    public float verticalOffset;
 
     private void Awake()
     {
@@ -50,7 +51,7 @@ public class SheetAssigner : MonoBehaviour
             //pick a random index for the array
             int randTemplate;
             //find position to place room
-            Vector3 pos = new Vector3(room.gridPos.x * (roomDimensions.x + gutterSize.x), room.gridPos.y * (roomDimensions.y + gutterSize.y), 0);
+            Vector3 pos = new Vector3(room.gridPos.x * (roomDimensions.x + gutterSize.x), room.gridPos.y * (roomDimensions.y + gutterSize.y) - (verticalOffset/5.4f), 0);
             RoomInstance myRoom = Instantiate(RoomObj, pos, Quaternion.identity).GetComponent<RoomInstance>();
             switch (room.type)
             {
