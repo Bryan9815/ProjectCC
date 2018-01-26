@@ -38,6 +38,7 @@ public class RoomInstance : MonoBehaviour
 		doorRight = _doorRight;
         MakeDoors();
 		GenerateRoomTiles();
+        CheckMobs();
 	}
 
     public void RefreshRooms()
@@ -54,27 +55,41 @@ public class RoomInstance : MonoBehaviour
 
     private void Update()
     {
-        try
+        if (mobList.Count == 0)
         {
-            if (mobList.Count == 0)
+            foreach (Door door in doorList)
+                door.ToggleActive(true);
+        }
+    }
+
+    public void CheckMobs()
+    {
+        List<int> mobsToClear = new List<int>();
+        for (int i = 0; i < mobList.Count; i++)
+        {
+            if(mobList[i].GetComponent<Entity>().GetIsDead())
             {
-                foreach (Door door in doorList)
-                    door.ToggleActive(true);
-            }
-            else
-            {
-                foreach (GameObject mob in mobList)
-                {
-                    if (mob.GetComponent<Entity>().GetIsDead())
-                    {
-                        mobList.Remove(mob);
-                        Destroy(mob);
-                        GameController.instance.mobsKilled++;
-                    }
-                }
+                mobsToClear.Add(i);
+                GameController.instance.mobsKilled++;
             }
         }
-        catch(Exception e) { Debug.Log(e); }
+
+        foreach (int index in mobsToClear)
+        {
+            GameObject mob = mobList[index];
+            mobList.Remove(mob);
+            Destroy(mob);
+        }
+        //foreach (GameObject mob in mobList)
+        //{
+        //    if (mob.GetComponent<Entity>().GetIsDead())
+        //    {
+        //        mobList.Remove(mob);
+        //        Destroy(mob);
+        //        GameController.instance.mobsKilled++;
+        //
+        //    }
+        //}
     }
 
     void MakeDoors()

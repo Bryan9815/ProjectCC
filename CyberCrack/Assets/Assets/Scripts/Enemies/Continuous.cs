@@ -23,7 +23,7 @@ public class Continuous : Entity
         if (isActive)
         {
             if (hp <= 0)
-                isDead = true;
+                Death();
 
             if (timer < fireRate)
             {

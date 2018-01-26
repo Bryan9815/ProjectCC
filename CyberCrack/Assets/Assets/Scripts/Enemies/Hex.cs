@@ -42,7 +42,7 @@ public class Hex : Entity
         {
             // HP
             if (hp <= 0)
-                isDead = true;
+                Death();
 
             // Update HP Bar
             float hpBarScale = 800 * (hp / maxHP);

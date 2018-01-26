@@ -16,6 +16,16 @@ public class PowerUp : MonoBehaviour
         newParent.GetComponent<Entity>().AddPowerUp(this);
     }
 
+    public virtual void Dropped(Transform room)
+    {
+        // Add to new parent's power up list
+        gameObject.transform.parent = room;
+
+        // Disable collider and renderer
+        gameObject.GetComponent<Collider2D>().enabled = true;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;        
+    }
+
     public virtual void ActivateEffect(){}
     public virtual void DeactivateEffect() {}
 

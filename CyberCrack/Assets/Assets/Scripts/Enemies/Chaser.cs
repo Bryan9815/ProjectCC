@@ -29,7 +29,7 @@ public class Chaser : Entity
         if (isActive)
         {
             if (hp <= 0)
-                isDead = true;
+                Death();
 
             Vector3 dir = new Vector3();
             dir = (target.position - transform.position).normalized;

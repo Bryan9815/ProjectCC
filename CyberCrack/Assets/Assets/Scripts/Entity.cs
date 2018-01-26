@@ -72,6 +72,12 @@ public class Entity : MonoBehaviour
         return isDead;
     }
 
+    protected virtual void Death()
+    {
+        isDead = true;
+        GameController.instance.currentRoom.CheckMobs();
+    }
+
     public virtual void ToggleActive(bool active)
     {
         if (active)
@@ -105,11 +111,24 @@ public class Entity : MonoBehaviour
         fireRate += mod;
     }
 
+    public List<PowerUp> GetPowerUps()
+    {
+        return powerUps;
+    }
+
     public void AddPowerUp(PowerUp newPowerUp)
     {
         powerUps.Add(newPowerUp);
         powerUps[powerUps.Count - 1].transform.parent = powerUpList;
+        powerUps[powerUps.Count - 1].transform.localPosition = Vector3.zero;
         powerUps[powerUps.Count - 1].ActivateEffect();
+    }
+
+    public void DropPowerUp(int index)
+    {
+        PowerUp droppedPowerUp = powerUps[index];
+        powerUps.Remove(powerUps[index]);
+        droppedPowerUp.Dropped(gameObject.transform.parent);
     }
 
     public void RefreshPowerUp()
@@ -118,5 +137,16 @@ public class Entity : MonoBehaviour
         {
             powerUp.ActivateEffect();
         }
+    }
+
+    public PowerUp RemoveRandPowerUp()
+    {
+        int rand = UnityEngine.Random.Range(0, powerUps.Count);
+
+        PowerUp removedPowerUp = powerUps[rand];
+        removedPowerUp.DeactivateEffect();
+        powerUps.Remove(powerUps[rand]);
+
+        return removedPowerUp;
     }
 }
