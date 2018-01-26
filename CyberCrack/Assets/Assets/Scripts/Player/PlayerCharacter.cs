@@ -11,8 +11,6 @@ public class PlayerCharacter : Entity
     bool projectileCooldown;
     bool usable = false;
 
-    int respawns;
-
     int shotStyle = 0;
     string fireDirection = "";
 
@@ -41,9 +39,9 @@ public class PlayerCharacter : Entity
 
         // Stats
         maxHP = hp = 3;
-        damage = 1;
+        damage = 3;
         speed = 1;
-        fireRate = 0.33f;
+        fireRate = 15.0f;
         projectileCooldown = false;
         isHit = false;
         projectileSpeed = 10.0f;
@@ -304,7 +302,7 @@ public class PlayerCharacter : Entity
                 break;
         }        
 
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(5/fireRate);
         projectileCooldown = false;        
     }
 

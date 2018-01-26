@@ -80,8 +80,7 @@ public class SheetAssigner : MonoBehaviour
             myRoom.name = "Room" + roomNumber;
             myRoom.transform.parent = roomParent.transform;
         }
-
-        Debug.Log("Number of rooms spawned = " + roomList.Count);
+        
         if (roomList.Count < GetComponent<LevelGeneration>().numberOfRooms)
         {
             roomList.Clear();

@@ -14,7 +14,7 @@ public class Chaser : Entity
     {
         Init();
 
-        maxHP = hp = 3;
+        maxHP = hp = 10;
         damage = 1;
         speed = 0.1f;
         fireRate = 0.33f;

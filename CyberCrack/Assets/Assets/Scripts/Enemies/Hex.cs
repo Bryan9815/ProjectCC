@@ -13,10 +13,10 @@ public class Hex : Entity
     {
         Init();
 
-        maxHP = hp = 30;
+        maxHP = hp = 150;
         damage = 1;
         speed = 0.5f;
-        fireRate = 1.5f;
+        fireRate = 3.333f;
         timer = 0;
         dirVec = new Vector3(1, 1, 0);
     }
@@ -54,7 +54,7 @@ public class Hex : Entity
             GameController.instance.bossHPBar.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(hpBarScale, 100);
 
             #region Attacks
-            if (timer < fireRate)
+            if (timer < 5/fireRate)
             {
                 timer += Time.deltaTime;
             }

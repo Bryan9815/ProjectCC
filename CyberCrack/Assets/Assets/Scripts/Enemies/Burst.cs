@@ -10,10 +10,10 @@ public class Burst : Entity
     {
         Init();
 
-        maxHP = hp = 3;
+        maxHP = hp = 15;
         damage = 1;
         speed = 5;
-        fireRate = 1.5f;
+        fireRate = 3.5f;
         timer = 0;
     }
 
@@ -25,7 +25,7 @@ public class Burst : Entity
             if (hp <= 0)
                 Death();
 
-            if (timer < fireRate)
+            if (timer < 5/fireRate)
             {
                 timer += Time.deltaTime;
             }

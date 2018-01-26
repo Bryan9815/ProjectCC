@@ -41,7 +41,6 @@ public class LevelGeneration : MonoBehaviour
         }
         else
         {
-            Debug.Log("Rooms with zero neighbors, restarting level generation");
             takenPositions.Clear();
             Start();
         }
@@ -379,7 +378,6 @@ public class LevelGeneration : MonoBehaviour
 
                 if (!rooms[x, y].doorTop && !rooms[x, y].doorBot && !rooms[x, y].doorLeft && !rooms[x, y].doorRight)
                 {
-                    Debug.Log("Corrupted spawn");
                     correctSpawn = false;
                     break;
                 }
@@ -391,7 +389,6 @@ public class LevelGeneration : MonoBehaviour
 
     public void RestartLevelGeneration()
     {
-        Debug.Log("Level generation restarted by Sheet Assigner");
         for (int i = 0; i < GameController.instance.gameplayCanvas.Find("Rooms").childCount; i++)
             Destroy(GameController.instance.gameplayCanvas.Find("Rooms").GetChild(i).gameObject);
 
