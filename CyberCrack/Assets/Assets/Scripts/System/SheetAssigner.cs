@@ -80,9 +80,16 @@ public class SheetAssigner : MonoBehaviour
             myRoom.name = "Room" + roomNumber;
             myRoom.transform.parent = roomParent.transform;
         }
+
+        Debug.Log("Number of rooms spawned = " + roomList.Count);
+        if (roomList.Count < GetComponent<LevelGeneration>().numberOfRooms)
+        {
+            roomList.Clear();
+            GetComponent<LevelGeneration>().RestartLevelGeneration();
+        }
     }
 
-    IEnumerator Debug(float seconds, RoomInstance myRoom)
+    IEnumerator DebugSheetAssigner(float seconds, RoomInstance myRoom)
     {
         yield return new WaitForSeconds(seconds);
         Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Hex"), myRoom.transform);

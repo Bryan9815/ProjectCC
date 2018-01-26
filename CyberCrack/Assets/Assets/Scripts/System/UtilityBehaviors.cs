@@ -9,6 +9,7 @@ public class UtilityBehaviors : MonoBehaviour
     {
         if (Input.GetKeyDown("r"))
         {
+            Debug.Log("Restarting game");
             foreach (GameObject singleton in GameController.instance.singletons)
                 Destroy(singleton);
 

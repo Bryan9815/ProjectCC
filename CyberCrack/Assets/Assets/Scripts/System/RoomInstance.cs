@@ -199,7 +199,6 @@ public class RoomInstance : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            Debug.Log(mobList);
             ToggleRoomActive();
             GameController.instance.currentRoom = GetComponent<RoomInstance>();
         }
