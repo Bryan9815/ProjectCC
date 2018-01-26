@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
         rooms = transform.parent.parent;
 
         minimapIcon = GameController.instance.GetComponent<LevelGeneration>().mapRoot.transform.GetChild(0).gameObject;
-        player = GameController.instance.playerCharacter;
+        player = PlayerCharacter.instance.gameObject;
 
         roomVerticalMove = 208 * transform.parent.localScale.x;
         roomHorizontalMove = 416 * transform.parent.localScale.x;

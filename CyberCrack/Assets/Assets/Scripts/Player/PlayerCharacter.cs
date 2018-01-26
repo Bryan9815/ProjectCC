@@ -49,6 +49,7 @@ public class PlayerCharacter : Entity
         projectileSpeed = 10.0f;
 
         UpdateHealthDisplay();
+        GameController.instance.singletons.Add(this.gameObject);
     }
 	
 	// Update is called once per frame

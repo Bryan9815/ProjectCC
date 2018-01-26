@@ -19,7 +19,7 @@ public class Chaser : Entity
         speed = 0.1f;
         fireRate = 0.33f;
 
-        target = GameController.instance.playerCharacter.transform;
+        target = PlayerCharacter.instance.transform;
         //target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

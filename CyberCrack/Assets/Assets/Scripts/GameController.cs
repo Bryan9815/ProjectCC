@@ -15,11 +15,11 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public GameObject deathPanel;
     [HideInInspector]
-    public GameObject playerCharacter;
-    [HideInInspector]
     public RoomInstance currentRoom;
     [HideInInspector]
     public int respawnCount, mobsKilled, roomsCleared, bossesDefeated, powerUpsObtained;
+    [HideInInspector]
+    public List<GameObject> singletons = new List<GameObject>();
 
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+        singletons.Add(this.gameObject);
 
         // Init
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
@@ -66,7 +67,6 @@ public class GameController : MonoBehaviour
         menuOpen = false;
 
         respawnCount = 3;
-        playerCharacter = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Use this for initialization
@@ -78,9 +78,6 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(playerCharacter == null)
-            playerCharacter = GameObject.FindGameObjectWithTag("Player");
-
         UI_Input();
         UI_Update();
 
@@ -125,7 +122,7 @@ public class GameController : MonoBehaviour
     void PauseGame(bool pause)
     {
         // Pause all entities
-        playerCharacter.GetComponent<Entity>().ToggleActive(!pause);
+        PlayerCharacter.instance.ToggleActive(!pause);
         foreach (GameObject mob in currentRoom.mobList)
         {
             mob.GetComponent<Entity>().ToggleActive(!pause);
@@ -136,10 +133,10 @@ public class GameController : MonoBehaviour
             menuOpen = true;
             Time.timeScale = 0;
             // Stat update
-            pauseDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + playerCharacter.GetComponent<Entity>().GetDamage();
-            pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + playerCharacter.GetComponent<Entity>().GetSpeed();
-            pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + playerCharacter.GetComponent<Entity>().GetFireRate();
-            pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + playerCharacter.GetComponent<Entity>().GetProjectileSpeed();
+            pauseDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + PlayerCharacter.instance.GetDamage();
+            pauseDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + PlayerCharacter.instance.GetSpeed();
+            pauseDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + PlayerCharacter.instance.GetFireRate();
+            pauseDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + PlayerCharacter.instance.GetProjectileSpeed();
         }
         else
         {
@@ -201,7 +198,7 @@ public class GameController : MonoBehaviour
 
     public void OpenRespawnMenu()
     {
-        playerCharacter.GetComponent<Renderer>().enabled = false;
+        PlayerCharacter.instance.GetComponent<Renderer>().enabled = false;
         gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
 
         // Toggle the menu
@@ -293,17 +290,17 @@ public class GameController : MonoBehaviour
         // Move rooms back to starting position
         gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
         // Give power up to enemy in room that player died in, if player has any power ups
-        if(playerCharacter.GetComponent<PlayerCharacter>().GetPowerUps().Count > 0)
+        if(PlayerCharacter.instance.GetPowerUps().Count > 0)
         {
             int rand = Random.Range(0, currentRoom.mobList.Count);
-            PowerUp lostPower = playerCharacter.GetComponent<PlayerCharacter>().RemoveRandPowerUp();
+            PowerUp lostPower = PlayerCharacter.instance.RemoveRandPowerUp();
             currentRoom.mobList[rand].GetComponent<Entity>().AddPowerUp(lostPower);
         }
 
         // Respawn the player
-        playerCharacter.transform.position = new Vector3(0, 0, 0);
-        playerCharacter.GetComponent<Renderer>().enabled = true;
-        playerCharacter.GetComponent<PlayerCharacter>().InitializePlayer();
-        playerCharacter.GetComponent<PlayerCharacter>().RefreshPowerUp();
+        PlayerCharacter.instance.transform.position = new Vector3(0, 0, 0);
+        PlayerCharacter.instance.GetComponent<Renderer>().enabled = true;
+        PlayerCharacter.instance.InitializePlayer();
+        PlayerCharacter.instance.RefreshPowerUp();
     }
 }
