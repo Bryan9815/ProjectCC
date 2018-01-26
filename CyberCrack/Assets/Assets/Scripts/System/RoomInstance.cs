@@ -62,12 +62,32 @@ public class RoomInstance : MonoBehaviour
         }
     }
 
+    public void RefreshMobList()
+    {
+        mobList.Clear();
+
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            if (gameObject.transform.GetChild(i).tag == "Enemy")
+            {
+                gameObject.transform.GetChild(i).GetComponent<Entity>().ToggleActive(false);
+                mobList.Add(gameObject.transform.GetChild(i).gameObject);
+            }
+        }
+
+        if (mobList.Count != 0)
+        {
+            foreach (Door door in doorList)
+                door.ToggleActive(false);
+        }
+    }
+
     public void CheckMobs()
     {
         List<int> mobsToClear = new List<int>();
         for (int i = 0; i < mobList.Count; i++)
         {
-            if(mobList[i].GetComponent<Entity>().GetIsDead())
+            if (mobList[i].GetComponent<Entity>().GetIsDead())
             {
                 mobsToClear.Add(i);
                 GameController.instance.mobsKilled++;
@@ -80,16 +100,6 @@ public class RoomInstance : MonoBehaviour
             mobList.Remove(mob);
             Destroy(mob);
         }
-        //foreach (GameObject mob in mobList)
-        //{
-        //    if (mob.GetComponent<Entity>().GetIsDead())
-        //    {
-        //        mobList.Remove(mob);
-        //        Destroy(mob);
-        //        GameController.instance.mobsKilled++;
-        //
-        //    }
-        //}
     }
 
     void MakeDoors()

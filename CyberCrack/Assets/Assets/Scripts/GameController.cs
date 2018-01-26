@@ -198,7 +198,7 @@ public class GameController : MonoBehaviour
 
     public void OpenRespawnMenu()
     {
-        PlayerCharacter.instance.GetComponent<Renderer>().enabled = false;
+        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
         gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
 
         // Toggle the menu
@@ -287,19 +287,21 @@ public class GameController : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        // Move rooms back to starting position
-        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
         // Give power up to enemy in room that player died in, if player has any power ups
-        if(PlayerCharacter.instance.GetPowerUps().Count > 0)
+        if (PlayerCharacter.instance.GetPowerUps().Count > 0)
         {
             int rand = Random.Range(0, currentRoom.mobList.Count);
             PowerUp lostPower = PlayerCharacter.instance.RemoveRandPowerUp();
+            Debug.Log("currentRoom: " + currentRoom.name + "\nMobList: " + currentRoom.mobList.Count);
             currentRoom.mobList[rand].GetComponent<Entity>().AddPowerUp(lostPower);
         }
 
+        // Move rooms back to starting position
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
+
         // Respawn the player
-        PlayerCharacter.instance.transform.position = new Vector3(0, 0, 0);
-        PlayerCharacter.instance.GetComponent<Renderer>().enabled = true;
+        PlayerCharacter.instance.transform.position = new Vector3(0, -GetComponent<SheetAssigner>().verticalOffset/5.4f, 0);
+        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
         PlayerCharacter.instance.InitializePlayer();
         PlayerCharacter.instance.RefreshPowerUp();
     }

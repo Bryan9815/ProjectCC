@@ -40,7 +40,7 @@ public class PlayerCharacter : Entity
 
         // Stats
         maxHP = hp = 3;
-        damage = 3;
+        damage = 5;
         speed = 1;
         fireRate = 15.0f;
         projectileCooldown = false;
