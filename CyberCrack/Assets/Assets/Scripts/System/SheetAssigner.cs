@@ -13,6 +13,8 @@ public class SheetAssigner : MonoBehaviour
     [SerializeField]
     List<Texture2D> upgradeTemplates = new List<Texture2D>();
     [SerializeField]
+    List<Texture2D> shopTemplates = new List<Texture2D>();
+    [SerializeField]
 	GameObject RoomObj;
     [HideInInspector]
     public List<RoomInstance> roomList = new List<RoomInstance>();
@@ -64,13 +66,17 @@ public class SheetAssigner : MonoBehaviour
                     randTemplate = Mathf.RoundToInt(Random.value * (normalTemplates.Count - 1));
                     myRoom.Setup(normalTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
                     break;
-                case Room.roomType.boss:
-                    randTemplate = Mathf.RoundToInt(Random.value * (bossTemplates.Count - 1));
-                    myRoom.Setup(bossTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
-                    break;
                 case Room.roomType.upgrade:
                     randTemplate = Mathf.RoundToInt(Random.value * (upgradeTemplates.Count - 1));
                     myRoom.Setup(upgradeTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+                    break;
+                case Room.roomType.shop:
+                    randTemplate = Mathf.RoundToInt(Random.value * (shopTemplates.Count - 1));
+                    myRoom.Setup(shopTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+                    break;
+                case Room.roomType.boss:
+                    randTemplate = Mathf.RoundToInt(Random.value * (bossTemplates.Count - 1));
+                    myRoom.Setup(bossTemplates[randTemplate], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
                     break;
             }
             roomList.Add(myRoom);
@@ -81,8 +87,9 @@ public class SheetAssigner : MonoBehaviour
             myRoom.transform.parent = roomParent.transform;
         }
         
-        if (roomList.Count < GetComponent<LevelGeneration>().numberOfRooms)
+        if (roomList.Count < GetComponent<LevelGeneration>().numberOfRooms + GetComponent<LevelGeneration>().specialRooms)
         {
+            Debug.Log("Incorrect number of rooms spawned, restarting level generation");
             roomList.Clear();
             GetComponent<LevelGeneration>().RestartLevelGeneration();
         }

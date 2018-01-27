@@ -7,6 +7,8 @@ public class LevelGeneration : MonoBehaviour
 {
 	public Vector2 worldSize = new Vector2(4,4);
     public int numberOfRooms;
+    [HideInInspector]
+    public int specialRooms;
     Room[,] rooms;
 	List<Vector2> takenPositions = new List<Vector2>();
     [HideInInspector]
@@ -18,6 +20,7 @@ public class LevelGeneration : MonoBehaviour
 
     void Start ()
     {
+        specialRooms = 3;
         correctSpawn = true;
 
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
@@ -58,10 +61,10 @@ public class LevelGeneration : MonoBehaviour
 		//magic numbers
 		float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
 		//add rooms
-		for (int i = 1; i <= numberOfRooms; i++)
+		for (int i = 1; i < numberOfRooms + specialRooms; i++)
         {
             // Leave the last 2 rooms for special rooms (Upgrade, Shop, Boss)
-            if (i < numberOfRooms - 2)
+            if (i < numberOfRooms)
             {
                 float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
                 randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
@@ -86,31 +89,16 @@ public class LevelGeneration : MonoBehaviour
             }
             else // Upgrade, Shop, Boss
             {
-                //checkPos = NewPosition();
-                //// Make sure it has only one neighbor
-                //if (NumberOfNeighbors(checkPos, takenPositions) != 1)
-                //{
-                //    int iterations = 0;
-                //    do
-                //    {
-                //        iterations++;
-                //        checkPos = SelectiveNewPosition();
-                //        if (NumberOfNeighbors(checkPos, takenPositions) == 1)
-                //            break;
-                //    }
-                //    while (NumberOfNeighbors(checkPos, takenPositions) != 1 && iterations < 100);
-                //    if (iterations >= 50)
-                //        Debug.Log("error: could not create special room with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
-                //}
-
                 checkPos = SpawnSpecialRoom();
 
                 //finalize position
                 try
                 {
-                    if (i == numberOfRooms - 1)
+                    if (i == numberOfRooms)
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.upgrade);
-                    else if (i == numberOfRooms)
+                    else if (i == numberOfRooms + 1)
+                        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.shop);
+                    else if (i == numberOfRooms + (specialRooms--))
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
                 }
                 catch(Exception e) { Debug.Log("Error: special room not spawned: " + e); }
@@ -378,6 +366,7 @@ public class LevelGeneration : MonoBehaviour
 
                 if (!rooms[x, y].doorTop && !rooms[x, y].doorBot && !rooms[x, y].doorLeft && !rooms[x, y].doorRight)
                 {
+                    Debug.Log("Rooms with no doors found, restarting level generation");
                     correctSpawn = false;
                     break;
                 }

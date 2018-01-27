@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room
 {
 	public Vector2 gridPos;
-    public enum roomType { normal, enter, upgrade, item, boss }
+    public enum roomType { normal, enter, upgrade, shop, boss }
     public roomType type;
 	public bool doorTop, doorBot, doorLeft, doorRight;
 
