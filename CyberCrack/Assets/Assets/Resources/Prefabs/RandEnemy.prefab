@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4232132393388834}
   - component: {fileID: 212470522961602340}
   - component: {fileID: 61066563362882404}
-  - component: {fileID: 114529775680149170}
+  - component: {fileID: 114715483871517422}
   m_Layer: 0
-  m_Name: RandPowerUp
+  m_Name: RandEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114529775680149170
+--- !u!114 &114715483871517422
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,10 +75,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1864472389956204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da83005c8fde204d94a8efd2f118a56, type: 3}
+  m_Script: {fileID: 11500000, guid: 2334a63946af47540b5f270d88b469c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpList: []
+  enemyList: []
 --- !u!212 &212470522961602340
 SpriteRenderer:
   m_ObjectHideFlags: 1

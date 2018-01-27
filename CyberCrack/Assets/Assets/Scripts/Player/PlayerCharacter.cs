@@ -95,7 +95,7 @@ public class PlayerCharacter : Entity
 
     void UpdateHealthDisplay()
     {
-        GameObject heartContainer = GameController.instance.uiCanvas.GetChild(0).gameObject;
+        GameObject heartContainer = GameController.instance.uiCanvas.GetChild(0).Find("HealthContainer").gameObject;
         if(hp != heartContainer.transform.childCount)
         {
             if (heartContainer.transform.childCount != 0)

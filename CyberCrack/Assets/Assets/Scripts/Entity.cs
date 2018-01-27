@@ -76,6 +76,17 @@ public class Entity : MonoBehaviour
     {
         isDead = true;
         GameController.instance.currentRoom.CheckMobs();
+
+        // Drops
+        if (powerUps.Count > 0)
+        {
+            List<PowerUp> powerUpsToDrop = new List<PowerUp>();
+            foreach (PowerUp upgrade in powerUps)
+                powerUpsToDrop.Add(upgrade);
+
+            foreach (PowerUp upgrade in powerUpsToDrop)
+                DropPowerUp(upgrade);
+        }
     }
 
     public virtual void ToggleActive(bool active)
@@ -128,6 +139,13 @@ public class Entity : MonoBehaviour
     {
         PowerUp droppedPowerUp = powerUps[index];
         powerUps.Remove(powerUps[index]);
+        droppedPowerUp.Dropped(gameObject.transform.parent);
+    }
+
+    public void DropPowerUp(PowerUp upgrade)
+    {
+        PowerUp droppedPowerUp = upgrade;
+        powerUps.Remove(upgrade);
         droppedPowerUp.Dropped(gameObject.transform.parent);
     }
 
