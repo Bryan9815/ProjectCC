@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    protected bool used;
-    
     public virtual void PickUp(GameObject newParent)
     {
         // Disable collider and renderer
