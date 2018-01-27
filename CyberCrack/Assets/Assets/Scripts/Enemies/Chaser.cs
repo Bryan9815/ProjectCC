@@ -19,6 +19,10 @@ public class Chaser : Entity
         speed = 0.1f;
         fireRate = 0.33f;
 
+        chanceToDropMoney = 3;
+        moneyMin = 1;
+        moneyMax = 3;
+
         target = PlayerCharacter.instance.transform;
         //target = GameObject.FindGameObjectWithTag("Player").transform;
     }

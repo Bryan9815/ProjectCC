@@ -15,6 +15,9 @@ public class Burst : Entity
         speed = 5;
         fireRate = 3.5f;
         timer = 0;
+        chanceToDropMoney = 3;
+        moneyMin = 1;
+        moneyMax = 5;
     }
 
     // Update is called once per frame

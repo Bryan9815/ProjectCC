@@ -16,5 +16,5 @@ public class UtilityBehaviors : MonoBehaviour
             //reload scene, for testing purposes
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-	}
+    }
 }

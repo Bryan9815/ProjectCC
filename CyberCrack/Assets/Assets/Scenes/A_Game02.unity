@@ -513,6 +513,21 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114072469429294160, guid: 44912379c60252146a303a9767f293a0,
+        type: 2}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114072469429294160, guid: 44912379c60252146a303a9767f293a0,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114072469429294160, guid: 44912379c60252146a303a9767f293a0,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44912379c60252146a303a9767f293a0, type: 2}
   m_IsPrefabParent: 0

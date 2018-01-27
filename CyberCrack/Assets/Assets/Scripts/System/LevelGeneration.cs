@@ -113,7 +113,7 @@ public class LevelGeneration : MonoBehaviour
                     else if (i == numberOfRooms)
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
                 }
-                catch(Exception e) { Debug.Log(e); }
+                catch(Exception e) { Debug.Log("Error: special room not spawned: " + e); }
                 takenPositions.Add(checkPos);
             }
         }	

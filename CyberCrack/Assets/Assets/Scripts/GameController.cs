@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public List<GameObject> singletons = new List<GameObject>();
 
+    int playerMoney;
+
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
     Transform deathDisplay, deathOptions, deathSelector;
@@ -42,6 +44,8 @@ public class GameController : MonoBehaviour
         singletons.Add(this.gameObject);
 
         // Init
+        playerMoney = 0;
+
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
         miniMap = gameplayCanvas.GetChild(0).transform;
         mmOriginal = miniMap.localPosition;
@@ -68,13 +72,7 @@ public class GameController : MonoBehaviour
 
         respawnCount = 3;
     }
-
-    // Use this for initialization
-    void Start ()
-    {
-        
-    }
-	
+    
 	// Update is called once per frame
 	void Update ()
     {
@@ -83,6 +81,12 @@ public class GameController : MonoBehaviour
 
         //DebugMode();
 	}
+
+    public void ModMoney(int value)
+    {
+        playerMoney += value;
+        uiCanvas.Find("PlayerUI").Find("Currency").gameObject.GetComponentInChildren<TextMeshProUGUI>().text = playerMoney.ToString();
+    }
 
     void UI_Update()
     {

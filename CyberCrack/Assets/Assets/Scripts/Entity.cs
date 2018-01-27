@@ -13,6 +13,8 @@ public class Entity : MonoBehaviour
     protected float projectileSpeed;
     protected bool isActive = true;
     protected bool isDead = false;
+    protected int chanceToDropMoney; // The higher the value, the less likely it is for money to drop.
+    protected int moneyMin, moneyMax;
     protected AudioSource sound;
     protected Animator anim;
 
@@ -78,6 +80,13 @@ public class Entity : MonoBehaviour
         GameController.instance.currentRoom.CheckMobs();
 
         // Drops
+
+        // Money
+        int chance = UnityEngine.Random.Range(0, chanceToDropMoney); // Chance to drop money
+        if (chance == 0)
+            Money.SpawnMoneyRand(transform.position, transform.parent, moneyMin, moneyMax);
+
+        // Power Ups
         if (powerUps.Count > 0)
         {
             List<PowerUp> powerUpsToDrop = new List<PowerUp>();

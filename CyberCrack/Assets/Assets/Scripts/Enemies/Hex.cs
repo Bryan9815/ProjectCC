@@ -19,6 +19,9 @@ public class Hex : Entity
         fireRate = 3.333f;
         timer = 0;
         dirVec = new Vector3(1, 1, 0);
+        chanceToDropMoney = 0;
+        moneyMin = 5;
+        moneyMax = 20;
     }
 
     public override void ToggleActive(bool active)

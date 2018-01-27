@@ -15,6 +15,9 @@ public class Continuous : Entity
         speed = 5;
         fireRate = 6.25f;
         timer = 0;
+        chanceToDropMoney = 3;
+        moneyMin = 1;
+        moneyMax = 5;
     }
 
     // Update is called once per frame
