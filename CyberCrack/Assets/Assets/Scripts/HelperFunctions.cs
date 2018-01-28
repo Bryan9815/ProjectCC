@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HelperFunctions
 {
@@ -51,5 +52,11 @@ public class HelperFunctions
             return true;
         else
             return false;
+    }
+
+    public static IEnumerator SceneTransition(float delay, string scene)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
     }
 }

@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public List<GameObject> singletons = new List<GameObject>();
 
-    int playerMoney;
+    int playerMoney, gameLevel;
 
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
 
         // Init
         playerMoney = 0;
+        gameLevel = 1;
 
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
         miniMap = gameplayCanvas.GetChild(0).transform;
