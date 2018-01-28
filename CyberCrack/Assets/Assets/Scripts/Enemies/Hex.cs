@@ -38,6 +38,13 @@ public class Hex : Entity
         }
     }
 
+    protected override void Death()
+    {
+        base.Death();
+        GoToNextLevel.CreateDoorToNextLevel(transform.parent);
+        GameController.instance.bossHPBar.gameObject.SetActive(true);
+    }
+
     // Update is called once per frame
     void Update()
     {

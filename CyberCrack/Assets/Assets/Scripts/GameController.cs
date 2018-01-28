@@ -98,7 +98,12 @@ public class GameController : MonoBehaviour
         return gameLevel;
     }
 
-    public IEnumerator NextLevel()
+    public void StartNextLevel()
+    {
+        StartCoroutine(NextLevel());
+    }
+
+    IEnumerator NextLevel()
     {
         gameLevel++;
         // Disable Player momentarily

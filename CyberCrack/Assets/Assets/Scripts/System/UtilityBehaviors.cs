@@ -18,7 +18,15 @@ public class UtilityBehaviors : MonoBehaviour
         }
         if(Input.GetKeyDown("g"))
         {
-            StartCoroutine(GameController.instance.NextLevel());
+            GameController.instance.StartNextLevel();
+        }
+        if(Input.GetKeyDown("c"))
+        {
+            PlayerCharacter.instance.ModifyDamage(+50);
+            PlayerCharacter.instance.ModifyMaxHP(+10);
+            PlayerCharacter.instance.ModifyHP(+10);
+            PlayerCharacter.instance.ModifySpeed(+1);
+            PlayerCharacter.instance.ModifyFireRate(+15);
         }
     }
 }

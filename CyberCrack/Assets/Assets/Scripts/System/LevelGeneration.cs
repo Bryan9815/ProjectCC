@@ -323,6 +323,7 @@ public class LevelGeneration : MonoBehaviour
 
     public void ClearMap()
     {
+        mapRoot.GetChild(0).position = Vector3.zero;
         for(int i = 0; i < mapRoot.GetChild(1).childCount; i++)
         {
             Destroy(mapRoot.GetChild(1).GetChild(i).gameObject);
