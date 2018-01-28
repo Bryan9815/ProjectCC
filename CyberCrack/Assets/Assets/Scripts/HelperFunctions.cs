@@ -54,7 +54,13 @@ public class HelperFunctions
             return false;
     }
 
-    public static IEnumerator SceneTransition(float delay, string scene)
+    public static IEnumerator SceneTransition(string scene)
+    {
+        yield return new WaitForEndOfFrame();
+        SceneManager.LoadScene(scene);
+    }
+
+    public static IEnumerator SceneTransition(string scene, float delay)
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(scene);
