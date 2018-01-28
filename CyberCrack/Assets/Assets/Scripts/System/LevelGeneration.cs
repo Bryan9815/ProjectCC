@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelGeneration : MonoBehaviour
 {
 	public Vector2 worldSize = new Vector2(4,4);
+    [HideInInspector]
     public int numberOfRooms;
     [HideInInspector]
     public int specialRooms;
@@ -20,7 +21,9 @@ public class LevelGeneration : MonoBehaviour
 
     void Start ()
     {
+        numberOfRooms = 7 + (GameController.instance.GetCurrentLevel() * 3);
         specialRooms = 3;
+        Debug.Log("Current level: " + GameController.instance.GetCurrentLevel() + "\nTotal Rooms: " + (numberOfRooms + specialRooms));
         correctSpawn = true;
 
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
@@ -47,6 +50,14 @@ public class LevelGeneration : MonoBehaviour
             takenPositions.Clear();
             Start();
         }
+    }
+
+    public void GenerateNextLevel()
+    {
+        GetComponent<SheetAssigner>().roomList.Clear();
+        takenPositions.Clear();
+        ClearMap();
+        Start();
     }
 
     void CreateRooms()
@@ -89,6 +100,7 @@ public class LevelGeneration : MonoBehaviour
             }
             else // Upgrade, Shop, Boss
             {
+                //Debug.Log("Spawning special room: " + i + "\nBoss Room = " + (numberOfRooms + (specialRooms-1)));
                 checkPos = SpawnSpecialRoom();
 
                 //finalize position
@@ -98,7 +110,7 @@ public class LevelGeneration : MonoBehaviour
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.upgrade);
                     else if (i == numberOfRooms + 1)
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.shop);
-                    else if (i == numberOfRooms + (specialRooms--))
+                    else if (i == numberOfRooms + (specialRooms-1))
                         rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
                 }
                 catch(Exception e) { Debug.Log("Error: special room not spawned: " + e); }
@@ -305,15 +317,15 @@ public class LevelGeneration : MonoBehaviour
 			mapper.down = room.doorBot;
 			mapper.right = room.doorRight;
 			mapper.left = room.doorLeft;
-			mapper.gameObject.transform.parent = mapRoot;
+			mapper.gameObject.transform.parent = mapRoot.GetChild(1);
 		}
-	}
+    }
 
     public void ClearMap()
     {
-        for(int i = 0; i < mapRoot.childCount - 1; i++)
+        for(int i = 0; i < mapRoot.GetChild(1).childCount; i++)
         {
-            Destroy(mapRoot.GetChild(i).gameObject);
+            Destroy(mapRoot.GetChild(1).GetChild(i).gameObject);
         }
     }
 

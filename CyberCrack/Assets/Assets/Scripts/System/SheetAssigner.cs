@@ -86,13 +86,17 @@ public class SheetAssigner : MonoBehaviour
             myRoom.name = "Room" + roomNumber;
             myRoom.transform.parent = roomParent.transform;
         }
-        
+
+        //Debug.Log("Sheet Assigner thinks there are these many rooms total: " + (GetComponent<LevelGeneration>().numberOfRooms + GetComponent<LevelGeneration>().specialRooms));
+        //Debug.Log("Sheet Assigner Room List: " + roomList.Count);
+
         if (roomList.Count < GetComponent<LevelGeneration>().numberOfRooms + GetComponent<LevelGeneration>().specialRooms)
         {
             Debug.Log("Incorrect number of rooms spawned, restarting level generation");
             roomList.Clear();
             GetComponent<LevelGeneration>().RestartLevelGeneration();
         }
+
     }
 
     IEnumerator DebugSheetAssigner(float seconds, RoomInstance myRoom)

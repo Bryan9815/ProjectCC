@@ -93,6 +93,38 @@ public class GameController : MonoBehaviour
         uiCanvas.Find("PlayerUI").Find("Currency").gameObject.GetComponentInChildren<TextMeshProUGUI>().text = playerMoney.ToString();
     }
 
+    public int GetCurrentLevel()
+    {
+        return gameLevel;
+    }
+
+    public IEnumerator NextLevel()
+    {
+        gameLevel++;
+        // Disable Player momentarily
+        PlayerCharacter.instance.transform.position = new Vector3(0, -GetComponent<SheetAssigner>().verticalOffset / 5.4f, 0);
+        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
+        PlayerCharacter.instance.ToggleActive(false);
+
+        // Erase rooms of current level
+        for(int i = 0; i < gameplayCanvas.GetChild(1).childCount; i++)
+        {
+            Destroy(gameplayCanvas.GetChild(1).GetChild(i).gameObject);
+        }
+
+        // Move rooms back to starting position
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(1.0f);
+
+        // Generate new rooms
+        GetComponent<LevelGeneration>().GenerateNextLevel();
+
+        // Re-enable the Player
+        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
+        PlayerCharacter.instance.ToggleActive(true);
+    }
+
     void UI_Update()
     {
         if(menuOpen)

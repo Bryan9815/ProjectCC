@@ -16,5 +16,9 @@ public class UtilityBehaviors : MonoBehaviour
             //reload scene, for testing purposes
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        if(Input.GetKeyDown("g"))
+        {
+            StartCoroutine(GameController.instance.NextLevel());
+        }
     }
 }
