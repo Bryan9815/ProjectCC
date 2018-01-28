@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -27,7 +28,8 @@ public class GameController : MonoBehaviour
     Transform pauseDisplay, pauseOptions, pauseSelector;
     Transform deathDisplay, deathOptions, deathSelector;
     int pauseSelectNum, deathSelectNum;
-    bool menuOpen;
+    bool menuOpen, selectBarFading;
+    float selectBarFadeTimer;
     Vector3 mmOriginal;
 
     void Awake()
@@ -70,6 +72,8 @@ public class GameController : MonoBehaviour
         pauseSelectNum = deathSelectNum = 0;
 
         menuOpen = false;
+        selectBarFading = true;
+        selectBarFadeTimer = 0;
 
         respawnCount = 3;
     }
@@ -91,7 +95,55 @@ public class GameController : MonoBehaviour
 
     void UI_Update()
     {
+        if(menuOpen)
+        {
+            #region manual select bar blinking animation
+            selectBarFadeTimer += Time.unscaledDeltaTime;
+            if (selectBarFadeTimer >= 0.5f)
+            {
+                selectBarFadeTimer = 0;
+                if (selectBarFading)
+                    selectBarFading = false;
+                else
+                    selectBarFading = true;
+            }
 
+            if (pauseSelector.gameObject.activeSelf)
+            {
+                if (selectBarFading)
+                {
+                    Color newColor = new Color(pauseSelector.GetComponent<Image>().color.r, pauseSelector.GetComponent<Image>().color.g, pauseSelector.GetComponent<Image>().color.b, pauseSelector.GetComponent<Image>().color.a - (0.6f/30));
+                    if (newColor.a < 0)
+                        newColor.a = 0;
+                    pauseSelector.GetComponent<Image>().color = newColor;
+                }
+                else
+                {
+                    Color newColor = new Color(pauseSelector.GetComponent<Image>().color.r, pauseSelector.GetComponent<Image>().color.g, pauseSelector.GetComponent<Image>().color.b, pauseSelector.GetComponent<Image>().color.a + (0.6f/30));
+                    if (newColor.a > 0.6f)
+                        newColor.a = 0.6f;
+                    pauseSelector.GetComponent<Image>().color = newColor;
+                }
+            }
+            if (deathSelector.gameObject.activeSelf)
+            {
+                if (selectBarFading)
+                {
+                    Color newColor = new Color(deathSelector.GetComponent<Image>().color.r, deathSelector.GetComponent<Image>().color.g, deathSelector.GetComponent<Image>().color.b, deathSelector.GetComponent<Image>().color.a - (0.6f / 30));
+                    if (newColor.a < 0)
+                        newColor.a = 0;
+                    deathSelector.GetComponent<Image>().color = newColor;
+                }
+                else
+                {
+                    Color newColor = new Color(deathSelector.GetComponent<Image>().color.r, deathSelector.GetComponent<Image>().color.g, deathSelector.GetComponent<Image>().color.b, deathSelector.GetComponent<Image>().color.a + (0.6f / 30));
+                    if (newColor.a > 0.6f)
+                        newColor.a = 0.6f;
+                    deathSelector.GetComponent<Image>().color = newColor;
+                }
+            }
+            #endregion
+        }
     }
 
     void UI_Input()
