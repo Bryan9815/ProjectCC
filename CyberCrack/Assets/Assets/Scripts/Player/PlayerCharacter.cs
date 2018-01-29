@@ -115,25 +115,25 @@ public class PlayerCharacter : Entity
     void Movement()
     {
         //Move Up
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(GameData.instance.playerKeys.up))
         {
             transform.localPosition += new Vector3(0, speed, 0);
         }
 
         // Move Left
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(GameData.instance.playerKeys.left))
         {
             transform.localPosition += new Vector3(-speed, 0, 0);
         }
 
         // Move Down
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(GameData.instance.playerKeys.down))
         {
             transform.localPosition += new Vector3(0, -speed, 0);
         }
 
         // Move Right
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(GameData.instance.playerKeys.right))
         {
             transform.localPosition += new Vector3(speed, 0, 0);
         }
@@ -151,49 +151,49 @@ public class PlayerCharacter : Entity
 
         #region Rotation & firing bool
         // Up
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(GameData.instance.shootKeys.up))
         {
             firing = true;
             // Up
             newRot.eulerAngles = new Vector3(0, 0, 0);
             fireDirection = "Vertical";
             // Upper Left & Right
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(GameData.instance.shootKeys.left))
             {
                 newRot.eulerAngles = new Vector3(0, 0, 45);
                 fireDirection = "Diagonal_RtL";
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(GameData.instance.shootKeys.right))
             {
                 newRot.eulerAngles = new Vector3(0, 0, -45);
                 fireDirection = "Diagonal_LtR";
             }
         }
-        else if (Input.GetKey(KeyCode.DownArrow)) // Down
+        else if (Input.GetKey(GameData.instance.shootKeys.down)) // Down
         {
             firing = true;
             // Down
             newRot.eulerAngles = new Vector3(0, 0, -180);
             fireDirection = "Vertical";
             // Lower Left & Right
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(GameData.instance.shootKeys.left))
             {
                 newRot.eulerAngles = new Vector3(0, 0, -225);
                 fireDirection = "Diagonal_LtR";
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(GameData.instance.shootKeys.right))
             {
                 newRot.eulerAngles = new Vector3(0, 0, 225);
                 fireDirection = "Diagonal_RtL";
             }
         }
-        else if (Input.GetKey(KeyCode.LeftArrow)) // Left
+        else if (Input.GetKey(GameData.instance.shootKeys.left)) // Left
         {
             firing = true;
             newRot.eulerAngles = new Vector3(0, 0, 90);
             fireDirection = "Horizontal";
         }
-        else if (Input.GetKey(KeyCode.RightArrow)) // Right
+        else if (Input.GetKey(GameData.instance.shootKeys.right)) // Right
         {
             firing = true;
             newRot.eulerAngles = new Vector3(0, 0, -90);

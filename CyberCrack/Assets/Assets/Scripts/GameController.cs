@@ -200,12 +200,12 @@ public class GameController : MonoBehaviour
     void MinimapInput()
     {
         #region minimap toggle
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(GameData.instance.miniMap))
         {
             miniMap.localPosition = Vector3.zero;
             miniMap.localScale *= 4;
         }
-        else if (Input.GetKeyUp(KeyCode.M))
+        else if (Input.GetKeyUp(GameData.instance.miniMap))
         {
             miniMap.localPosition = mmOriginal;
             miniMap.localScale /= 4;
@@ -249,7 +249,7 @@ public class GameController : MonoBehaviour
         if (pausePanel.activeSelf)
         {
             #region Menu Selection
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(GameData.instance.playerKeys.down))
             {
                 if (pauseSelectNum < 2)
                 {
@@ -257,7 +257,7 @@ public class GameController : MonoBehaviour
                     pauseSelector.transform.localPosition += new Vector3(0, -90, 0);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(GameData.instance.playerKeys.up))
             {
                 if (pauseSelectNum > 0)
                 {
@@ -271,22 +271,22 @@ public class GameController : MonoBehaviour
             switch (pauseSelectNum)
             {
                 case 0: // Resume
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(GameData.instance.interact))
                         PauseGame(false);
                     break;
                 case 1: // Power Ups
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(GameData.instance.interact))
                         break;
                     break;
                 case 2: // Quit
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(GameData.instance.interact))
                         Application.Quit();
                     break;
             }
             #endregion
         }
         // Toggle menu on
-        else { if (Input.GetKeyDown(KeyCode.Escape) && !menuOpen) PauseGame(true); }
+        else { if (Input.GetKeyDown(GameData.instance.pauseOpen) && !menuOpen) PauseGame(true); }
         #endregion
     }
 
@@ -319,7 +319,7 @@ public class GameController : MonoBehaviour
         if (deathPanel.activeSelf)
         {
             #region Menu Selection
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(GameData.instance.playerKeys.down))
             {
                 if (deathSelectNum < 2)
                 {
@@ -327,7 +327,7 @@ public class GameController : MonoBehaviour
                     deathSelector.transform.localPosition += new Vector3(0, -90, 0);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(GameData.instance.playerKeys.up))
             {
                 if (respawnCount > 0)
                 {
@@ -352,15 +352,15 @@ public class GameController : MonoBehaviour
             switch (deathSelectNum)
             {
                 case 0: // Resume
-                    if (Input.GetKeyDown(KeyCode.Space) && respawnCount > 0)
+                    if (Input.GetKeyDown(GameData.instance.interact) && respawnCount > 0)
                         StartCoroutine(Respawn());
                     break;
                 case 1: // Power Ups
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(GameData.instance.interact))
                         break;
                     break;
                 case 2: // Quit
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(GameData.instance.interact))
                         Application.Quit();
                     break;
             }
