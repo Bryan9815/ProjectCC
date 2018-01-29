@@ -28,5 +28,10 @@ public class UtilityBehaviors : MonoBehaviour
             PlayerCharacter.instance.ModifySpeed(+1);
             PlayerCharacter.instance.ModifyFireRate(+15);
         }
+        if(Input.GetKeyDown("j"))
+        {
+            bool test = false;
+            Debug.Log("Bool: " + !test);
+        }
     }
 }
