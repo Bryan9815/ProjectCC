@@ -34,8 +34,8 @@ public class MenuOptions : MonoBehaviour
         {
             switch(selectNum)
             {
-                case 0:
-                    HelperFunctions.SceneTransition("Game");
+                case 0:                    
+                    StartCoroutine(HelperFunctions.SceneTransition("Game"));
                     break;
                 case 1:
                     mainMenuController.TogglePanel(true, MainMenuController.MainMenuPanels.Options);

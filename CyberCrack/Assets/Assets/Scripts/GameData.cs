@@ -41,6 +41,23 @@ public class GameData : MonoBehaviour
         pauseOpen = (KeyCode)System.Enum.Parse(typeof(KeyCode), SaveGame.Load("pauseOpen", "Escape"));
         miniMap = (KeyCode)System.Enum.Parse(typeof(KeyCode), SaveGame.Load("miniMap", "M"));
     }
+
+    public void ResetKeySettings()
+    {
+        SaveGame.Save("playerUp", KeyCode.W.ToString());
+        SaveGame.Save("playerDown", KeyCode.S.ToString());
+        SaveGame.Save("playerLeft", KeyCode.A.ToString());
+        SaveGame.Save("playerRight", KeyCode.D.ToString());
+
+        SaveGame.Save("shootUp", KeyCode.UpArrow.ToString());
+        SaveGame.Save("shootDown", KeyCode.DownArrow.ToString());
+        SaveGame.Save("shootLeft", KeyCode.LeftArrow.ToString());
+        SaveGame.Save("shootRight", KeyCode.RightArrow.ToString());
+
+        SaveGame.Save("interact", KeyCode.Space.ToString());
+        SaveGame.Save("pauseOpen", KeyCode.Escape.ToString());
+        SaveGame.Save("miniMap", KeyCode.M.ToString());
+    }
 }
 
 public struct PlayerKeys

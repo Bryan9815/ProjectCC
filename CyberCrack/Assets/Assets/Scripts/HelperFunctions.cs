@@ -54,12 +54,14 @@ public class HelperFunctions
             return false;
     }
 
+    // Use Coroutine
     public static IEnumerator SceneTransition(string scene)
     {
         yield return new WaitForEndOfFrame();
         SceneManager.LoadScene(scene);
     }
 
+    // Use Coroutine
     public static IEnumerator SceneTransition(string scene, float delay)
     {
         yield return new WaitForSeconds(delay);

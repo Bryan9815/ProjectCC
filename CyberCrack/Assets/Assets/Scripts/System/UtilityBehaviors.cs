@@ -30,8 +30,7 @@ public class UtilityBehaviors : MonoBehaviour
         }
         if(Input.GetKeyDown("j"))
         {
-            bool test = false;
-            Debug.Log("Bool: " + !test);
+            Debug.Log("Test: " + KeyCode.RightArrow.ToString());
         }
     }
 }

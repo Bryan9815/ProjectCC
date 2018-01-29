@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
 {
-    GameObject MenuOptions, OptionsPanel, HighscorePanel, CreditsPanel;
+    GameObject MenuOptions, OptionsPanel, KeyBindingPanel, HighscorePanel, CreditsPanel;
 
     public enum MainMenuPanels { Options, Highscore, Credits };
 
@@ -14,6 +14,7 @@ public class MainMenuController : MonoBehaviour
     {
         MenuOptions = transform.GetChild(1).gameObject;
         OptionsPanel = transform.GetChild(2).gameObject;
+        KeyBindingPanel = OptionsPanel.transform.GetChild(1).gameObject;
         HighscorePanel = transform.GetChild(3).gameObject;
         CreditsPanel = transform.GetChild(4).gameObject;
 
@@ -43,5 +44,11 @@ public class MainMenuController : MonoBehaviour
                 MenuOptions.GetComponent<MenuOptions>().enabled = !active;
                 break;
         }
+    }
+
+    public void ToggleKeyBindingPanel(bool active)
+    {
+        KeyBindingPanel.SetActive(active);
+        OptionsPanel.GetComponent<GameOptions>().enabled = !active;
     }
 }
