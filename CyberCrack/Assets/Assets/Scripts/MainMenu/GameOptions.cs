@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GameOptions : MonoBehaviour
 {
-
-	// Use this for initialization
-	void Start () {
+    Transform selector;
+    int selectNum, maxSelectNum;
+    // Use this for initialization
+    void Start ()
+    {
 		
 	}
 	
