@@ -33,10 +33,14 @@ public class SheetAssigner : MonoBehaviour
         //{
         //    bossTemplates.Add(template);
         //}
-        //foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Upgrade"))
-        //{
-        //    upgradeTemplates.Add(template);
-        //}
+        foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Upgrade"))
+        {
+            upgradeTemplates.Add(template);
+        }
+        foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Shop"))
+        {
+            shopTemplates.Add(template);
+        }
     }
 
     public void Assign(Room[,] rooms)

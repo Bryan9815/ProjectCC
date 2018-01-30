@@ -101,6 +101,8 @@ MonoBehaviour:
     prefab: {fileID: 1950168259769766, guid: d69e1930873b93c419028d2f153ee949, type: 2}
   - color: {r: 0.49019608, g: 0, b: 1, a: 1}
     prefab: {fileID: 1940333035060016, guid: e703b8be6cf30bd49aae072b9bd4bbef, type: 2}
+  - color: {r: 0, g: 1, b: 1, a: 1}
+    prefab: {fileID: 1864472389956204, guid: 0b3a5bbe01eb6894c85c3c398ca8fb3d, type: 2}
   mobList: []
   doorList: []
 --- !u!212 &212522987513716332
