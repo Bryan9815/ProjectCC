@@ -83,9 +83,13 @@ public class Entity : MonoBehaviour
         // Drops
 
         // Money
-        int chance = UnityEngine.Random.Range(0, chanceToDropMoney); // Chance to drop money
-        if (chance == 0)
+        int moneyChance = UnityEngine.Random.Range(0, chanceToDropMoney); // Chance to drop money
+        if (moneyChance == 0)
             Money.SpawnMoneyRand(transform.position, transform.parent, moneyMin, moneyMax);
+
+        int hpChance = UnityEngine.Random.Range(0, 4);
+        if (hpChance != 3)
+            RecoverHP.SpawnHP(transform.position, transform.parent);
 
         // Power Ups
         if (powerUps.Count > 0)
