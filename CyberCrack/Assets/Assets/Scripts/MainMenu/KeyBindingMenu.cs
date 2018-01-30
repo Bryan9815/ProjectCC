@@ -91,100 +91,16 @@ public class KeyBindingMenu : MonoBehaviour
 
     void RefreshKeyBindingText()
     {
-        for(int i = 0; i < maxSelectNum; i++)
+        for(int i = 0; i < GameData.instance.keyList.Count - 1; i++)
         {
-            switch(i)
-            {
-                case 0:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.playerKeys.up.ToString();
-                    break;
-                case 1:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.playerKeys.down.ToString();
-                    break;
-                case 2:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.playerKeys.left.ToString();
-                    break;
-                case 3:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.playerKeys.right.ToString();
-                    break;
-                case 4:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.shootKeys.up.ToString();
-                    break;
-                case 5:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.shootKeys.down.ToString();
-                    break;
-                case 6:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.shootKeys.left.ToString();
-                    break;
-                case 7:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.shootKeys.right.ToString();
-                    break;
-                case 8:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.interact.ToString();
-                    break;
-                case 9:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.pauseOpen.ToString();
-                    break;
-                case 10:
-                    keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.miniMap.ToString();
-                    break;
-            }
+            keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.keyList[i].ToString();
             keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.black;
         }
     }
 
     void UpdateKeyBindings(KeyCode key)
     {
-        //switch (selectNum)
-        //{
-        //    case 0:                
-        //        BayatGames.SaveGameFree.SaveGame.Save("playerUp", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.playerKeys.up, key);
-        //        break;
-        //    case 1:
-        //        BayatGames.SaveGameFree.SaveGame.Save("playerDown", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.playerKeys.down, key);
-        //        break;
-        //    case 2:
-        //        BayatGames.SaveGameFree.SaveGame.Save("playerLeft", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.playerKeys.left, key);
-        //        break;
-        //    case 3:
-        //        BayatGames.SaveGameFree.SaveGame.Save("playerRight", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.playerKeys.right, key);
-        //        break;
-        //    case 4:
-        //        BayatGames.SaveGameFree.SaveGame.Save("shootUp", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.shootKeys.up, key);
-        //        break;
-        //    case 5:
-        //        BayatGames.SaveGameFree.SaveGame.Save("shootDown", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.shootKeys.down, key);
-        //        break;
-        //    case 6:
-        //        BayatGames.SaveGameFree.SaveGame.Save("shootLeft", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.shootKeys.left, key);
-        //        break;
-        //    case 7:
-        //        BayatGames.SaveGameFree.SaveGame.Save("shootRight", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.shootKeys.right, key);
-        //        break;
-        //    case 8:
-        //        BayatGames.SaveGameFree.SaveGame.Save("interact", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.interact, key);
-        //        break;
-        //    case 9:
-        //        BayatGames.SaveGameFree.SaveGame.Save("pauseOpen", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.pauseOpen, key);
-        //        break;
-        //    case 10:
-        //        BayatGames.SaveGameFree.SaveGame.Save("miniMap", key.ToString());
-        //        GameData.instance.CheckOtherKeys(GameData.instance.miniMap, key);
-        //        break;
-        //}
-
         GameData.instance.CheckOtherKeys(selectNum, key);
-        //GameData.instance.LoadKeySettings();
         RefreshKeyBindingText();
     }
 
