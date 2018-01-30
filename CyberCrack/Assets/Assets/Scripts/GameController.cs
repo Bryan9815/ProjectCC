@@ -249,19 +249,37 @@ public class GameController : MonoBehaviour
             #region Menu Selection
             if (Input.GetKeyDown(GameData.instance.playerKeys.down))
             {
-                if (pauseSelectNum < 2)
-                {
+                if (pauseSelectNum == 1)
+                    pauseSelectNum = 0;
+                else
                     pauseSelectNum++;
-                    pauseSelector.transform.localPosition += new Vector3(0, -90, 0);
+
+                if (respawnCount <= 0)
+                {
+                    pauseSelectNum = 1;
                 }
+
+                if (pauseSelectNum == 0)
+                    pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, 60, 0);
+                else
+                    pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, -40, 0);
             }
             if (Input.GetKeyDown(GameData.instance.playerKeys.up))
             {
-                if (pauseSelectNum > 0)
-                {
+                if (pauseSelectNum == 0)
+                    pauseSelectNum = 1;
+                else
                     pauseSelectNum--;
-                    pauseSelector.transform.localPosition += new Vector3(0, 90, 0);
+
+                if (respawnCount <= 0)
+                {
+                    pauseSelectNum = 1;
                 }
+
+                if (pauseSelectNum == 0)
+                    pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, 60, 0);
+                else
+                    pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, -40, 0);
             }
             #endregion
 
@@ -272,13 +290,13 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(GameData.instance.interact))
                         PauseGame(false);
                     break;
-                case 1: // Power Ups
+                case 1: // Quit
                     if (Input.GetKeyDown(GameData.instance.interact))
-                        break;
-                    break;
-                case 2: // Quit
-                    if (Input.GetKeyDown(GameData.instance.interact))
-                        Application.Quit();
+                    {
+                        HelperFunctions.SceneTransition("MainMenu");
+                        foreach (GameObject singleton in GameController.instance.singletons)
+                            Destroy(singleton);
+                    }
                     break;
             }
             #endregion
@@ -306,7 +324,7 @@ public class GameController : MonoBehaviour
         if (respawnCount <= 0)
         {
             deathSelectNum = 1;
-            deathSelector.transform.localPosition += new Vector3(0, -90, 0);
+            deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, deathSelector.localPosition.y + 100 - (200 * deathSelectNum), 0);
             deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
         }
     }
@@ -319,30 +337,37 @@ public class GameController : MonoBehaviour
             #region Menu Selection
             if (Input.GetKeyDown(GameData.instance.playerKeys.down))
             {
-                if (deathSelectNum < 2)
-                {
+                if (deathSelectNum == 1)
+                    deathSelectNum = 0;
+                else
                     deathSelectNum++;
-                    deathSelector.transform.localPosition += new Vector3(0, -90, 0);
+
+                if (respawnCount <= 0)
+                {
+                    deathSelectNum = 1;
                 }
+
+                if (deathSelectNum == 0)
+                    deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, 60, 0);
+                else
+                    deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, -40, 0);
             }
             if (Input.GetKeyDown(GameData.instance.playerKeys.up))
-            {
-                if (respawnCount > 0)
-                {
-                    if (deathSelectNum > 0)
-                    {
-                        deathSelectNum--;
-                        deathSelector.transform.localPosition += new Vector3(0, 90, 0);
-                    }
-                }
+            {                
+                if (deathSelectNum == 0)
+                    deathSelectNum = 1;
                 else
+                    deathSelectNum--;
+
+                if (respawnCount <= 0)
                 {
-                    if (deathSelectNum > 1)
-                    {
-                        deathSelectNum--;
-                        deathSelector.transform.localPosition += new Vector3(0, 90, 0);
-                    }
+                    deathSelectNum = 1;
                 }
+
+                if (deathSelectNum == 0)
+                    deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, 60, 0);
+                else
+                    deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, -40, 0);
             }
             #endregion
 
@@ -353,13 +378,13 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(GameData.instance.interact) && respawnCount > 0)
                         StartCoroutine(Respawn());
                     break;
-                case 1: // Power Ups
+                case 1: // Quit
                     if (Input.GetKeyDown(GameData.instance.interact))
-                        break;
-                    break;
-                case 2: // Quit
-                    if (Input.GetKeyDown(GameData.instance.interact))
-                        Application.Quit();
+                    {
+                        HelperFunctions.SceneTransition("MainMenu");
+                        foreach (GameObject singleton in GameController.instance.singletons)
+                            Destroy(singleton);
+                    }
                     break;
             }
             #endregion

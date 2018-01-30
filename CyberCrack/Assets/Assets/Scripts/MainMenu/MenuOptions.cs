@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuOptions : MonoBehaviour
 {
     MainMenuController mainMenuController;
     Transform selector;
     int selectNum, maxSelectNum;
-	// Use this for initialization
-	void Start ()
+    bool selectBarFading;
+    float selectBarFadeTimer;
+    // Use this for initialization
+    void Start ()
     {
         mainMenuController = transform.parent.GetComponent<MainMenuController>();
         selector = transform.GetChild(1);
         selectNum = 0;
         maxSelectNum = 4;
-	}
+
+        selectBarFading = true;
+        selectBarFadeTimer = 0;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -35,7 +41,7 @@ public class MenuOptions : MonoBehaviour
             switch(selectNum)
             {
                 case 0:                    
-                    StartCoroutine(HelperFunctions.SceneTransition("Game"));
+                    HelperFunctions.SceneTransition("Game");
                     break;
                 case 1:
                     mainMenuController.TogglePanel(true, MainMenuController.MainMenuPanels.Options);
@@ -51,5 +57,32 @@ public class MenuOptions : MonoBehaviour
                     break;
             }
         }
+
+        #region manual select bar blinking animation
+        selectBarFadeTimer += Time.unscaledDeltaTime;
+        if (selectBarFadeTimer >= 0.5f)
+        {
+            selectBarFadeTimer = 0;
+            if (selectBarFading)
+                selectBarFading = false;
+            else
+                selectBarFading = true;
+        }
+
+        if (selectBarFading)
+        {
+            Color newColor = new Color(selector.GetComponent<Image>().color.r, selector.GetComponent<Image>().color.g, selector.GetComponent<Image>().color.b, selector.GetComponent<Image>().color.a - (0.6f / 30));
+            if (newColor.a < 0)
+                newColor.a = 0;
+            selector.GetComponent<Image>().color = newColor;
+        }
+        else
+        {
+            Color newColor = new Color(selector.GetComponent<Image>().color.r, selector.GetComponent<Image>().color.g, selector.GetComponent<Image>().color.b, selector.GetComponent<Image>().color.a + (0.6f / 30));
+            if (newColor.a > 0.6f)
+                newColor.a = 0.6f;
+            selector.GetComponent<Image>().color = newColor;
+        }
+        #endregion
     }
 }
