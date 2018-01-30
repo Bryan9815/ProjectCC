@@ -389,8 +389,6 @@ public class GameController : MonoBehaviour
                     {
                         if (respawnCount > 0)
                             GameData.instance.UpdateData("totalRunsQuit", GameData.instance.totalRunsQuit+1);
-                        else if(respawnCount <= 0)
-                            GameData.instance.UpdateData("totalRunsFailed", GameData.instance.totalRunsFailed+1);
 
                         HelperFunctions.SceneTransition("MainMenu");
                         ClearGameplaySingletons();
@@ -408,9 +406,8 @@ public class GameController : MonoBehaviour
         deathPanel.SetActive(false);
 
         foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
-        {
             room.RefreshRooms();
-        }
+
         GetComponent<LevelGeneration>().ClearMap();
         GetComponent<LevelGeneration>().DrawMap();
 
@@ -433,5 +430,8 @@ public class GameController : MonoBehaviour
         PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
         PlayerCharacter.instance.InitializePlayer();
         PlayerCharacter.instance.RefreshPowerUp();
+
+        foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
+            room.RefreshRoomCleared();
     }
 }

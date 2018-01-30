@@ -53,6 +53,10 @@ public class RoomInstance : MonoBehaviour
         }
         MakeDoors();
         GenerateRoomTiles();
+    }
+
+    public void RefreshRoomCleared()
+    {
         roomCleared = false;
         GameController.instance.roomsCleared--;
     }

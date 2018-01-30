@@ -40,6 +40,7 @@ public class GameData : MonoBehaviour
     {
         killRecord = SaveGame.Load("killRecord", 0);
         totalKills = SaveGame.Load("totalKills", 0);
+        totalRooms = SaveGame.Load("totalRooms", 0);
         totalPowerUps = SaveGame.Load("totalPowerUps", 0);
         totalMoney = SaveGame.Load("totalMoney", 0);
         totalRunsCompleted = SaveGame.Load("totalRunsCompleted", 0);
