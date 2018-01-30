@@ -144,6 +144,7 @@ public class GameController : MonoBehaviour
         }
         else if (gameLevel == 5)
         {
+            GameData.instance.UpdateData("totalRunsCompleted", GameData.instance.totalRunsCompleted+1);
             HelperFunctions.SceneTransition("GameVictory");
             ClearGameplaySingletons();
         }
@@ -268,11 +269,6 @@ public class GameController : MonoBehaviour
                 else
                     pauseSelectNum++;
 
-                if (respawnCount <= 0)
-                {
-                    pauseSelectNum = 1;
-                }
-
                 if (pauseSelectNum == 0)
                     pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, 60, 0);
                 else
@@ -284,11 +280,6 @@ public class GameController : MonoBehaviour
                     pauseSelectNum = 1;
                 else
                     pauseSelectNum--;
-
-                if (respawnCount <= 0)
-                {
-                    pauseSelectNum = 1;
-                }
 
                 if (pauseSelectNum == 0)
                     pauseSelector.localPosition = new Vector3(pauseSelector.localPosition.x, 60, 0);
@@ -307,8 +298,9 @@ public class GameController : MonoBehaviour
                 case 1: // Quit
                     if (Input.GetKeyDown(GameData.instance.interact))
                     {
+                        GameData.instance.UpdateData("totalRunsQuit", GameData.instance.totalRunsQuit+1);
                         HelperFunctions.SceneTransition("MainMenu");
-                        
+                        ClearGameplaySingletons();
                     }
                     break;
             }
@@ -336,6 +328,7 @@ public class GameController : MonoBehaviour
         deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Respawn: " + respawnCount;
         if (respawnCount <= 0)
         {
+            GameData.instance.UpdateData("totalRunsFailed", GameData.instance.totalRunsFailed+1);
             deathSelectNum = 1;
             deathSelector.localPosition = new Vector3(deathSelector.localPosition.x, deathSelector.localPosition.y + 100 - (200 * deathSelectNum), 0);
             deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
@@ -394,6 +387,11 @@ public class GameController : MonoBehaviour
                 case 1: // Quit
                     if (Input.GetKeyDown(GameData.instance.interact))
                     {
+                        if (respawnCount > 0)
+                            GameData.instance.UpdateData("totalRunsQuit", GameData.instance.totalRunsQuit+1);
+                        else if(respawnCount <= 0)
+                            GameData.instance.UpdateData("totalRunsFailed", GameData.instance.totalRunsFailed+1);
+
                         HelperFunctions.SceneTransition("MainMenu");
                         ClearGameplaySingletons();
                     }

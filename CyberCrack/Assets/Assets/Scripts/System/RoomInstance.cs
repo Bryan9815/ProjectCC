@@ -65,6 +65,7 @@ public class RoomInstance : MonoBehaviour
             {
                 roomCleared = true;
                 GameController.instance.roomsCleared++;
+                GameData.instance.UpdateData("totalRooms", GameData.instance.totalRooms+1);
                 foreach (Door door in doorList)
                     door.ToggleActive(true);
             }
@@ -100,6 +101,9 @@ public class RoomInstance : MonoBehaviour
             {
                 mobsToClear.Add(i);
                 GameController.instance.mobsKilled++;
+                GameData.instance.UpdateData("totalKills", GameData.instance.totalKills+1);
+                if(GameController.instance.mobsKilled > GameData.instance.killRecord)
+                    GameData.instance.UpdateData("killRecord", GameController.instance.mobsKilled);
             }
         }
 

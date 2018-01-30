@@ -11,6 +11,8 @@ public class GameData : MonoBehaviour
     public KeyCode interact, pauseOpen, miniMap;
     [HideInInspector]
     public List<KeyCode> keyList = new List<KeyCode>();
+    [HideInInspector]
+    public int killRecord, totalKills, totalRooms, totalPowerUps, totalMoney, totalRunsCompleted, totalRunsFailed, totalRunsQuit;
     
     void Awake()
     {
@@ -23,9 +25,32 @@ public class GameData : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-        
-        LoadKeySettings();
+
+        LoadAllData();
         RefreshKeyList();
+    }
+
+    public void LoadAllData()
+    {
+        LoadHighScoreStats();
+        LoadKeySettings();
+    }
+
+    public void LoadHighScoreStats()
+    {
+        killRecord = SaveGame.Load("killRecord", 0);
+        totalKills = SaveGame.Load("totalKills", 0);
+        totalPowerUps = SaveGame.Load("totalPowerUps", 0);
+        totalMoney = SaveGame.Load("totalMoney", 0);
+        totalRunsCompleted = SaveGame.Load("totalRunsCompleted", 0);
+        totalRunsFailed = SaveGame.Load("totalRunsFailed", 0);
+        totalRunsQuit = SaveGame.Load("totalRunsQuit", 0);
+    }
+
+    public void UpdateData(string name, int data)
+    {
+        SaveGame.Save(name, data);
+        LoadHighScoreStats();
     }
 
     void RefreshKeyList()
@@ -78,6 +103,9 @@ public class GameData : MonoBehaviour
         SaveGame.Save("interact", KeyCode.Space.ToString());
         SaveGame.Save("pauseOpen", KeyCode.Escape.ToString());
         SaveGame.Save("miniMap", KeyCode.M.ToString());
+
+        LoadKeySettings();
+        RefreshKeyList();
     }
 
     public void CheckAndUpdateKey(int index, KeyCode newKeyCode)

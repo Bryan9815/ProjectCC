@@ -34,6 +34,7 @@ public class GameOptions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region Selection up/down
         if (Input.GetKeyDown(GameData.instance.playerKeys.down))
         {
             if (selectNum <= maxSelectNum)
@@ -57,27 +58,27 @@ public class GameOptions : MonoBehaviour
                 selector.localPosition = new Vector3(selector.localPosition.x, transform.GetChild(selectNum).localPosition.y, selector.localPosition.z);
             }
         }
+        #endregion
+
+        #region Interact Button
         if (Input.GetKeyDown(GameData.instance.interact))
         {
             switch (selectNum)
             {
-                case 3:
+                case 3: // Keybinding
                     mainMenuController.ToggleKeyBindingPanel(true);
                     break;
-                case 4:
-                    volume = 1;
-                    resolutionNum = 5;
-                    windowMode = 0;
-                    UpdateVolumeText();
-                    GameData.instance.ResetKeySettings();
-                    UpdateWindowMode();
+                case 4: // Reset Game Options to default
+                    ResetGameSettings();
                     break;
-                case 5:
+                case 5: // Erase Game Data
                     BayatGames.SaveGameFree.SaveGame.Clear();
+                    GameData.instance.LoadAllData();
+                    ResetGameSettings();
                     transform.GetChild(selectNum).GetComponent<TextMeshProUGUI>().text = "Data reset!";
                     transform.GetChild(selectNum).GetComponent<TextMeshProUGUI>().color = Color.red;
                     break;
-                case 6:
+                case 6: // Exit
                     BayatGames.SaveGameFree.SaveGame.Save("Volume", volume);
                     BayatGames.SaveGameFree.SaveGame.Save("resolution", resolutionNum);
                     BayatGames.SaveGameFree.SaveGame.Save("windowMode", windowMode);
@@ -85,6 +86,9 @@ public class GameOptions : MonoBehaviour
                     break;
             }
         }
+        #endregion
+
+        #region Game Options Left/Right
         if (Input.GetKeyDown(GameData.instance.playerKeys.left))
         {
             switch (selectNum)
@@ -155,6 +159,17 @@ public class GameOptions : MonoBehaviour
                 UpdateVolumeText();
             }
         }
+        #endregion
+    }
+
+    void ResetGameSettings()
+    {
+        volume = 1;
+        resolutionNum = 5;
+        windowMode = 0;
+        UpdateVolumeText();
+        GameData.instance.ResetKeySettings();
+        UpdateWindowMode();
     }
 
     void UpdateVolumeText()

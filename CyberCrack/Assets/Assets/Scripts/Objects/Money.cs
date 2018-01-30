@@ -33,6 +33,7 @@ public class Money : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             GameController.instance.ModMoney(moneyToAdd);
+            GameData.instance.UpdateData("totalMoney", (GameData.instance.totalMoney + moneyToAdd));
             Destroy(gameObject);
         }
     }

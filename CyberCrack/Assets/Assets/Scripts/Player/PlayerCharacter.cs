@@ -78,6 +78,7 @@ public class PlayerCharacter : Entity
     {
         base.AddPowerUp(newPowerUp);
         GameController.instance.powerUpsObtained++;
+        GameData.instance.UpdateData("totalPowerUps", GameData.instance.totalPowerUps+1);
     }
 
     public void IsHit(bool high)

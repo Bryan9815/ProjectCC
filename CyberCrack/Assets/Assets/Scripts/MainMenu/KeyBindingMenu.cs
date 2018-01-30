@@ -91,7 +91,7 @@ public class KeyBindingMenu : MonoBehaviour
 
     void RefreshKeyBindingText()
     {
-        for(int i = 0; i < GameData.instance.keyList.Count - 1; i++)
+        for(int i = 0; i < GameData.instance.keyList.Count; i++)
         {
             keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameData.instance.keyList[i].ToString();
             keys.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.black;
