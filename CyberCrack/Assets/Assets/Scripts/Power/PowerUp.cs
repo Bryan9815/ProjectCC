@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     public int price;
+    protected string powerName, powerDescription;
 
     public virtual void PickUp(GameObject newParent)
     {

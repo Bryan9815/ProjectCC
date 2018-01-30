@@ -190,13 +190,6 @@ public class GameController : MonoBehaviour
 
     void UI_Input()
     {
-        #region debug
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StartCoroutine(Respawn());
-        }
-        #endregion
-
         MinimapInput();
         PauseInput();
         RespawnMenuInput();
@@ -383,6 +376,8 @@ public class GameController : MonoBehaviour
         {
             room.RefreshRooms();
         }
+        GetComponent<LevelGeneration>().ClearMap();
+        GetComponent<LevelGeneration>().DrawMap();
 
         yield return new WaitForSeconds(1.0f);
 

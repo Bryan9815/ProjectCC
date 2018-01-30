@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ShopItem : MonoBehaviour
 {
@@ -17,13 +18,11 @@ public class ShopItem : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        power = transform.GetChild(0);
+        power = transform.GetChild(1);
         power.GetComponent<Collider2D>().enabled = false;
-        power.transform.localPosition = Vector3.zero;
-        power.transform.localEulerAngles = Vector3.zero;
-        power.transform.localScale = new Vector3(1, 1, 1);
-
         price = power.GetComponent<PowerUp>().price;
+
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = price.ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

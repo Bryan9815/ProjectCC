@@ -529,6 +529,7 @@ MonoBehaviour:
   interact: 0
   pauseOpen: 0
   miniMap: 0
+  keyList: 
 --- !u!4 &815686617
 Transform:
   m_ObjectHideFlags: 0

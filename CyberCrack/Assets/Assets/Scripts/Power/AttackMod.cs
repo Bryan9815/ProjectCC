@@ -1,10 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AttackMod : PowerUp
 {
     public float attackMod;
+
+    private void Start()
+    {
+        powerName = "Attack Upgrade";
+        price = 15;
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;
+    }
 
     public override void ActivateEffect()
     {

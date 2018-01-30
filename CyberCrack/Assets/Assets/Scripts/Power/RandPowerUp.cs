@@ -8,6 +8,13 @@ public class RandPowerUp : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        if (transform.parent.tag == "Object")
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localEulerAngles = Vector3.zero;
+            transform.localScale = new Vector3(1, 1, 1);
+            Debug.Log("rand power up transform fixed");
+        }
         foreach (GameObject powerUp in Resources.LoadAll("Prefabs/PowerUps"))
             powerUpList.Add(powerUp);
 
@@ -15,8 +22,14 @@ public class RandPowerUp : MonoBehaviour
 	}
 
     void SpawnRandPowerUp()
-    {
+    {        
         GameObject newPowerUp = Instantiate(powerUpList[Random.Range(0, powerUpList.Count)], transform.position, transform.rotation, transform.parent);
+        if (transform.parent.tag == "Object")
+        {
+            newPowerUp.transform.localPosition = Vector3.zero;
+            newPowerUp.transform.localEulerAngles = Vector3.zero;
+            newPowerUp.transform.localScale = new Vector3(1, 1, 1);
+        }
         Destroy(gameObject);
     }
 	
