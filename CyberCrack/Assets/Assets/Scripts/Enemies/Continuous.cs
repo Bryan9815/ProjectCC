@@ -11,7 +11,6 @@ public class Continuous : Entity
         Init();
 
         maxHP = hp = 15;
-        damage = 1;
         speed = 5;
         fireRate = 6.25f;
         timer = 0;
@@ -47,7 +46,7 @@ public class Continuous : Entity
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
-            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, damage, 1.0f);
+            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);
 
             yield return new WaitForSeconds(0.1f);
         }

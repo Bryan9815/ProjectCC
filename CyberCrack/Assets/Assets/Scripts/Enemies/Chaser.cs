@@ -48,7 +48,7 @@ public class Chaser : Entity
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerCharacter>().IsHit(damage);
+            collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
         }
     }
 }

@@ -8,11 +8,17 @@ public class AttackMod : PowerUp
 
     public override void ActivateEffect()
     {
-        GetComponentInParent<Entity>().ModifyDamage(attackMod);
+        if (transform.parent.parent.tag == "Player")
+            GetComponentInParent<Entity>().ModifyPlayerDamage(attackMod);
+        else
+            GetComponentInParent<Entity>().ModifyMobDamage(true);
     }
 
     public override void DeactivateEffect()
     {
-        GetComponentInParent<Entity>().ModifyDamage(-attackMod);
+        if (transform.parent.parent.tag == "Player")
+            GetComponentInParent<Entity>().ModifyPlayerDamage(-attackMod);
+        else
+            GetComponentInParent<Entity>().ModifyMobDamage(false);
     }
 }

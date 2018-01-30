@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
     protected float speed;
     protected float fireRate;
     protected float projectileSpeed;
+    protected bool mobDamageHigh = false;
     protected bool isActive = true;
     protected bool isDead = false;
     protected int chanceToDropMoney; // The higher the value, the less likely it is for money to drop.
@@ -106,7 +107,7 @@ public class Entity : MonoBehaviour
             isActive = false;
     }
 
-    public void ModifyHP(float mod)
+    public virtual void ModifyHP(float mod)
     {
         hp += mod;
     }
@@ -116,9 +117,14 @@ public class Entity : MonoBehaviour
         maxHP += mod;
     }
 
-    public void ModifyDamage(float mod)
+    public void ModifyPlayerDamage(float mod)
     {
         damage += mod;
+    }
+
+    public void ModifyMobDamage(bool high)
+    {
+        mobDamageHigh = high;
     }
 
     public void ModifySpeed(float mod)

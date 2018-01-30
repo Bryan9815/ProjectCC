@@ -96,7 +96,7 @@ public class Hex : Entity
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
-            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, damage, 1.0f);
+            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);
         }
     }
 
@@ -128,7 +128,7 @@ public class Hex : Entity
         switch(collision.gameObject.tag)
         {
             case "Player":
-                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(damage);
+                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
                 break;
             case "Terrain":
                 ChangeMovement();

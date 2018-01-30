@@ -23,7 +23,7 @@ public class UtilityBehaviors : MonoBehaviour
         }
         if(Input.GetKeyDown("c"))
         {
-            PlayerCharacter.instance.ModifyDamage(+50);
+            PlayerCharacter.instance.ModifyPlayerDamage(+50);
             PlayerCharacter.instance.ModifyMaxHP(+10);
             PlayerCharacter.instance.ModifyHP(+10);
             PlayerCharacter.instance.ModifySpeed(+1);
@@ -31,7 +31,8 @@ public class UtilityBehaviors : MonoBehaviour
         }
         if(Input.GetKeyDown("j"))
         {
-            Debug.Log("Test: " + KeyCode.RightArrow.ToString());
+            Debug.Log("Player hp increased");
+            PlayerCharacter.instance.ModifyHP(+1);
         }
     }
 }

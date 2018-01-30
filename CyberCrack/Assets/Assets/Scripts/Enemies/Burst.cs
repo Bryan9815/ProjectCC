@@ -49,7 +49,7 @@ public class Burst : Entity
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
             //Debug.Log("Direction: " + direction);
-            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, damage, 1.0f);
+            bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);
         }
     }
 }

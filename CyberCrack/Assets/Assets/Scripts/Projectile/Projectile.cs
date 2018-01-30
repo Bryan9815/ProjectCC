@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    protected bool mobDamage;
     protected float damage;
     protected float lifetime = 1.0f;
     // Use this for initialization

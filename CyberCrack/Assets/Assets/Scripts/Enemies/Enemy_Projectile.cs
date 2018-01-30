@@ -13,12 +13,12 @@ public class Enemy_Projectile : Projectile
 
     }
 
-    public void Init(Vector3 pos, Quaternion rot, Vector3 dir, float dmg, float life)
+    public void Init(Vector3 pos, Quaternion rot, Vector3 dir, bool dmgHigh, float life)
     {
         transform.position = pos;
         transform.rotation = rot;
         GetComponent<Rigidbody2D>().velocity = dir;
-        damage = dmg;
+        mobDamage = dmgHigh;
         lifetime = life;
     }
 
@@ -35,7 +35,7 @@ public class Enemy_Projectile : Projectile
         switch (collision.gameObject.tag)
         {
             case "Player":
-                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(damage);
+                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamage);
                 Destroy(gameObject);
                 break;
             case "Object":

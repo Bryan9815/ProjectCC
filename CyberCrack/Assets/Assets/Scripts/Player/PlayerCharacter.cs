@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCharacter : Entity
 {
@@ -13,7 +14,7 @@ public class PlayerCharacter : Entity
 
     int shotStyle = 0;
     string fireDirection = "";
-
+    HealthContainer heartContainer;
     void Awake()
     {
         // if the singleton hasn't been initialized yet
@@ -39,13 +40,15 @@ public class PlayerCharacter : Entity
         transform.position = new Vector3(0, -GameController.instance.GetComponent<SheetAssigner>().verticalOffset / 5.4f, 0);
 
         // Stats
-        maxHP = hp = 3;
+        maxHP = 10;
+        hp = 3;
         damage = 5;
         speed = 1;
         fireRate = 15.0f;
         projectileCooldown = false;
         isHit = false;
         projectileSpeed = 10.0f;
+        heartContainer = GameController.instance.uiCanvas.GetChild(0).Find("HealthContainer").GetComponent<HealthContainer>();
 
         UpdateHealthDisplay();
         GameController.instance.singletons.Add(this.gameObject);
@@ -61,13 +64,25 @@ public class PlayerCharacter : Entity
         }
     }
 
-    public void IsHit(float damage)
+    public override void ModifyHP(float mod)
+    {
+        base.ModifyHP(mod);
+
+        if (hp >= maxHP)
+            hp = maxHP;
+
+        UpdateHealthDisplay();
+    }
+
+    public void IsHit(bool high)
     {
         if (!isHit)
         {
             isHit = true;
-            hp -= damage;
-            UpdateHealthDisplay();
+            if (!high)
+                ModifyHP(-1);
+            else
+                ModifyHP(-2);
 
             if (hp > 0)
                 StartCoroutine(ResetInvincibility());
@@ -95,21 +110,41 @@ public class PlayerCharacter : Entity
 
     void UpdateHealthDisplay()
     {
-        GameObject heartContainer = GameController.instance.uiCanvas.GetChild(0).Find("HealthContainer").gameObject;
-        if(hp != heartContainer.transform.childCount)
-        {
-            if (heartContainer.transform.childCount != 0)
-            {
-                for (int i = 0; i < heartContainer.transform.childCount; i++)
-                {
-                    Destroy(heartContainer.transform.GetChild(i).gameObject);
-                }
-            }            
-            for (int i = 0; i < hp; i++)
-            {
-                Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
-            }
-        }
+        heartContainer.SpawnHearts((int)hp);
+        
+        //if(hp != heartContainer.transform.childCount)
+        //{
+        //    if (heartContainer.transform.childCount != 0)
+        //    {
+        //        for (int i = 0; i < heartContainer.transform.childCount; i++)
+        //        {
+        //            Destroy(heartContainer.transform.GetChild(i).gameObject);
+        //        }
+        //    }
+        //    if (hp <= 5)
+        //    {
+        //        for (int i = 0; i < hp; i++)
+        //        {
+        //            Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
+        //            if (hp == 5)
+        //            {                        
+        //                heartContainer.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/redHeart");
+        //            }
+        //        }
+        //    }
+        //    else if (hp > 5)
+        //    {
+        //        for (int i = 0; i < 5; i++)
+        //        {
+        //            Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
+        //        }
+        //        for (int i = 0; i < (hp); i++)
+        //        {
+        //            Debug.Log("Heart container child count: " + heartContainer.transform.childCount);
+        //            heartContainer.transform.GetChild(i).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/greenHeart");
+        //        }
+        //    }
+        //}
     }
 
     void Movement()
