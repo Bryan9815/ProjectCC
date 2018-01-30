@@ -13,7 +13,8 @@ public class GameOptions : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        mainMenuController = transform.parent.GetComponent<MainMenuController>();
+        mainMenuController = transform.parent.parent.GetComponent<MainMenuController>();
+        selector = transform.Find("Selector");
 
         selectNum = 0;
         maxSelectNum = 6;
@@ -29,13 +30,36 @@ public class GameOptions : MonoBehaviour
 
         UpdateWindowMode();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-		if(Input.GetKeyDown(GameData.instance.interact))
+        if (Input.GetKeyDown(GameData.instance.playerKeys.down))
         {
-            switch(selectNum)
+            if (selectNum <= maxSelectNum)
+            {
+                if (selectNum == maxSelectNum)
+                    selectNum = 0;
+                else
+                    selectNum++;
+                selector.localPosition = new Vector3(selector.localPosition.x, transform.GetChild(selectNum).localPosition.y, 0);
+            }
+        }
+        if (Input.GetKeyDown(GameData.instance.playerKeys.up))
+        {
+            if (selectNum >= 0)
+            {
+                if (selectNum == 0)
+                    selectNum = maxSelectNum;
+                else
+                    selectNum--;
+
+                selector.localPosition = new Vector3(selector.localPosition.x, transform.GetChild(selectNum).localPosition.y, selector.localPosition.z);
+            }
+        }
+        if (Input.GetKeyDown(GameData.instance.interact))
+        {
+            switch (selectNum)
             {
                 case 3:
                     mainMenuController.ToggleKeyBindingPanel(true);
@@ -65,23 +89,24 @@ public class GameOptions : MonoBehaviour
         {
             switch (selectNum)
             {
-                case 0:
-                    if(volume > 0)
-                        volume -= 0.01f;
-                    UpdateVolumeText();
-                    break;
                 case 1:
-                    if (windowMode > 0)
+                    if (resolutionNum >= 0)
                     {
-                        windowMode--;
-                        UpdateWindowMode();
+                        if (resolutionNum == 0)
+                            resolutionNum = maxResolutionNum;
+                        else
+                            resolutionNum--;
+                        UpdateResolution();
                     }
                     break;
                 case 2:
-                    if (resolutionNum > 0)
+                    if (windowMode >= 0)
                     {
-                        resolutionNum--;
-                        UpdateResolution();
+                        if (windowMode == 0)
+                            windowMode = 1;
+                        else
+                            windowMode--;
+                        UpdateWindowMode();
                     }
                     break;
             }
@@ -90,32 +115,51 @@ public class GameOptions : MonoBehaviour
         {
             switch (selectNum)
             {
-                case 0:
-                    if(volume < 1)
-                        volume += 0.01f;
-                    UpdateVolumeText();
-                    break;
                 case 1:
-                    if (windowMode > 0)
+                    if (resolutionNum <= maxResolutionNum)
                     {
-                        windowMode--;
-                        UpdateWindowMode();
-                    }
-                    break;
-                case 2:
-                    if (resolutionNum > 0)
-                    {
-                        resolutionNum--;
+                        if (resolutionNum == maxResolutionNum)
+                            resolutionNum = 0;
+                        else
+                            resolutionNum++;
                         UpdateResolution();
                     }
                     break;
+                case 2:
+                    if (windowMode <= 1)
+                    {
+                        if (windowMode == 1)
+                            windowMode = 0;
+                        else
+                            windowMode++;
+                        UpdateWindowMode();
+                    }
+                    break;
+            }
+        }
+        if (Input.GetKey(GameData.instance.playerKeys.left))
+        {
+            if (selectNum == 0)
+            {
+                if (volume > 0)
+                    volume -= 0.1f * Time.deltaTime;
+                UpdateVolumeText();
+            }
+        }
+        if (Input.GetKey(GameData.instance.playerKeys.right))
+        {
+            if (selectNum == 0)
+            {
+                if (volume < 1)
+                    volume += 0.1f * Time.deltaTime;
+                UpdateVolumeText();
             }
         }
     }
 
     void UpdateVolumeText()
     {
-        volumeText.text = (volume * 100).ToString();
+        volumeText.text = ((int)(volume * 100)).ToString();
     }
 
     void UpdateResolution()
@@ -123,42 +167,42 @@ public class GameOptions : MonoBehaviour
         switch(resolutionNum)
         {
             case 0:
-                resText.text = "800 x 600";
+                resText.text = "800x600";
                 if (windowMode == 0)
                     Screen.SetResolution(800, 600, true);
                 else
                     Screen.SetResolution(800, 600, false);
                 break;
             case 1:
-                resText.text = "1024 x 720";
+                resText.text = "1024x720";
                 if (windowMode == 0)
                     Screen.SetResolution(1024, 720, true);
                 else
                     Screen.SetResolution(1024, 720, false);
                 break;
             case 2:
-                resText.text = "  1440 x 810";
+                resText.text = "1440x810";
                 if (windowMode == 0)
                     Screen.SetResolution(1440, 810, true);
                 else
                     Screen.SetResolution(1440, 810, false);
                 break;
             case 3:
-                resText.text = "  1600 x 900";
+                resText.text = "1600x900";
                 if (windowMode == 0)
                     Screen.SetResolution(1600, 900, true);
                 else
                     Screen.SetResolution(1600, 900, false);
                 break;
             case 4:
-                resText.text = " 1600 x 1024";
+                resText.text = "1600x1024";
                 if (windowMode == 0)
                     Screen.SetResolution(1600, 1024, true);
                 else
                     Screen.SetResolution(1600, 1024, false);
                 break;
             case 5:
-                resText.text = " 1920 x 1080";
+                resText.text = "1920x1080";
                 if (windowMode == 0)
                     Screen.SetResolution(1920, 1080, true);
                 else

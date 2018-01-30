@@ -49,6 +49,6 @@ public class MainMenuController : MonoBehaviour
     public void ToggleKeyBindingPanel(bool active)
     {
         KeyBindingPanel.SetActive(active);
-        OptionsPanel.GetComponent<GameOptions>().enabled = !active;
+        OptionsPanel.transform.GetChild(0).GetComponent<GameOptions>().enabled = !active;
     }
 }
