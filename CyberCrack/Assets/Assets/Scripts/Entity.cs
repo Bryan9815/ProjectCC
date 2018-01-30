@@ -88,7 +88,7 @@ public class Entity : MonoBehaviour
             Money.SpawnMoneyRand(transform.position, transform.parent, moneyMin, moneyMax);
 
         int hpChance = UnityEngine.Random.Range(0, 4);
-        if (hpChance != 3)
+        if (hpChance == 0)
             RecoverHP.SpawnHP(transform.position, transform.parent);
 
         // Power Ups
@@ -146,7 +146,7 @@ public class Entity : MonoBehaviour
         return powerUps;
     }
 
-    public void AddPowerUp(PowerUp newPowerUp)
+    public virtual void AddPowerUp(PowerUp newPowerUp)
     {
         powerUps.Add(newPowerUp);
         powerUps[powerUps.Count - 1].transform.parent = powerUpList;

@@ -16,11 +16,11 @@ public class HealthMod : PowerUp
 
     public override void ActivateEffect()
     {
-        GetComponentInParent<Entity>().ModifyMaxHP(healthMod);
+        GetComponentInParent<Entity>().ModifyHP(healthMod);
     }
 
     public override void DeactivateEffect()
     {
-        GetComponentInParent<Entity>().ModifyMaxHP(-healthMod);
+        GetComponentInParent<Entity>().ModifyHP(-healthMod);
     }
 }

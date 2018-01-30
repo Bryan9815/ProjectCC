@@ -41,6 +41,7 @@ public class Hex : Entity
     protected override void Death()
     {
         base.Death();
+        GameController.instance.bossesDefeated++;
         GoToNextLevel.CreateDoorToNextLevel(transform.parent);
         GameController.instance.bossHPBar.gameObject.SetActive(true);
     }

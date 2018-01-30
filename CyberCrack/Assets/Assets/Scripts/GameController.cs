@@ -87,6 +87,12 @@ public class GameController : MonoBehaviour
         //DebugMode();
 	}
 
+    public void ClearGameplaySingletons()
+    {
+        foreach (GameObject singleton in singletons)
+            Destroy(singleton);
+    }
+
     public int GetMoney()
     {
         return playerMoney;
@@ -110,29 +116,37 @@ public class GameController : MonoBehaviour
 
     IEnumerator NextLevel()
     {
-        gameLevel++;
-        // Disable Player momentarily
-        PlayerCharacter.instance.transform.position = new Vector3(0, -GetComponent<SheetAssigner>().verticalOffset / 5.4f, 0);
-        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
-        PlayerCharacter.instance.ToggleActive(false);
-
-        // Erase rooms of current level
-        for(int i = 0; i < gameplayCanvas.GetChild(1).childCount; i++)
+        if (gameLevel < 5)
         {
-            Destroy(gameplayCanvas.GetChild(1).GetChild(i).gameObject);
+            gameLevel++;
+            // Disable Player momentarily
+            PlayerCharacter.instance.transform.position = new Vector3(0, -GetComponent<SheetAssigner>().verticalOffset / 5.4f, 0);
+            PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
+            PlayerCharacter.instance.ToggleActive(false);
+
+            // Erase rooms of current level
+            for (int i = 0; i < gameplayCanvas.GetChild(1).childCount; i++)
+            {
+                Destroy(gameplayCanvas.GetChild(1).GetChild(i).gameObject);
+            }
+
+            // Move rooms back to starting position
+            gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
+
+            yield return new WaitForSeconds(1.0f);
+
+            // Generate new rooms
+            GetComponent<LevelGeneration>().GenerateNextLevel();
+
+            // Re-enable the Player
+            PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
+            PlayerCharacter.instance.ToggleActive(true);
         }
-
-        // Move rooms back to starting position
-        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(0, 0, 0);
-
-        yield return new WaitForSeconds(1.0f);
-
-        // Generate new rooms
-        GetComponent<LevelGeneration>().GenerateNextLevel();
-
-        // Re-enable the Player
-        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
-        PlayerCharacter.instance.ToggleActive(true);
+        else if (gameLevel == 5)
+        {
+            HelperFunctions.SceneTransition("GameVictory");
+            ClearGameplaySingletons();
+        }
     }
 
     void UI_Update()
@@ -294,8 +308,7 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(GameData.instance.interact))
                     {
                         HelperFunctions.SceneTransition("MainMenu");
-                        foreach (GameObject singleton in GameController.instance.singletons)
-                            Destroy(singleton);
+                        
                     }
                     break;
             }
@@ -316,10 +329,10 @@ public class GameController : MonoBehaviour
         menuOpen = true;
 
         // Stat update
-        deathDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Kills: ";
-        deathDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Rooms Cleared: ";
-        deathDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Bosses Defeated: ";
-        deathDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Power Ups: ";
+        deathDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Kills: " + mobsKilled;
+        deathDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Rooms Cleared: " + roomsCleared;
+        deathDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Bosses Defeated: " + bossesDefeated;
+        deathDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Power Ups: " + powerUpsObtained;
         deathOptions.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Respawn: " + respawnCount;
         if (respawnCount <= 0)
         {
@@ -382,8 +395,7 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(GameData.instance.interact))
                     {
                         HelperFunctions.SceneTransition("MainMenu");
-                        foreach (GameObject singleton in GameController.instance.singletons)
-                            Destroy(singleton);
+                        ClearGameplaySingletons();
                     }
                     break;
             }

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114230148662115678}
   m_Layer: 0
   m_Name: Currency
-  m_TagString: Object
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61984803889260706
 BoxCollider2D:
   m_ObjectHideFlags: 1

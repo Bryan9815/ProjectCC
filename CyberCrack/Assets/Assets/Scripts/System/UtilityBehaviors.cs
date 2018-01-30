@@ -11,8 +11,7 @@ public class UtilityBehaviors : MonoBehaviour
         if (Input.GetKeyDown("r"))
         {
             Debug.Log("Restarting game");
-            foreach (GameObject singleton in GameController.instance.singletons)
-                Destroy(singleton);
+            GameController.instance.ClearGameplaySingletons();
 
             //reload scene, for testing purposes
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

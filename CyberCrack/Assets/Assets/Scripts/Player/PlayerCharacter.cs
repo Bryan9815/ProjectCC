@@ -74,6 +74,12 @@ public class PlayerCharacter : Entity
         UpdateHealthDisplay();
     }
 
+    public override void AddPowerUp(PowerUp newPowerUp)
+    {
+        base.AddPowerUp(newPowerUp);
+        GameController.instance.powerUpsObtained++;
+    }
+
     public void IsHit(bool high)
     {
         if (!isHit)

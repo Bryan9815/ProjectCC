@@ -14,6 +14,8 @@ public class RoomInstance : MonoBehaviour
     [HideInInspector]
     public bool playerInside = false;
     [HideInInspector]
+    bool roomCleared = false;
+    [HideInInspector]
     public GameObject doorU, doorD, doorL, doorR;
     [SerializeField]
 	GameObject door, doorWall;
@@ -51,14 +53,21 @@ public class RoomInstance : MonoBehaviour
         }
         MakeDoors();
         GenerateRoomTiles();
+        roomCleared = false;
+        GameController.instance.roomsCleared--;
     }
 
     private void Update()
     {
-        if (mobList.Count == 0)
+        if (!roomCleared)
         {
-            foreach (Door door in doorList)
-                door.ToggleActive(true);
+            if (mobList.Count == 0)
+            {
+                roomCleared = true;
+                GameController.instance.roomsCleared++;
+                foreach (Door door in doorList)
+                    door.ToggleActive(true);
+            }
         }
     }
 
