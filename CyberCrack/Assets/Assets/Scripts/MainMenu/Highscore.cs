@@ -8,6 +8,8 @@ public class Highscore : MonoBehaviour
     MainMenuController mainMenuController;
     Transform stats;
     TextMeshProUGUI exitText;
+    bool firstStart = true;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -17,15 +19,19 @@ public class Highscore : MonoBehaviour
 
         exitText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         UpdateText();
+
+        firstStart = false;
     }
 
     private void OnEnable()
     {
-        UpdateText();
+        if(!firstStart)
+            UpdateText();
     }
 
     void UpdateText()
     {
+        Debug.Log(exitText);
         exitText.text = "Press " + GameData.instance.interact.ToString() + " to return to menu";
 
         stats.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Most Kills in a single run: " + GameData.instance.killRecord;
