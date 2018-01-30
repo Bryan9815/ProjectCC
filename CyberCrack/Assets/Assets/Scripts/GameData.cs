@@ -80,7 +80,7 @@ public class GameData : MonoBehaviour
         SaveGame.Save("miniMap", KeyCode.M.ToString());
     }
 
-    public void CheckOtherKeys(int index, KeyCode newKeyCode)
+    public void CheckAndUpdateKey(int index, KeyCode newKeyCode)
     {
         for(int i = 0; i < keyList.Count-1; i++)
         {

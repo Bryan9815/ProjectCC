@@ -100,7 +100,7 @@ public class KeyBindingMenu : MonoBehaviour
 
     void UpdateKeyBindings(KeyCode key)
     {
-        GameData.instance.CheckOtherKeys(selectNum, key);
+        GameData.instance.CheckAndUpdateKey(selectNum, key);
         RefreshKeyBindingText();
     }
 
