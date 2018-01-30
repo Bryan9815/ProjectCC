@@ -87,6 +87,11 @@ public class GameController : MonoBehaviour
         //DebugMode();
 	}
 
+    public int GetMoney()
+    {
+        return playerMoney;
+    }
+
     public void ModMoney(int value)
     {
         playerMoney += value;

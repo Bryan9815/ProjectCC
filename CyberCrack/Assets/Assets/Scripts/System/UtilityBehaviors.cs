@@ -31,8 +31,11 @@ public class UtilityBehaviors : MonoBehaviour
         }
         if(Input.GetKeyDown("j"))
         {
-            Debug.Log("Player hp increased");
             PlayerCharacter.instance.ModifyHP(+1);
+        }
+        if(Input.GetKeyDown("o"))
+        {
+            GameController.instance.ModMoney(+10);
         }
     }
 }

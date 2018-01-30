@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    public int price;
+
     public virtual void PickUp(GameObject newParent)
     {
         // Disable collider and renderer
