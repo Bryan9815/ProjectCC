@@ -68,6 +68,10 @@ public class Patroller : Entity
     {
         switch (collision.gameObject.tag)
         {
+            case "Player":
+                speed *= -1;
+                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                break;
             case "Object":
                 speed *= -1;
                 break;
