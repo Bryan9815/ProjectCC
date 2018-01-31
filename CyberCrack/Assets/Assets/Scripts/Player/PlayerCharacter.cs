@@ -186,7 +186,6 @@ public class PlayerCharacter : Entity
         // Replace player character model with a pointer
         // Rotate pointer in direction pressed and then instantiate bullet and make it move forward
         // 8-directional shooting
-        // Create a bullet system so that the instantiated bullet has all power-up effects
         bool firing = false;
         Quaternion newRot = transform.localRotation;
         Quaternion temp = newRot;

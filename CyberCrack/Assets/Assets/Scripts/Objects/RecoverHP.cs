@@ -15,8 +15,11 @@ public class RecoverHP : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            PlayerCharacter.instance.ModifyHP(healthToAdd);
-            Destroy(gameObject);
+            if (PlayerCharacter.instance.GetHP() < PlayerCharacter.instance.GetMaxHP())
+            {
+                PlayerCharacter.instance.ModifyHP(healthToAdd);
+                Destroy(gameObject);
+            }
         }
     }
 }

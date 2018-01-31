@@ -462,10 +462,13 @@ public class GameController : MonoBehaviour
 
     void VictoryMenuInput()
     {
-        if (Input.GetKeyDown(GameData.instance.interact))
+        if (victoryPanel.activeSelf)
         {
-            HelperFunctions.SceneTransition("MainMenu");
-            ClearGameplaySingletons();
+            if (Input.GetKeyDown(GameData.instance.interact))
+            {
+                HelperFunctions.SceneTransition("MainMenu");
+                ClearGameplaySingletons();
+            }
         }
     }
 }

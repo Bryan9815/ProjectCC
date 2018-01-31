@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   price: 0
-  speedMod: 1
+  speedMod: 0.5
 --- !u!114 &114162605372569258
 MonoBehaviour:
   m_ObjectHideFlags: 1
