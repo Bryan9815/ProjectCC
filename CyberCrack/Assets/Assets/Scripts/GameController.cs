@@ -12,9 +12,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Transform bossHPBar;
     [HideInInspector]
-    public GameObject pausePanel;
-    [HideInInspector]
-    public GameObject deathPanel;
+    public GameObject pausePanel, deathPanel, victoryPanel;
     [HideInInspector]
     public RoomInstance currentRoom;
     [HideInInspector]
@@ -27,6 +25,7 @@ public class GameController : MonoBehaviour
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
     Transform deathDisplay, deathOptions, deathSelector;
+    Transform victoryDisplay, victoryOptions;
     int pauseSelectNum, deathSelectNum;
     bool menuOpen, selectBarFading;
     float selectBarFadeTimer;
@@ -68,6 +67,11 @@ public class GameController : MonoBehaviour
         deathOptions = deathPanel.transform.Find("Options");
         deathSelector = deathOptions.Find("Selector");
         deathPanel.SetActive(false);
+
+        victoryPanel = uiCanvas.Find("Victory_Panel").gameObject;
+        victoryDisplay = victoryPanel.transform.Find("Display");
+        victoryOptions = victoryPanel.transform.Find("Options");
+        victoryPanel.SetActive(false);
 
         pauseSelectNum = deathSelectNum = 0;
 
@@ -145,8 +149,7 @@ public class GameController : MonoBehaviour
         else if (gameLevel == 5)
         {
             GameData.instance.UpdateData("totalRunsCompleted", GameData.instance.totalRunsCompleted+1);
-            HelperFunctions.SceneTransition("GameVictory");
-            ClearGameplaySingletons();
+            OpenVictoryMenu();
         }
     }
 
@@ -208,6 +211,8 @@ public class GameController : MonoBehaviour
         MinimapInput();
         PauseInput();
         RespawnMenuInput();
+        if (menuOpen)
+            VictoryMenuInput();
     }
 
     void MinimapInput()
@@ -433,5 +438,35 @@ public class GameController : MonoBehaviour
 
         foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
             room.RefreshRoomCleared();
+    }
+
+    public void OpenVictoryMenu()
+    {
+        PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
+        gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
+
+        // Toggle the menu
+        victoryPanel.SetActive(true);
+        menuOpen = true;
+
+        // Stat update
+        victoryDisplay.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Damage: " + PlayerCharacter.instance.GetDamage();
+        victoryDisplay.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Movement Speed: " + PlayerCharacter.instance.GetSpeed();
+        victoryDisplay.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Fire Rate: " + PlayerCharacter.instance.GetFireRate();
+        victoryDisplay.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>().text = "Bullet Speed: " + PlayerCharacter.instance.GetProjectileSpeed();
+        victoryDisplay.GetChild(1).GetChild(4).GetComponent<TextMeshProUGUI>().text = "Kills: " + mobsKilled;
+        victoryDisplay.GetChild(1).GetChild(5).GetComponent<TextMeshProUGUI>().text = "Rooms Cleared: " + roomsCleared;
+        victoryDisplay.GetChild(1).GetChild(6).GetComponent<TextMeshProUGUI>().text = "Bosses Defeated: " + bossesDefeated;
+        victoryDisplay.GetChild(1).GetChild(7).GetComponent<TextMeshProUGUI>().text = "Power Ups: " + powerUpsObtained;
+        victoryOptions.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Press " + GameData.instance.interact.ToString() + " to return to menu";
+    }
+
+    void VictoryMenuInput()
+    {
+        if (victoryPanel.activeSelf)
+        {
+            HelperFunctions.SceneTransition("MainMenu");
+            ClearGameplaySingletons();
+        }
     }
 }
