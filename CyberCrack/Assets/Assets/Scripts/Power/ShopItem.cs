@@ -11,10 +11,24 @@ public class ShopItem : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        StartCoroutine(GetPower());
+        if (transform.GetChild(0).name == "RandPowerUp")
+            StartCoroutine(GetRandPower());
+        else
+            StartCoroutine(GetPower());
+    }
+
+    IEnumerator GetPower()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        power = transform.GetChild(0);
+        power.GetComponent<Collider2D>().enabled = false;
+        price = power.GetComponent<PowerUp>().price;
+
+        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = price.ToString();
     }
 	
-	IEnumerator GetPower()
+	IEnumerator GetRandPower()
     {
         yield return new WaitForSeconds(0.1f);
 

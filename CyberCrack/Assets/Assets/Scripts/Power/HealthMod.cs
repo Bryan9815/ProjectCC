@@ -10,7 +10,7 @@ public class HealthMod : PowerUp
     private void Start()
     {
         powerName = "Health Upgrade";
-        price = 5;
+        price = 10;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;
     }
 
