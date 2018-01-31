@@ -530,6 +530,14 @@ MonoBehaviour:
   pauseOpen: 0
   miniMap: 0
   keyList: 
+  killRecord: 0
+  totalKills: 0
+  totalRooms: 0
+  totalPowerUps: 0
+  totalMoney: 0
+  totalRunsCompleted: 0
+  totalRunsFailed: 0
+  totalRunsQuit: 0
 --- !u!4 &815686617
 Transform:
   m_ObjectHideFlags: 0

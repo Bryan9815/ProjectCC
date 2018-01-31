@@ -10,14 +10,13 @@ public class Burst : Entity
     {
         Init();
 
-        maxHP = hp = 15;
-        damage = 1;
+        maxHP = hp = 15 + (5 * GameController.instance.GetCurrentLevel());
         speed = 5;
         fireRate = 3.5f;
         timer = 0;
         chanceToDropMoney = 3;
-        moneyMin = 1;
-        moneyMax = 5;
+        moneyMin = 0 + (1 * GameController.instance.GetCurrentLevel());
+        moneyMax = 5 + (3 * GameController.instance.GetCurrentLevel());
     }
 
     // Update is called once per frame

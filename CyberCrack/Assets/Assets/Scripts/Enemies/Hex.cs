@@ -13,15 +13,15 @@ public class Hex : Entity
     {
         Init();
 
-        maxHP = hp = 150;
+        maxHP = hp = 150 + (15 * GameController.instance.GetCurrentLevel());
         damage = 1;
         speed = 0.5f;
         fireRate = 3.333f;
         timer = 0;
         dirVec = new Vector3(1, 1, 0);
         chanceToDropMoney = 0;
-        moneyMin = 5;
-        moneyMax = 20;
+        moneyMin = 5 + (2 * GameController.instance.GetCurrentLevel());
+        moneyMax = 20 + (2 * GameController.instance.GetCurrentLevel());
     }
 
     public override void ToggleActive(bool active)

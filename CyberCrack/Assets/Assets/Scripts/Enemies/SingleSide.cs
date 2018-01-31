@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Continuous : Entity
+public class SingleSide : Entity
 {
     float timer;
     // Use this for initialization
@@ -12,9 +12,9 @@ public class Continuous : Entity
 
         maxHP = hp = 15 + (5 * GameController.instance.GetCurrentLevel());
         speed = 5;
-        fireRate = 6.25f;
+        fireRate = 3.5f;
         timer = 0;
-        chanceToDropMoney = 3;
+        chanceToDropMoney = 2;
         moneyMin = 0 + (1 * GameController.instance.GetCurrentLevel());
         moneyMax = 5 + (3 * GameController.instance.GetCurrentLevel());
     }
@@ -27,28 +27,28 @@ public class Continuous : Entity
             if (hp <= 0)
                 Death();
 
-            if (timer < 5/fireRate)
+            if (timer < 5 / fireRate)
             {
                 timer += Time.deltaTime;
             }
             else
             {
                 timer = 0;
-                StartCoroutine(FireProjectile());
+                FireProjectile();
             }
         }
     }
 
-    IEnumerator FireProjectile()
+    void FireProjectile()
     {
         for (int i = 0; i < target.childCount; i++)
         {
+            //Debug.Log("Target: " + (i+1));
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
+            //Debug.Log("Direction: " + direction);
             bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);
-
-            yield return new WaitForSeconds(0.1f);
         }
     }
 }

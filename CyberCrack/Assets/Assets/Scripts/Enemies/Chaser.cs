@@ -14,14 +14,13 @@ public class Chaser : Entity
     {
         Init();
 
-        maxHP = hp = 10;
-        damage = 1;
-        speed = 0.1f;
+        maxHP = hp = 10 + (5 * GameController.instance.GetCurrentLevel());
+        speed = 0.25f;
         fireRate = 0.33f;
 
         chanceToDropMoney = 3;
-        moneyMin = 1;
-        moneyMax = 3;
+        moneyMin = 0 + (1 * GameController.instance.GetCurrentLevel());
+        moneyMax = 3 + (2 * GameController.instance.GetCurrentLevel());
 
         target = PlayerCharacter.instance.transform;
         //target = GameObject.FindGameObjectWithTag("Player").transform;
