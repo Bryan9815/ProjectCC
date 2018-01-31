@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   price: 0
-  fireRateMod: 3
+  fireRateMod: 5
 --- !u!114 &114804644814986916
 MonoBehaviour:
   m_ObjectHideFlags: 1
