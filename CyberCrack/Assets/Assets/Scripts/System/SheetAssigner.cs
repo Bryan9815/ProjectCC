@@ -63,6 +63,8 @@ public class SheetAssigner : MonoBehaviour
             {
                 case Room.roomType.enter:
                     myRoom.Setup(normalTemplates[0], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+                    myRoom.playerInside = true;
+                    StartCoroutine(DelayedMinimapShit());
                     //Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Hex"), myRoom.transform);
                     //Instantiate(Resources.Load<GameObject>("Prefabs/RandPowerUp"), myRoom.transform);
                     //Instantiate(Resources.Load<GameObject>("Prefabs/NextLevelDoor"), myRoom.transform);
@@ -88,7 +90,7 @@ public class SheetAssigner : MonoBehaviour
 
             // Name the room and parent it to canvas
             roomNumber++;
-            myRoom.name = "Room" + roomNumber;
+            myRoom.name = "Room_" + roomNumber;
             myRoom.transform.parent = roomParent.transform;
         }
 
@@ -108,5 +110,13 @@ public class SheetAssigner : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Hex"), myRoom.transform);
+    }
+
+    IEnumerator DelayedMinimapShit()
+    {
+        yield return new WaitForEndOfFrame();
+        GetComponent<LevelGeneration>().mapRoot.GetComponent<MinimapController>().RefreshMiniMapColors();
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<LevelGeneration>().mapRoot.GetComponent<MinimapController>().RefreshMiniMapColors();
     }
 }

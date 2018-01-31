@@ -59,27 +59,28 @@ public class Door : MonoBehaviour
         {
             if (collision.tag == "Player")
             {
+                GameController.instance.currentRoom.playerInside = false;
                 switch (name)
                 {
                     case "doorTop":
                         collision.transform.position = new Vector3(collision.transform.position.x, collision.transform.position.y - playerVerticalMove, collision.transform.position.z);
                         rooms.localPosition = new Vector3(rooms.localPosition.x, rooms.localPosition.y - roomVerticalMove, rooms.localPosition.z);
-                        minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x, minimapIcon.transform.localPosition.y + mMapIconVerticalMove, minimapIcon.transform.localPosition.z);
+                        //minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x, minimapIcon.transform.localPosition.y + mMapIconVerticalMove, minimapIcon.transform.localPosition.z);
                         break;
                     case "doorBot":
                         collision.transform.position = new Vector3(collision.transform.position.x, collision.transform.position.y + playerVerticalMove, collision.transform.position.z);
                         rooms.localPosition = new Vector3(rooms.localPosition.x, rooms.localPosition.y + roomVerticalMove, rooms.localPosition.z);
-                        minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x, minimapIcon.transform.localPosition.y - mMapIconVerticalMove, minimapIcon.transform.localPosition.z);
+                        //minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x, minimapIcon.transform.localPosition.y - mMapIconVerticalMove, minimapIcon.transform.localPosition.z);
                         break;
                     case "doorRight":
                         collision.transform.position = new Vector3(collision.transform.position.x - playerHorizontalMove, collision.transform.position.y, collision.transform.position.z);
                         rooms.localPosition = new Vector3(rooms.localPosition.x - roomHorizontalMove, rooms.localPosition.y, rooms.localPosition.z);
-                        minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x + mMapIconHorizonalMove, minimapIcon.transform.localPosition.y, minimapIcon.transform.localPosition.z);
+                        //minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x + mMapIconHorizonalMove, minimapIcon.transform.localPosition.y, minimapIcon.transform.localPosition.z);
                         break;
                     case "doorLeft":
                         collision.transform.position = new Vector3(collision.transform.position.x + playerHorizontalMove, collision.transform.position.y, collision.transform.position.z);
                         rooms.localPosition = new Vector3(rooms.localPosition.x + roomHorizontalMove, rooms.localPosition.y, rooms.localPosition.z);
-                        minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x - mMapIconHorizonalMove, minimapIcon.transform.localPosition.y, minimapIcon.transform.localPosition.z);
+                        //minimapIcon.transform.localPosition = new Vector3(minimapIcon.transform.localPosition.x - mMapIconHorizonalMove, minimapIcon.transform.localPosition.y, minimapIcon.transform.localPosition.z);
                         break;
                 }
             }

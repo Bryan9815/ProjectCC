@@ -13,7 +13,6 @@ public class RandPowerUp : MonoBehaviour
             transform.localPosition = Vector3.zero;
             transform.localEulerAngles = Vector3.zero;
             transform.localScale = new Vector3(1, 1, 1);
-            Debug.Log("rand power up transform fixed");
         }
         foreach (GameObject powerUp in Resources.LoadAll("Prefabs/PowerUps"))
             powerUpList.Add(powerUp);

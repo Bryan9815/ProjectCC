@@ -196,7 +196,7 @@ public class RoomInstance : MonoBehaviour
 			if (mapping.color.Equals(pixelColor))
             {
 				Vector3 spawnPos = PositionFromTileGrid(x,y);
-				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, Quaternion.identity, this.transform);
+				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, mapping.prefab.transform.localRotation, this.transform);
                 if (entity.tag == "Enemy")
                 {
                     mobList.Add(entity);
@@ -226,8 +226,10 @@ public class RoomInstance : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            playerInside = true;
             ToggleRoomActive();
             GameController.instance.currentRoom = GetComponent<RoomInstance>();
+            GameController.instance.GetComponent<LevelGeneration>().mapRoot.GetComponent<MinimapController>().RefreshMiniMapColors();
         }
     }
 }

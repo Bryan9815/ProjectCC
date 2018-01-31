@@ -66,8 +66,9 @@ GameObject:
   - component: {fileID: 4535148657131982}
   - component: {fileID: 212834765474297690}
   - component: {fileID: 60947367162911756}
+  - component: {fileID: 114906146278941140}
   m_Layer: 0
-  m_Name: SingleSide 1
+  m_Name: SingleSideL
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 1556550023551106}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -299.103, y: -64.4917, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 4185261273015222}
   - {fileID: 4668656164695662}
@@ -195,6 +196,17 @@ PolygonCollider2D:
       - {x: 0.21, y: -1.26}
       - {x: 0.29, y: -1.24}
       - {x: 0.39999998, y: -1.1999999}
+--- !u!114 &114906146278941140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556550023551106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 511c7fbd0d7244a4aa05b0e3e17aa38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212834765474297690
 SpriteRenderer:
   m_ObjectHideFlags: 1

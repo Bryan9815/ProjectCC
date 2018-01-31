@@ -319,6 +319,8 @@ public class LevelGeneration : MonoBehaviour
 			mapper.left = room.doorLeft;
 			mapper.gameObject.transform.parent = mapRoot.GetChild(1);
 		}
+
+        mapRoot.GetComponent<MinimapController>().RefreshMiniMapSpriteList();
     }
 
     public void ClearMap()

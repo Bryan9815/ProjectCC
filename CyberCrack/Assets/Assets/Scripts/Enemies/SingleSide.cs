@@ -47,7 +47,11 @@ public class SingleSide : Entity
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
-            //Debug.Log("Direction: " + direction);
+            
+            // Increase speed if facing left/right
+            if (transform.localEulerAngles.z == 90 || transform.localEulerAngles.z == 270)
+                direction *= 3;
+
             bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);
         }
     }

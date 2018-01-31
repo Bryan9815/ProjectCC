@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class MapSpriteSelector : MonoBehaviour
@@ -11,14 +10,12 @@ public class MapSpriteSelector : MonoBehaviour
 
 	public bool up, down, left, right, playerInside;
     public Room.roomType type;
-    public Color emptyColor, activeColor;
 	Color mainColor;
 	SpriteRenderer rend;
 
 	public void Start ()
     {
 		rend = GetComponent<SpriteRenderer>();
-		mainColor = emptyColor;
 		PickSprite();
 		PickColor();
 	}
@@ -119,21 +116,38 @@ public class MapSpriteSelector : MonoBehaviour
 	void PickColor()
     {
         //changes color based on what type the room is
-        //switch(type)
-        //{
-        //    case Room.roomType.normal:
-        //        mainColor = emptyColor;
-        //        break;
-        //    case Room.roomType.enter:
-        //        mainColor = activeColor;
-        //        break;
-        //    case Room.roomType.item:
-        //        break;
-        //    default:
-        //        mainColor = emptyColor;
-        //        break;
-        //}
+        switch (type)
+        {
+            case Room.roomType.normal:
+                mainColor = Color.white;
+                break;
+            case Room.roomType.enter:
+                mainColor = Color.white;
+                break;
+            case Room.roomType.boss:
+                mainColor = Color.red;
+                break;
+            case Room.roomType.upgrade:
+                mainColor = Color.cyan;
+                break;
+            case Room.roomType.shop:
+                mainColor = Color.yellow;
+                break;
+            default:
+                mainColor = Color.white;
+                break;
+        }
+    }
 
-        rend.color = mainColor;
+    public void ChangeColor(bool active)
+    {
+        try
+        {
+            if (active)
+                rend.color = Color.green;
+            else
+                rend.color = mainColor;
+        }
+        catch(Exception e) { Debug.Log("MapSpriteSelector ChangeColor: " + e); }
     }
 }

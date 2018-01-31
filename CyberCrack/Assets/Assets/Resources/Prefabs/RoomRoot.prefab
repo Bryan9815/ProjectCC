@@ -105,6 +105,14 @@ MonoBehaviour:
     prefab: {fileID: 1980734056243902, guid: 49e748afbc6316641877ada7ca7f713a, type: 2}
   - color: {r: 0, g: 0.49019608, b: 1, a: 1}
     prefab: {fileID: 1864472389956204, guid: 0b3a5bbe01eb6894c85c3c398ca8fb3d, type: 2}
+  - color: {r: 1, g: 1, b: 0, a: 1}
+    prefab: {fileID: 1556550023551106, guid: 281109eec9107b641a050940bdf56397, type: 2}
+  - color: {r: 1, g: 0.8039216, b: 0, a: 1}
+    prefab: {fileID: 1997686919152076, guid: 61e20b41b0bc19540afced061d2406d8, type: 2}
+  - color: {r: 0.8039216, g: 1, b: 0, a: 1}
+    prefab: {fileID: 1556550023551106, guid: c73623265918a9c47b320cb1d4f4357e, type: 2}
+  - color: {r: 0.8039216, g: 0.8039216, b: 0, a: 1}
+    prefab: {fileID: 1115023662734894, guid: d2cc5b30191621d44b3afeeda4b76efd, type: 2}
   mobList: []
   doorList: []
 --- !u!212 &212522987513716332
