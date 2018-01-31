@@ -10,7 +10,8 @@ public class SingleSide : Entity
     {
         Init();
 
-        maxHP = hp = 15 + (5 * GameController.instance.GetCurrentLevel());
+        //maxHP = hp = 1;
+        maxHP = hp = 10 + (5 * GameController.instance.GetCurrentLevel());
         speed = 5;
         fireRate = 3.5f;
         timer = 0;

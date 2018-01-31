@@ -211,8 +211,7 @@ public class GameController : MonoBehaviour
         MinimapInput();
         PauseInput();
         RespawnMenuInput();
-        if (menuOpen)
-            VictoryMenuInput();
+        VictoryMenuInput();
     }
 
     void MinimapInput()
@@ -463,7 +462,7 @@ public class GameController : MonoBehaviour
 
     void VictoryMenuInput()
     {
-        if (victoryPanel.activeSelf)
+        if (Input.GetKeyDown(GameData.instance.interact))
         {
             HelperFunctions.SceneTransition("MainMenu");
             ClearGameplaySingletons();

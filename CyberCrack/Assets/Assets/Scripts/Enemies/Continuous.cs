@@ -10,7 +10,8 @@ public class Continuous : Entity
     {
         Init();
 
-        maxHP = hp = 15 + (5 * GameController.instance.GetCurrentLevel());
+        //maxHP = hp = 1;
+        maxHP = hp = 10 + (5 * GameController.instance.GetCurrentLevel());
         speed = 5;
         fireRate = 6.25f;
         timer = 0;

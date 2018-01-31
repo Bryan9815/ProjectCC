@@ -38,10 +38,10 @@ GameObject:
   - component: {fileID: 4232132393388834}
   - component: {fileID: 212470522961602340}
   - component: {fileID: 61066563362882404}
-  - component: {fileID: 114190539047141928}
   - component: {fileID: 50916857555206544}
+  - component: {fileID: 114865357823617192}
   m_Layer: 0
-  m_Name: Health
+  m_Name: Speed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114190539047141928
+--- !u!114 &114865357823617192
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -230,11 +230,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1864472389956204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a388c1ad6949d4a98391a02b9bd1f3, type: 3}
+  m_Script: {fileID: 11500000, guid: d83cc3ca8f7bb4d42b249b22ade9155b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   price: 0
-  healthMod: 5
+  speedMod: 1
 --- !u!212 &212470522961602340
 SpriteRenderer:
   m_ObjectHideFlags: 1

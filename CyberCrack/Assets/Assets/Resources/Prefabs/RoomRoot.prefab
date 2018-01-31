@@ -102,7 +102,13 @@ MonoBehaviour:
   - color: {r: 0.49019608, g: 0, b: 1, a: 1}
     prefab: {fileID: 1940333035060016, guid: e703b8be6cf30bd49aae072b9bd4bbef, type: 2}
   - color: {r: 0, g: 1, b: 1, a: 1}
-    prefab: {fileID: 1980734056243902, guid: 49e748afbc6316641877ada7ca7f713a, type: 2}
+    prefab: {fileID: 1178310940543956, guid: 3dde9f322ee52c74590e5e80fff905fa, type: 2}
+  - color: {r: 0.3137255, g: 1, b: 1, a: 1}
+    prefab: {fileID: 1792235934729022, guid: 408659f0866881f46a625ef036aa9677, type: 2}
+  - color: {r: 0.627451, g: 1, b: 1, a: 1}
+    prefab: {fileID: 1164579504049024, guid: 1ce9ba432c69b154f81238f7a81b242d, type: 2}
+  - color: {r: 0.9411765, g: 1, b: 1, a: 1}
+    prefab: {fileID: 1871129546476456, guid: 0cb6e9c92ccdf354f973b0b03e38696e, type: 2}
   - color: {r: 0, g: 0.49019608, b: 1, a: 1}
     prefab: {fileID: 1864472389956204, guid: 0b3a5bbe01eb6894c85c3c398ca8fb3d, type: 2}
   - color: {r: 1, g: 1, b: 0, a: 1}

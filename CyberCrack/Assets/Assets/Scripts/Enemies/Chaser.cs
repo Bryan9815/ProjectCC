@@ -14,7 +14,8 @@ public class Chaser : Entity
     {
         Init();
 
-        maxHP = hp = 10 + (5 * GameController.instance.GetCurrentLevel());
+        //maxHP = hp = 1;
+        maxHP = hp = 5 + (5 * GameController.instance.GetCurrentLevel());
         speed = 0.25f;
         fireRate = 0.33f;
 

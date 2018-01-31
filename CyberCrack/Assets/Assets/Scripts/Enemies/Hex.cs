@@ -13,6 +13,7 @@ public class Hex : Entity
     {
         Init();
 
+        //maxHP = hp = 1;
         maxHP = hp = 150 + (15 * GameController.instance.GetCurrentLevel());
         damage = 1;
         speed = 0.5f;
