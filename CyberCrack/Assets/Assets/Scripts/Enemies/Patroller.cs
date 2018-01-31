@@ -73,6 +73,9 @@ public class Patroller : Entity
                 speed *= -1;
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
                 break;
+            case "PickUp":
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+                break;
             case "Object":
                 speed *= -1;
                 break;

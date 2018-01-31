@@ -46,9 +46,14 @@ public class Chaser : Entity
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        switch(collision.gameObject.tag)
         {
-            collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+            case "Player":
+                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                break;
+            case "PickUp":
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+                break;
         }
     }
 }

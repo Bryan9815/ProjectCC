@@ -132,6 +132,9 @@ public class Hex : Entity
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
                 break;
+            case "PickUp":
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+                break;
             case "Terrain":
                 ChangeMovement();
                 break;

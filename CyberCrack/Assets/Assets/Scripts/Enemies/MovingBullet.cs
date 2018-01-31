@@ -17,7 +17,7 @@ public class MovingBullet : Entity
         //maxHP = hp = 1;
         maxHP = hp = 150 + (15 * GameController.instance.GetCurrentLevel());
         damage = 1;
-        speed = 0.5f;
+        speed = 1.0f;
         fireRate = 3.333f;
         timer = 0;
         charging = false;
@@ -115,18 +115,23 @@ public class MovingBullet : Entity
 
     IEnumerator Charge()
     {
-        GetComponent<Rigidbody2D>().velocity += -(dirVec.normalized * 25);
+        GetComponent<Rigidbody2D>().velocity += -(dirVec.normalized * 25 * speed);
         yield return new WaitForSeconds(0.75f);
-        GetComponent<Rigidbody2D>().velocity += (dirVec.normalized * 150);
+        GetComponent<Rigidbody2D>().velocity += (dirVec.normalized * 150 * speed);
         yield return new WaitForSeconds(1.5f);
         charging = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        switch (collision.gameObject.tag)
         {
-            collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+            case "Player":
+                collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                break;
+            case "PickUp":
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+                break;
         }
     }
 }
