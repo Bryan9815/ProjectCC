@@ -31,7 +31,6 @@ public class Highscore : MonoBehaviour
 
     void UpdateText()
     {
-        Debug.Log(exitText);
         exitText.text = "Press " + GameData.instance.interact.ToString() + " to return to menu";
 
         stats.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Most Kills in a single run: " + GameData.instance.killRecord;

@@ -11,6 +11,7 @@ public class LevelGeneration : MonoBehaviour
     [HideInInspector]
     public int specialRooms;
     Room[,] rooms;
+    List<roomStats> roomPos = new List<roomStats>();
 	List<Vector2> takenPositions = new List<Vector2>();
     [HideInInspector]
     int gridSizeX, gridSizeY; 
@@ -64,7 +65,8 @@ public class LevelGeneration : MonoBehaviour
     {
 		//setup
 		rooms = new Room[gridSizeX * 4,gridSizeY * 4];
-		rooms[gridSizeX,gridSizeY] = new Room(Vector2.zero, Room.roomType.enter);
+		//rooms[gridSizeX,gridSizeY] = new Room(Vector2.zero, Room.roomType.enter);
+        AddRoom(gridSizeX, gridSizeY, Vector2.zero, Room.roomType.enter);
 
 		takenPositions.Insert(0,Vector2.zero);
 		Vector2 checkPos = Vector2.zero;
@@ -95,7 +97,8 @@ public class LevelGeneration : MonoBehaviour
                         Debug.Log("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
                 }
                 //finalize position
-                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.normal);
+                //rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.normal);
+                AddRoom((int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY, checkPos, Room.roomType.normal);
                 takenPositions.Add(checkPos);
             }
             else // Upgrade, Shop, Boss
@@ -107,17 +110,37 @@ public class LevelGeneration : MonoBehaviour
                 try
                 {
                     if (i == numberOfRooms)
-                        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.upgrade);
+                    {
+                        //rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.upgrade);
+                        AddRoom((int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY, checkPos, Room.roomType.upgrade);
+                    }
                     else if (i == numberOfRooms + 1)
-                        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.shop);
-                    else if (i == numberOfRooms + (specialRooms-1))
-                        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
+                    {
+                        //rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.shop);
+                        AddRoom((int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY, checkPos, Room.roomType.shop);
+                    }
+                    else if (i == numberOfRooms + (specialRooms - 1))
+                    {
+                        //rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, Room.roomType.boss);
+                        AddRoom((int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY, checkPos, Room.roomType.boss);
+                    }
                 }
                 catch(Exception e) { Debug.Log("Error: special room not spawned: " + e); }
                 takenPositions.Add(checkPos);
             }
         }	
 	}
+
+    void AddRoom(int posX, int posY, Vector2 checkPos,Room.roomType roomType)
+    {
+        rooms[posX, posY] = new Room(checkPos, roomType);
+        roomStats roomStats = new roomStats();
+        roomStats.x = posX;
+        roomStats.y = posY;
+        roomStats.checkPos = checkPos;
+
+        roomPos.Add(roomStats);
+    }
 
 	Vector2 NewPosition()
     {
@@ -334,6 +357,62 @@ public class LevelGeneration : MonoBehaviour
 
 	void SetRoomDoors()
     {
+        foreach (roomStats roomStats in roomPos)
+        {
+            try
+            {
+                if (!correctSpawn)
+                    break;
+
+                List<Vector2> filledSides = new List<Vector2>();
+
+                if (takenPositions.Contains(roomStats.checkPos + Vector2.right))
+                {
+                    filledSides.Add(roomStats.checkPos + Vector2.right);
+                    rooms[roomStats.x, roomStats.y].doorRight = true;
+                }
+                else
+                    rooms[roomStats.x, roomStats.y].doorRight = false;
+
+                if (takenPositions.Contains(roomStats.checkPos + Vector2.left))
+                {
+                    filledSides.Add(roomStats.checkPos + Vector2.left);
+                    rooms[roomStats.x, roomStats.y].doorLeft = true;
+                }
+                else
+                    rooms[roomStats.x, roomStats.y].doorLeft = false;
+
+                if (takenPositions.Contains(roomStats.checkPos + Vector2.up))
+                {
+                    filledSides.Add(roomStats.checkPos + Vector2.up);
+                    rooms[roomStats.x, roomStats.y].doorTop = true;
+                }
+                else
+                    rooms[roomStats.x, roomStats.y].doorTop = false;
+
+                if (takenPositions.Contains(roomStats.checkPos + Vector2.down))
+                {
+                    filledSides.Add(roomStats.checkPos + Vector2.down);
+                    rooms[roomStats.x, roomStats.y].doorBot = true;
+                }
+                else
+                    rooms[roomStats.x, roomStats.y].doorBot = false;
+
+                if (filledSides.Count == 0)
+                {
+                    Debug.Log("Rooms with no doors found, restarting level generation");
+                    correctSpawn = false;
+                    break;
+                }
+                else
+                    correctSpawn = true;
+            }
+            catch (Exception e) { Debug.Log("Level Generation SetDoors Error: " + e); }
+        }
+    }
+
+    void OldSetDoors()
+    {
         for (int x = 0; x < ((gridSizeX * 4)); x++)
         {
             for (int y = 0; y < ((gridSizeY * 4)); y++)
@@ -399,4 +478,10 @@ public class LevelGeneration : MonoBehaviour
         takenPositions.Clear();
         Start();
     }
+}
+
+public struct roomStats
+{
+    public int x, y;
+    public Vector2 checkPos;
 }
