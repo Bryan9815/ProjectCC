@@ -107,7 +107,6 @@ public class PlayerCharacter : Entity
         yield return new WaitForSeconds(1.0f);
 
         isHit = false;
-        Debug.Log("Invincibility reset");
     }
 
     IEnumerator PlayerDeath()

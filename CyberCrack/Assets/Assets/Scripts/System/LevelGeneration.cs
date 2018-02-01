@@ -407,7 +407,7 @@ public class LevelGeneration : MonoBehaviour
                 else
                     correctSpawn = true;
             }
-            catch (Exception e) { Debug.Log("Level Generation SetDoors Error: " + e); }
+            catch (Exception e) { }
         }
     }
 

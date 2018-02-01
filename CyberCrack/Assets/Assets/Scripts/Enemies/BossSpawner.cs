@@ -7,8 +7,9 @@ public class BossSpawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SpawnScheduledBoss();
-        Destroy(gameObject);
+        StartCoroutine(Spawn());
+        //SpawnScheduledBoss();
+        //Destroy(gameObject);
     }
 
     void SpawnScheduledBoss()
@@ -28,6 +29,13 @@ public class BossSpawner : MonoBehaviour
 
         foreach (RoomInstance room in GameController.instance.GetComponent<SheetAssigner>().roomList)
             room.RefreshMobList();
+    }
+
+    IEnumerator Spawn()
+    {
+        yield return new WaitForFixedUpdate();
+        SpawnScheduledBoss();
+        Destroy(gameObject);
     }
 
     // Update is called once per frame

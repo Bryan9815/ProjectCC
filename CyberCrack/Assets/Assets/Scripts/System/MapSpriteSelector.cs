@@ -150,6 +150,6 @@ public class MapSpriteSelector : MonoBehaviour
             else
                 rend.color = mainColor;
         }
-        catch(Exception e) { Debug.Log("MapSpriteSelector ChangeColor: " + e); }
+        catch(Exception e) { }
     }
 }
