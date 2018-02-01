@@ -14,6 +14,8 @@ public class RoomInstance : MonoBehaviour
     [HideInInspector]
     public bool playerInside = false;
     [HideInInspector]
+    public bool playerDiedHere = false;
+    [HideInInspector]
     bool roomCleared = false;
     [HideInInspector]
     public GameObject doorU, doorD, doorL, doorR;
@@ -240,6 +242,9 @@ public class RoomInstance : MonoBehaviour
         if(collision.tag == "Player")
         {
             playerInside = true;
+            if (playerDiedHere)
+                playerDiedHere = false;
+
             ToggleRoomActive();
             GameController.instance.currentRoom = GetComponent<RoomInstance>();
             GameController.instance.GetComponent<LevelGeneration>().mapRoot.GetComponent<MinimapController>().RefreshMiniMapColors();

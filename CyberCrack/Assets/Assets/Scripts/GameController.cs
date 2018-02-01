@@ -318,6 +318,7 @@ public class GameController : MonoBehaviour
 
     public void OpenRespawnMenu()
     {
+        currentRoom.playerDiedHere = true;
         PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
         gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
 

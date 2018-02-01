@@ -33,9 +33,10 @@ public class MinimapController : MonoBehaviour
 
     public void RefreshMiniMapColors()
     {
+        RefreshMiniMapSpriteList();
         for (int i = 0; i < GameController.instance.GetComponent<SheetAssigner>().roomList.Count; i++)
         {
-            minimapSprites[i].ChangeColor(GameController.instance.GetComponent<SheetAssigner>().roomList[i].playerInside);
+            minimapSprites[i].ChangeColor(GameController.instance.GetComponent<SheetAssigner>().roomList[i].playerInside, GameController.instance.GetComponent<SheetAssigner>().roomList[i].playerDiedHere);
         }
     }
 	

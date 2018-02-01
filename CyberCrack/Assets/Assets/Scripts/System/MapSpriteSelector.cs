@@ -139,11 +139,13 @@ public class MapSpriteSelector : MonoBehaviour
         }
     }
 
-    public void ChangeColor(bool active)
+    public void ChangeColor(bool active, bool playerDied)
     {
         try
         {
-            if (active)
+            if (playerDied)
+                rend.color = Color.magenta;
+            else if (active)
                 rend.color = Color.green;
             else
                 rend.color = mainColor;
