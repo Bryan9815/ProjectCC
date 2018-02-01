@@ -8,7 +8,7 @@ public class PlayerCharacter : Entity
     public static PlayerCharacter instance;
     RoomInstance currentRoom;
 
-    bool isHit;
+    bool isHit, knockback, firing;
     bool projectileCooldown;
     bool usable = false;
 
@@ -47,6 +47,8 @@ public class PlayerCharacter : Entity
         fireRate = 15.0f;
         projectileCooldown = false;
         isHit = false;
+        knockback = false;
+        firing = false;
         projectileSpeed = 10.0f;
         heartContainer = GameController.instance.uiCanvas.GetChild(0).Find("HealthContainer").GetComponent<HealthContainer>();
 
@@ -118,66 +120,43 @@ public class PlayerCharacter : Entity
     void UpdateHealthDisplay()
     {
         heartContainer.SpawnHearts((int)hp);
-        
-        //if(hp != heartContainer.transform.childCount)
-        //{
-        //    if (heartContainer.transform.childCount != 0)
-        //    {
-        //        for (int i = 0; i < heartContainer.transform.childCount; i++)
-        //        {
-        //            Destroy(heartContainer.transform.GetChild(i).gameObject);
-        //        }
-        //    }
-        //    if (hp <= 5)
-        //    {
-        //        for (int i = 0; i < hp; i++)
-        //        {
-        //            Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
-        //            if (hp == 5)
-        //            {                        
-        //                heartContainer.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/redHeart");
-        //            }
-        //        }
-        //    }
-        //    else if (hp > 5)
-        //    {
-        //        for (int i = 0; i < 5; i++)
-        //        {
-        //            Instantiate(Resources.Load<GameObject>("Prefabs/Heart"), heartContainer.transform);
-        //        }
-        //        for (int i = 0; i < (hp); i++)
-        //        {
-        //            Debug.Log("Heart container child count: " + heartContainer.transform.childCount);
-        //            heartContainer.transform.GetChild(i).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/greenHeart");
-        //        }
-        //    }
-        //}
     }
 
     void Movement()
     {
-        //Move Up
-        if (Input.GetKey(GameData.instance.playerKeys.up))
+        if (!knockback)
         {
-            transform.localPosition += new Vector3(0, speed, 0);
-        }
+            //Move Up
+            if (Input.GetKey(GameData.instance.playerKeys.up))
+            {
+                transform.localPosition += new Vector3(0, speed, 0);
+                if (!firing)
+                    transform.localEulerAngles = Vector3.zero;
+            }
 
-        // Move Left
-        if (Input.GetKey(GameData.instance.playerKeys.left))
-        {
-            transform.localPosition += new Vector3(-speed, 0, 0);
-        }
+            // Move Left
+            if (Input.GetKey(GameData.instance.playerKeys.left))
+            {
+                transform.localPosition += new Vector3(-speed, 0, 0);
+                if (!firing)
+                    transform.localEulerAngles = new Vector3(0, 0, 90);
+            }
 
-        // Move Down
-        if (Input.GetKey(GameData.instance.playerKeys.down))
-        {
-            transform.localPosition += new Vector3(0, -speed, 0);
-        }
+            // Move Down
+            if (Input.GetKey(GameData.instance.playerKeys.down))
+            {
+                transform.localPosition += new Vector3(0, -speed, 0);
+                if (!firing)
+                    transform.localEulerAngles = new Vector3(0, 0, 180);
+            }
 
-        // Move Right
-        if (Input.GetKey(GameData.instance.playerKeys.right))
-        {
-            transform.localPosition += new Vector3(speed, 0, 0);
+            // Move Right
+            if (Input.GetKey(GameData.instance.playerKeys.right))
+            {
+                transform.localPosition += new Vector3(speed, 0, 0);
+                if (!firing)
+                    transform.localEulerAngles = new Vector3(0, 0, -90);
+            }
         }
     }
 
@@ -186,7 +165,6 @@ public class PlayerCharacter : Entity
         // Replace player character model with a pointer
         // Rotate pointer in direction pressed and then instantiate bullet and make it move forward
         // 8-directional shooting
-        bool firing = false;
         Quaternion newRot = transform.localRotation;
         Quaternion temp = newRot;
 
@@ -343,7 +321,7 @@ public class PlayerCharacter : Entity
                 }
                 break;
         }        
-
+        firing = false;
         yield return new WaitForSeconds(5/fireRate);
         projectileCooldown = false;        
     }
