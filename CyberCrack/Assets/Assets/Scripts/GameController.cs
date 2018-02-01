@@ -437,10 +437,6 @@ public class GameController : MonoBehaviour
 
         foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
             room.RefreshRoomCleared();
-
-        yield return new WaitForSeconds(0.5f);
-        foreach (RoomInstance room in GetComponent<SheetAssigner>().roomList)
-            room.RefreshRoomCleared();
     }
 
     public void OpenVictoryMenu()

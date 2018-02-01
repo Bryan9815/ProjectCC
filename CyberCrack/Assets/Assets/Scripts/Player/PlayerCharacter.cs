@@ -113,7 +113,7 @@ public class PlayerCharacter : Entity
     IEnumerator PlayerDeath()
     {
         // Play death animation
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         GameController.instance.OpenRespawnMenu();
     }
 
