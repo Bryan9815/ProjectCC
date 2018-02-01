@@ -67,13 +67,10 @@ public class MovingBullet : Entity
             GameController.instance.bossHPBar.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(hpBarScale, 100);
 
             #region Look at player
-            //if (!charging)
-            //{
-                dirVec = new Vector2(PlayerCharacter.instance.transform.position.x - transform.position.x, PlayerCharacter.instance.transform.position.y - transform.position.y);
-                float angle = Mathf.Atan2(dirVec.y, dirVec.x) * Mathf.Rad2Deg;
-                Vector3 newRot = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)).eulerAngles;
-                transform.eulerAngles = new Vector3(0, 0, newRot.z - 90);
-            //}
+            dirVec = new Vector2(PlayerCharacter.instance.transform.position.x - transform.position.x, PlayerCharacter.instance.transform.position.y - transform.position.y);
+            float angle = Mathf.Atan2(dirVec.y, dirVec.x) * Mathf.Rad2Deg;
+            Vector3 newRot = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)).eulerAngles;
+            transform.eulerAngles = new Vector3(0, 0, newRot.z - 90);
             #endregion
 
             #region Attacks

@@ -87,6 +87,7 @@ public class Hex : Entity
 
             //Movement
             transform.localPosition += dirVec * speed;
+            //GetComponent<Rigidbody2D>().velocity = dirVec * speed * 75;
             transform.localEulerAngles += new Vector3(0, 0, 0.25f);
         }
     }

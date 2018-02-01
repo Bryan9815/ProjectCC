@@ -87,6 +87,11 @@ public class RoomInstance : MonoBehaviour
                 gameObject.transform.GetChild(i).GetComponent<Entity>().ToggleActive(false);
                 mobList.Add(gameObject.transform.GetChild(i).gameObject);
             }
+            if(gameObject.transform.GetChild(i).tag == "Teleporter")
+            {
+                gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<Entity>().ToggleActive(false);
+                mobList.Add(gameObject.transform.GetChild(i).transform.GetChild(0).gameObject);
+            }
         }
 
         if (mobList.Count != 0)
@@ -115,7 +120,10 @@ public class RoomInstance : MonoBehaviour
         {
             GameObject mob = mobList[index];
             mobList.Remove(mob);
-            Destroy(mob);
+            if (mob.name != "Teleporter")
+                Destroy(mob);
+            else
+                Destroy(mob.transform.parent.gameObject);
         }
     }
 
@@ -202,7 +210,12 @@ public class RoomInstance : MonoBehaviour
                     mobList.Add(entity);
                     entity.GetComponent<Entity>().ToggleActive(false);
                 }
-			}
+                if (entity.tag == "Teleport")
+                {
+                    entity.transform.GetChild(0).GetComponent<Entity>().ToggleActive(false);
+                    mobList.Add(entity.transform.GetChild(0).gameObject);
+                }
+            }
 		}
 	}
 

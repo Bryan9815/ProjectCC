@@ -128,6 +128,13 @@ public class PlayerCharacter : Entity
         StartCoroutine(Knockback());
     }
 
+    public void Knockedback(Vector3 knockDirection)
+    {
+        knockback = true;
+        GetComponent<Rigidbody2D>().velocity = knockDirection;
+        StartCoroutine(Knockback());
+    }
+
     IEnumerator Knockback()
     {
         yield return new WaitForSeconds(0.5f);
