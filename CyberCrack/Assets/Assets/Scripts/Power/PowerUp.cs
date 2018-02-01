@@ -24,7 +24,10 @@ public class PowerUp : MonoBehaviour
 
         // Disable collider and renderer
         gameObject.GetComponent<Collider2D>().enabled = true;
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;        
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+        // Enable text
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public virtual void ActivateEffect(){}

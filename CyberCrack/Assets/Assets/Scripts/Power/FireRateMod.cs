@@ -17,6 +17,12 @@ public class FireRateMod : PowerUp
     public override void ActivateEffect()
     {
         GetComponentInParent<Entity>().ModifyFireRate(fireRateMod);
+
+        if (transform.parent.parent.tag == "Enemy")
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.parent.parent.GetComponent<SpriteRenderer>().color = Color.gray;
+        }
     }
 
     public override void DeactivateEffect()

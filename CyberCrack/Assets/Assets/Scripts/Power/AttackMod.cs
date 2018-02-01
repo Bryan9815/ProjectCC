@@ -19,7 +19,11 @@ public class AttackMod : PowerUp
         if (transform.parent.parent.tag == "Player")
             GetComponentInParent<Entity>().ModifyPlayerDamage(attackMod);
         else
+        {
             GetComponentInParent<Entity>().ModifyMobDamage(true);
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.parent.parent.GetComponent<SpriteRenderer>().color = Color.red;
+        }
     }
 
     public override void DeactivateEffect()
@@ -27,6 +31,8 @@ public class AttackMod : PowerUp
         if (transform.parent.parent.tag == "Player")
             GetComponentInParent<Entity>().ModifyPlayerDamage(-attackMod);
         else
+        {
             GetComponentInParent<Entity>().ModifyMobDamage(false);
+        }
     }
 }

@@ -17,6 +17,12 @@ public class SpeedMod : PowerUp
     public override void ActivateEffect()
     {
         GetComponentInParent<Entity>().ModifySpeed(speedMod);
+
+        if(transform.parent.parent.tag == "Enemy")
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.parent.parent.GetComponent<SpriteRenderer>().color = Color.cyan;
+        }
     }
 
     public override void DeactivateEffect()
