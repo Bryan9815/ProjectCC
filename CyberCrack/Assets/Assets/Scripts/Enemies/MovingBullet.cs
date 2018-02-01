@@ -128,6 +128,8 @@ public class MovingBullet : Entity
         {
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                if (charging)
+                    collision.gameObject.GetComponent<PlayerCharacter>().Knockedback();
                 break;
             case "PickUp":
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());

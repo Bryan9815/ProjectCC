@@ -122,6 +122,19 @@ public class PlayerCharacter : Entity
         heartContainer.SpawnHearts((int)hp);
     }
 
+    public void Knockedback()
+    {
+        knockback = true;
+        StartCoroutine(Knockback());
+    }
+
+    IEnumerator Knockback()
+    {
+        yield return new WaitForSeconds(0.5f);
+        knockback = false;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+    }
+
     void Movement()
     {
         if (!knockback)
@@ -167,7 +180,7 @@ public class PlayerCharacter : Entity
         // 8-directional shooting
         Quaternion newRot = transform.localRotation;
         Quaternion temp = newRot;
-
+        firing = false;
         #region Rotation & firing bool
         // Up
         if (Input.GetKey(GameData.instance.shootKeys.up))
@@ -321,7 +334,7 @@ public class PlayerCharacter : Entity
                 }
                 break;
         }        
-        firing = false;
+        
         yield return new WaitForSeconds(5/fireRate);
         projectileCooldown = false;        
     }
