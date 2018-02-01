@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public List<GameObject> singletons = new List<GameObject>();
 
-    int playerMoney, gameLevel;
+    int playerMoney, gameLevel, maxGameLevel;
 
     Transform miniMap;
     Transform pauseDisplay, pauseOptions, pauseSelector;
@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
         // Init
         playerMoney = 0;
         gameLevel = 1;
+        maxGameLevel = 3;
 
         gameplayCanvas = GameObject.Find("Gameplay_Canvas").transform;
         miniMap = gameplayCanvas.GetChild(0).transform;
@@ -120,7 +121,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator NextLevel()
     {
-        if (gameLevel < 5)
+        if (gameLevel < maxGameLevel)
         {
             gameLevel++;
             // Disable Player momentarily
@@ -146,7 +147,7 @@ public class GameController : MonoBehaviour
             PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = true;
             PlayerCharacter.instance.ToggleActive(true);
         }
-        else if (gameLevel == 5)
+        else if (gameLevel == maxGameLevel)
         {
             GameData.instance.UpdateData("totalRunsCompleted", GameData.instance.totalRunsCompleted+1);
             OpenVictoryMenu();

@@ -29,10 +29,10 @@ public class SheetAssigner : MonoBehaviour
         {
             normalTemplates.Add(template);
         }
-        //foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Boss"))
-        //{
-        //    bossTemplates.Add(template);
-        //}
+        foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Boss"))
+        {
+            bossTemplates.Add(template);
+        }
         foreach (Texture2D template in Resources.LoadAll<Texture2D>("roomTemplates/Upgrade"))
         {
             upgradeTemplates.Add(template);

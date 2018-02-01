@@ -2170,8 +2170,7 @@ MonoBehaviour:
   roomParent: {fileID: 277463896}
   normalTemplates:
   - {fileID: 2800000, guid: 564d6ca77f8ea7041bf378157f5feba0, type: 3}
-  bossTemplates:
-  - {fileID: 2800000, guid: 1355f3235a21a854a9f09b3f1c902f6f, type: 3}
+  bossTemplates: []
   upgradeTemplates: []
   shopTemplates: []
   RoomObj: {fileID: 1038065722679700, guid: 092b915af527d594aa11083a065a8de8, type: 2}
