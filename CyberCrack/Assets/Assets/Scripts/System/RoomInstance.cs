@@ -87,7 +87,7 @@ public class RoomInstance : MonoBehaviour
                 gameObject.transform.GetChild(i).GetComponent<Entity>().ToggleActive(false);
                 mobList.Add(gameObject.transform.GetChild(i).gameObject);
             }
-            if(gameObject.transform.GetChild(i).tag == "Teleporter")
+            if(gameObject.transform.GetChild(i).tag == "Teleport")
             {
                 gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<Entity>().ToggleActive(false);
                 mobList.Add(gameObject.transform.GetChild(i).transform.GetChild(0).gameObject);
