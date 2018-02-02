@@ -125,6 +125,8 @@ public class MovingBullet : Entity
         {
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), collision.transform.position, Quaternion.identity, transform.parent);
+                particles.GetComponent<ParticleSystem>().startColor = Color.red;
                 if (charging)
                     collision.gameObject.GetComponent<PlayerCharacter>().Knockedback();
                 break;

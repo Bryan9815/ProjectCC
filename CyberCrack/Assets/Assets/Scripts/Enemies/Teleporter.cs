@@ -175,6 +175,8 @@ public class Teleporter : Entity
                 {
                     Vector2 knockBackDir = new Vector3(PlayerCharacter.instance.transform.position.x - transform.position.x, PlayerCharacter.instance.transform.position.y - transform.position.y);
                     collision.gameObject.GetComponent<PlayerCharacter>().Knockedback(knockBackDir.normalized * 100);
+                    GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), collision.transform.position, Quaternion.identity, transform.parent);
+                    particles.GetComponent<ParticleSystem>().startColor = Color.red;
                 }
                 break;
             case "PickUp":

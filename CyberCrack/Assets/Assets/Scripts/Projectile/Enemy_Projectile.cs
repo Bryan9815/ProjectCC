@@ -36,7 +36,8 @@ public class Enemy_Projectile : Projectile
         {
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamage);
-                Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), transform.position, Quaternion.identity, transform.parent);
+                GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), transform.position, Quaternion.identity, transform.parent);
+                particles.GetComponent<ParticleSystem>().startColor = Color.red;
                 Destroy(gameObject);
                 break;
             case "Object":

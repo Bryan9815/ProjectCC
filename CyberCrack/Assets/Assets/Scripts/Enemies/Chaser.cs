@@ -50,6 +50,8 @@ public class Chaser : Entity
         {
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamageHigh);
+                GameObject particles = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), collision.transform.position, Quaternion.identity, transform.parent);
+                particles.GetComponent<ParticleSystem>().startColor = Color.red;
                 break;
             case "PickUp":
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
