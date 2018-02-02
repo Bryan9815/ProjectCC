@@ -27,7 +27,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Update()
     {
-        
+        sound.volume = GameData.instance.GetVolume();
     }
 
     public void TogglePanel(bool active, MainMenuPanels panels)

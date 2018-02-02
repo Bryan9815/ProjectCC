@@ -155,6 +155,7 @@ public class GameOptions : MonoBehaviour
                 if (volume > 0)
                     volume -= 0.1f * Time.deltaTime;
                 UpdateVolumeText();
+                BayatGames.SaveGameFree.SaveGame.Save<float>("Volume", volume);
             }
         }
         if (Input.GetKey(GameData.instance.playerKeys.right))
@@ -164,6 +165,7 @@ public class GameOptions : MonoBehaviour
                 if (volume < 1)
                     volume += 0.1f * Time.deltaTime;
                 UpdateVolumeText();
+                BayatGames.SaveGameFree.SaveGame.Save<float>("Volume", volume);
             }
         }
         #endregion
