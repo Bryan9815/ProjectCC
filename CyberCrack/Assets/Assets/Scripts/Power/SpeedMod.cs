@@ -9,6 +9,8 @@ public class SpeedMod : PowerUp
 
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
         powerName = "Speed Upgrade";
         price = 10;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;

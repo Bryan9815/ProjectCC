@@ -319,6 +319,7 @@ public class GameController : MonoBehaviour
 
     public void OpenRespawnMenu()
     {
+        Time.timeScale = 0;
         currentRoom.playerDiedHere = true;
         PlayerCharacter.instance.GetComponent<SpriteRenderer>().enabled = false;
         gameplayCanvas.GetChild(1).transform.localPosition = new Vector3(10000, 10000, 0);
@@ -397,6 +398,7 @@ public class GameController : MonoBehaviour
                         if (respawnCount > 0)
                             GameData.instance.UpdateData("totalRunsQuit", GameData.instance.totalRunsQuit+1);
 
+                        Time.timeScale = 0;
                         HelperFunctions.SceneTransition("MainMenu");
                         ClearGameplaySingletons();
                     }
@@ -417,6 +419,7 @@ public class GameController : MonoBehaviour
 
         GetComponent<LevelGeneration>().ClearMap();
         GetComponent<LevelGeneration>().DrawMap();
+        Time.timeScale = 1;
 
         yield return new WaitForSeconds(1.0f);
 

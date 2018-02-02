@@ -9,6 +9,8 @@ public class AttackMod : PowerUp
 
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
         powerName = "Attack Upgrade";
         price = 15;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;

@@ -9,6 +9,8 @@ public class HealthMod : PowerUp
 
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
         powerName = "Health Upgrade";
         price = 10;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;
@@ -34,8 +36,11 @@ public class HealthMod : PowerUp
     {
         if (collision.gameObject.tag == "Player")
         {
-            if(PlayerCharacter.instance.GetHP() < PlayerCharacter.instance.GetMaxHP())
+            if (PlayerCharacter.instance.GetHP() < PlayerCharacter.instance.GetMaxHP())
+            {
                 PickUp(collision.gameObject);
+                sound.PlayOneShot(Resources.Load<AudioClip>("Audio/healthCharge"));
+            }
         }
     }
 }

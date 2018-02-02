@@ -9,6 +9,8 @@ public class FireRateMod : PowerUp
 
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
         powerName = "Fire Rate Upgrade";
         price = 10;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerName;

@@ -6,6 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     public int price;
     protected string powerName, powerDescription;
+    protected AudioSource sound;
 
     public virtual void PickUp(GameObject newParent)
     {
@@ -46,6 +47,7 @@ public class PowerUp : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PickUp(collision.gameObject);
+            sound.PlayOneShot(Resources.Load<AudioClip>("Audio/pickUp"));
         }
     }
 }

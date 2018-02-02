@@ -150,7 +150,6 @@ public class GameOptions : MonoBehaviour
         }
         if (Input.GetKey(GameData.instance.playerKeys.left))
         {
-            Debug.Log("volume: " + volume);
             if (selectNum == 0)
             {
                 if (volume > 0)

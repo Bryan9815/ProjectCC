@@ -9,7 +9,7 @@ public class Teleporter : Entity
     Vector3 dirVec;
     GameObject crosshair;
     Color start, end;
-    bool teleport;
+    bool teleport, playingSound;
 
     // Use this for initialization
     void Start()
@@ -100,6 +100,12 @@ public class Teleporter : Entity
                 {
                     colorChanger += Time.deltaTime / 2.5f;
 
+                    if(!playingSound)
+                    {
+                        playingSound = true;
+                        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/teleport"));
+                    }
+
                     if (!crosshair.GetComponent<SpriteRenderer>().enabled)
                         crosshair.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -162,6 +168,7 @@ public class Teleporter : Entity
 
         yield return new WaitForSeconds(0.1f);
         teleport = false;
+        playingSound = false;
         teleportTimer = 0;
     }
 

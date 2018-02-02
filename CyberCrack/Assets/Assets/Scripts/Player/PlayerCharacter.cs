@@ -375,6 +375,21 @@ public class PlayerCharacter : Entity
         {
             case "Room":
                 currentRoom = collision.GetComponent<RoomInstance>();
+                break;            
+            default:
+                break;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "PickUp":
+                if (collision.gameObject.name == "RecoverHP(Clone)")
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/healthCharge"));
+                else if (collision.gameObject.name == "Currency(Clone)")
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/money"));
                 break;
             default:
                 break;
