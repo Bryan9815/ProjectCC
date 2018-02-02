@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
     float selectBarFadeTimer;
     Vector3 mmOriginal;
 
+    AudioSource sound;
+
     void Awake()
     {
         // if the singleton hasn't been initialized yet
@@ -45,6 +47,9 @@ public class GameController : MonoBehaviour
         singletons.Add(this.gameObject);
 
         // Init
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
+
         playerMoney = 0;
         gameLevel = 1;
         maxGameLevel = 3;

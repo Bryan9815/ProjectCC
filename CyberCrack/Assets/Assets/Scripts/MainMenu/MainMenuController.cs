@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuController : MonoBehaviour
 {
     GameObject MenuOptions, OptionsPanel, KeyBindingPanel, HighscorePanel, CreditsPanel;
+    AudioSource sound;
 
     public enum MainMenuPanels { Options, Highscore, Credits };
 
@@ -12,6 +13,9 @@ public class MainMenuController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        sound = GetComponent<AudioSource>();
+        sound.volume = GameData.instance.GetVolume();
+
         MenuOptions = transform.GetChild(1).gameObject;
         OptionsPanel = transform.GetChild(2).gameObject;
         KeyBindingPanel = OptionsPanel.transform.GetChild(1).gameObject;
