@@ -94,18 +94,14 @@ public class PlayerCharacter : Entity
                 ModifyHP(-2);
 
             if (hp > 0)
-                StartCoroutine(ResetInvincibility());
+                anim.SetTrigger("Hit");
             else
                 StartCoroutine(PlayerDeath());
         }
     }
 
-    private IEnumerator ResetInvincibility()
+    void ResetInvincibility()
     {
-        // Maybe replace this with an animator function instead
-        // Play damage flashing anim
-        yield return new WaitForSeconds(1.0f);
-
         isHit = false;
     }
 

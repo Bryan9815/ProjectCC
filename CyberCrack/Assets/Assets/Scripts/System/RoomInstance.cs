@@ -16,7 +16,9 @@ public class RoomInstance : MonoBehaviour
     [HideInInspector]
     public bool playerDiedHere = false;
     [HideInInspector]
-    bool roomCleared = false;
+    public bool roomCleared = false;
+    [HideInInspector]
+    bool mobListInitialized = false;
     [HideInInspector]
     public GameObject doorU, doorD, doorL, doorR;
     [SerializeField]
@@ -48,6 +50,7 @@ public class RoomInstance : MonoBehaviour
     public void RefreshRooms()
     {
         mobList.Clear();
+        mobListInitialized = false;
         doorList.Clear();
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -65,16 +68,18 @@ public class RoomInstance : MonoBehaviour
 
     private void Update()
     {
-        if (!roomCleared)
+        if (!roomCleared && mobListInitialized)
         {
             if (mobList.Count == 0)
             {
                 roomCleared = true;
                 GameController.instance.roomsCleared++;
-                GameData.instance.UpdateData("totalRooms", GameData.instance.totalRooms+1);
+                GameData.instance.UpdateData("totalRooms", GameData.instance.totalRooms + 1);
                 foreach (Door door in doorList)
                     door.ToggleActive(true);
             }
+            else
+                roomCleared = false;
         }
     }
 
@@ -88,7 +93,6 @@ public class RoomInstance : MonoBehaviour
             {
                 gameObject.transform.GetChild(i).GetComponent<Entity>().ToggleActive(false);
                 mobList.Add(gameObject.transform.GetChild(i).gameObject);
-                Debug.Log("adding in RefreshMobList " + gameObject.transform.GetChild(i).name + " to mobList: " + mobList.Count + "\nRoom Number: " + name);
             }
             if(gameObject.transform.GetChild(i).tag == "Teleport")
             {
@@ -102,6 +106,8 @@ public class RoomInstance : MonoBehaviour
             foreach (Door door in doorList)
                 door.ToggleActive(false);
         }
+
+        mobListInitialized = true;
     }
 
     public void CheckMobs()
@@ -208,6 +214,7 @@ public class RoomInstance : MonoBehaviour
             {
 				Vector3 spawnPos = PositionFromTileGrid(x,y);
 				GameObject entity = Instantiate<GameObject>(mapping.prefab, spawnPos, mapping.prefab.transform.localRotation, this.transform);
+                #region Original mobList creation method
                 //if (entity.tag == "Enemy")
                 //{
                 //    mobList.Add(entity);
@@ -219,6 +226,7 @@ public class RoomInstance : MonoBehaviour
                 //    entity.transform.GetChild(0).GetComponent<Entity>().ToggleActive(false);
                 //    mobList.Add(entity.transform.GetChild(0).gameObject);
                 //}
+                #endregion
             }
 		}
 	}
@@ -237,8 +245,6 @@ public class RoomInstance : MonoBehaviour
     {
         foreach (GameObject mob in mobList)
             mob.GetComponent<Entity>().ToggleActive(true);
-
-        Debug.Log("Room toggled active");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -248,13 +254,10 @@ public class RoomInstance : MonoBehaviour
             playerInside = true;
             if (playerDiedHere)
                 playerDiedHere = false;
-
-            Debug.Log("Toggling room active: " + gameObject.name);
+            
             ToggleRoomActive();
             GameController.instance.currentRoom = GetComponent<RoomInstance>();
-            Debug.Log("currentRoom updated");
             GameController.instance.GetComponent<LevelGeneration>().mapRoot.GetComponent<MinimapController>().RefreshMiniMapColors();
-            Debug.Log("Minimap updated");
         }
     }
 }

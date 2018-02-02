@@ -176,6 +176,49 @@ public class GameData : MonoBehaviour
                 break;
         }
     }
+
+    public void UpdateWindow(int resolutionNum, int windowMode)
+    {
+        switch (resolutionNum)
+        {
+            case 0:
+                if (windowMode == 0)
+                    Screen.SetResolution(800, 600, true);
+                else
+                    Screen.SetResolution(800, 600, false);
+                break;
+            case 1:
+                if (windowMode == 0)
+                    Screen.SetResolution(1024, 720, true);
+                else
+                    Screen.SetResolution(1024, 720, false);
+                break;
+            case 2:
+                if (windowMode == 0)
+                    Screen.SetResolution(1440, 810, true);
+                else
+                    Screen.SetResolution(1440, 810, false);
+                break;
+            case 3:
+                if (windowMode == 0)
+                    Screen.SetResolution(1600, 900, true);
+                else
+                    Screen.SetResolution(1600, 900, false);
+                break;
+            case 4:
+                if (windowMode == 0)
+                    Screen.SetResolution(1600, 1024, true);
+                else
+                    Screen.SetResolution(1600, 1024, false);
+                break;
+            case 5:
+                if (windowMode == 0)
+                    Screen.SetResolution(1920, 1080, true);
+                else
+                    Screen.SetResolution(1920, 1080, false);
+                break;
+        }
+    }
 }
 
 public struct PlayerKeys

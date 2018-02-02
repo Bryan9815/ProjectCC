@@ -36,6 +36,7 @@ public class Enemy_Projectile : Projectile
         {
             case "Player":
                 collision.gameObject.GetComponent<PlayerCharacter>().IsHit(mobDamage);
+                Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileParticle"), transform.position, Quaternion.identity, transform.parent);
                 Destroy(gameObject);
                 break;
             case "Object":

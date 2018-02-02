@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61066563362882404}
   - component: {fileID: 114715483871517422}
   m_Layer: 0
-  m_Name: RandEnemy
+  m_Name: bossEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2334a63946af47540b5f270d88b469c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyList: []
 --- !u!212 &212470522961602340
 SpriteRenderer:
   m_ObjectHideFlags: 1
