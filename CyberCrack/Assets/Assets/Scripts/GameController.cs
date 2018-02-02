@@ -303,6 +303,7 @@ public class GameController : MonoBehaviour
                 case 1: // Quit
                     if (Input.GetKeyDown(GameData.instance.interact))
                     {
+                        Time.timeScale = 1;
                         GameData.instance.UpdateData("totalRunsQuit", GameData.instance.totalRunsQuit+1);
                         HelperFunctions.SceneTransition("MainMenu");
                         ClearGameplaySingletons();

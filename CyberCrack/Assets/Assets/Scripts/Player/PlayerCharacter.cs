@@ -177,7 +177,6 @@ public class PlayerCharacter : Entity
 
     void Shooting()
     {
-        // Replace player character model with a pointer
         // Rotate pointer in direction pressed and then instantiate bullet and make it move forward
         // 8-directional shooting
         Quaternion newRot = transform.localRotation;
@@ -255,6 +254,7 @@ public class PlayerCharacter : Entity
             case 0: // Single Shot
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                     Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
@@ -269,6 +269,7 @@ public class PlayerCharacter : Entity
                     for (int i = 0; i < target.childCount; i++)
                     {
                         GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
+                        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                         Vector3 direction = (target.GetChild(i).position - transform.position) * projectileSpeed;
 
@@ -282,6 +283,7 @@ public class PlayerCharacter : Entity
             case 2: // Triple Shot
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                     Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
@@ -293,7 +295,9 @@ public class PlayerCharacter : Entity
                     yield return new WaitForSeconds(0.05f);
 
                     GameObject bulletL = Instantiate(bullet, bullet.transform);
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
                     GameObject bulletR = Instantiate(bullet, bullet.transform);
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                     Vector3 posL = new Vector3();
                     Vector3 posR = new Vector3();

@@ -27,12 +27,14 @@ public class Entity : MonoBehaviour
         try
         {
             sound = GetComponent<AudioSource>();
+            sound.volume = GameData.instance.GetVolume();
+
             anim = GetComponent<Animator>();
 
             powerUpList = transform.Find("PowerUps");
             target = transform.Find("Targets");
         }
-        catch(Exception e) { Debug.Log(gameObject.name + " could not init properly: " + e); }
+        catch(Exception e) { }
 	}
 	
 	// Update is called once per frame

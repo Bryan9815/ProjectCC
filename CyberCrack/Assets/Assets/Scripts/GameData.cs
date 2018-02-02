@@ -30,6 +30,11 @@ public class GameData : MonoBehaviour
         RefreshKeyList();
     }
 
+    public float GetVolume()
+    {
+        return SaveGame.Load<float>("Volume", 1);
+    }
+
     public void LoadAllData()
     {
         LoadHighScoreStats();

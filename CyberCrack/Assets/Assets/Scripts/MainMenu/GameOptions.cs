@@ -19,7 +19,7 @@ public class GameOptions : MonoBehaviour
         selectNum = 0;
         maxSelectNum = 6;
 
-        volume = BayatGames.SaveGameFree.SaveGame.Load("Volume", 1);
+        volume = BayatGames.SaveGameFree.SaveGame.Load<float>("Volume", 1);
         resolutionNum = BayatGames.SaveGameFree.SaveGame.Load("resolution", 5);
         maxResolutionNum = 5;
         windowMode = BayatGames.SaveGameFree.SaveGame.Load("windowMode", 0);
@@ -28,7 +28,14 @@ public class GameOptions : MonoBehaviour
         resText = transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>();
         windowText = transform.GetChild(2).GetChild(2).GetComponent<TextMeshProUGUI>();
 
+        selector.localPosition = new Vector3(selector.localPosition.x, transform.GetChild(selectNum).localPosition.y, 0);
         UpdateWindowMode();
+        UpdateVolumeText();
+    }
+
+    private void OnEnable()
+    {
+        Start();
     }
 
     // Update is called once per frame
@@ -79,7 +86,7 @@ public class GameOptions : MonoBehaviour
                     transform.GetChild(selectNum).GetComponent<TextMeshProUGUI>().color = Color.red;
                     break;
                 case 6: // Exit
-                    BayatGames.SaveGameFree.SaveGame.Save("Volume", volume);
+                    BayatGames.SaveGameFree.SaveGame.Save<float>("Volume", volume);
                     BayatGames.SaveGameFree.SaveGame.Save("resolution", resolutionNum);
                     BayatGames.SaveGameFree.SaveGame.Save("windowMode", windowMode);
                     mainMenuController.TogglePanel(false, MainMenuController.MainMenuPanels.Options);
@@ -143,6 +150,7 @@ public class GameOptions : MonoBehaviour
         }
         if (Input.GetKey(GameData.instance.playerKeys.left))
         {
+            Debug.Log("volume: " + volume);
             if (selectNum == 0)
             {
                 if (volume > 0)
