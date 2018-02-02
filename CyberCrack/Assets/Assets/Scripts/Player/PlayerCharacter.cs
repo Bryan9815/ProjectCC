@@ -254,7 +254,7 @@ public class PlayerCharacter : Entity
             case 0: // Single Shot
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/playerShot"));
 
                     Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
@@ -266,10 +266,10 @@ public class PlayerCharacter : Entity
                 break;
             case 1: // Spread Shot
                 {
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/playerShot"));
                     for (int i = 0; i < target.childCount; i++)
                     {
                         GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
-                        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                         Vector3 direction = (target.GetChild(i).position - transform.position) * projectileSpeed;
 
@@ -283,7 +283,7 @@ public class PlayerCharacter : Entity
             case 2: // Triple Shot
                 {
                     GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
+                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/playerShot"));
 
                     Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
 
@@ -295,9 +295,7 @@ public class PlayerCharacter : Entity
                     yield return new WaitForSeconds(0.05f);
 
                     GameObject bulletL = Instantiate(bullet, bullet.transform);
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
                     GameObject bulletR = Instantiate(bullet, bullet.transform);
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/8bitLaserShot"));
 
                     Vector3 posL = new Vector3();
                     Vector3 posR = new Vector3();
@@ -387,7 +385,10 @@ public class PlayerCharacter : Entity
         {
             case "PickUp":
                 if (collision.gameObject.name == "RecoverHP(Clone)")
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/healthCharge"));
+                {
+                    if(hp < maxHP)
+                        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/healthCharge"));
+                }
                 else if (collision.gameObject.name == "Currency(Clone)")
                     sound.PlayOneShot(Resources.Load<AudioClip>("Audio/money"));
                 break;

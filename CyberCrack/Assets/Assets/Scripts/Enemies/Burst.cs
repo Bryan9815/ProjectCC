@@ -42,7 +42,8 @@ public class Burst : Entity
 
     void FireProjectile()
     {
-        for(int i = 0; i < target.childCount; i ++)
+        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/enemyShot"));
+        for (int i = 0; i < target.childCount; i ++)
         {
             //Debug.Log("Target: " + (i+1));
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);

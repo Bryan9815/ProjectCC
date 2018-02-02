@@ -99,6 +99,7 @@ public class MovingBullet : Entity
 
     void FireProjectile()
     {
+        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/enemyShot"));
         for (int i = 0; i < target.childCount; i++)
         {
             //Debug.Log("Target: " + (i+1));

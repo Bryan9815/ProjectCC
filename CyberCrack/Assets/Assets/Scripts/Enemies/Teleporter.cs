@@ -125,6 +125,7 @@ public class Teleporter : Entity
     void FireProjectile()
     {
         GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
+        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/enemyShot"), GameData.instance.GetVolume() / 4);
         if (hp < maxHP / 4) // Quarter HP
         {
             Vector3 direction = (target.GetChild(0).position - transform.position) * 7.5f;

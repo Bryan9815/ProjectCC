@@ -45,6 +45,7 @@ public class Continuous : Entity
         for (int i = 0; i < target.childCount; i++)
         {
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
+            sound.PlayOneShot(Resources.Load<AudioClip>("Audio/enemyShot"), GameData.instance.GetVolume() / 4);
 
             Vector3 direction = (target.GetChild(i).position - transform.position) * 7.5f;
             bullet.GetComponent<Enemy_Projectile>().Init(target.GetChild(i).position, target.GetChild(i).rotation, direction, mobDamageHigh, 1.0f);

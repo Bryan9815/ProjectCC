@@ -94,6 +94,7 @@ public class Hex : Entity
 
     void FireProjectile()
     {
+        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/enemyShot"));
         for (int i = 0; i < target.childCount; i++)
         {
             GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy_Projectile"), transform.parent);
