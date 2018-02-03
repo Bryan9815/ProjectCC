@@ -23,7 +23,7 @@ public class SpeedMod : PowerUp
         if(transform.parent.parent.tag == "Enemy")
         {
             transform.GetChild(0).gameObject.SetActive(false);
-            transform.parent.parent.GetComponent<SpriteRenderer>().color = Color.cyan;
+            transform.parent.parent.GetComponent<SpriteRenderer>().color = new Color32(128, 0, 255, 255);
         }
     }
 

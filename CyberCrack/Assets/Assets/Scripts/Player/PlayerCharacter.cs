@@ -10,7 +10,7 @@ public class PlayerCharacter : Entity
 
     bool isHit, knockback, firing;
     bool projectileCooldown;
-    bool usable = false;
+    public bool usable = false;
 
     int shotStyle = 0;
     string fireDirection = "";
@@ -63,6 +63,7 @@ public class PlayerCharacter : Entity
         {
             Movement();
             Shooting();
+            Usable();
         }
     }
 
@@ -243,6 +244,15 @@ public class PlayerCharacter : Entity
         }
     }
 
+    void Usable()
+    {
+        if(usable)
+        {
+            if (Input.GetKeyDown(GameData.instance.interact))
+                ActivateTripleShot();
+        }
+    }
+
     IEnumerator FireBullet(bool trigger)
     {
         trigger = false;
@@ -367,6 +377,12 @@ public class PlayerCharacter : Entity
         }
     }
 
+    public void PlaySound(string soundName)
+    {
+        string path = "Audio/" + soundName;
+        sound.PlayOneShot(Resources.Load<AudioClip>(path));
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch(collision.tag)
@@ -374,24 +390,6 @@ public class PlayerCharacter : Entity
             case "Room":
                 currentRoom = collision.GetComponent<RoomInstance>();
                 break;            
-            default:
-                break;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "PickUp":
-                if (collision.gameObject.name == "RecoverHP(Clone)")
-                {
-                    if(hp < maxHP)
-                        sound.PlayOneShot(Resources.Load<AudioClip>("Audio/healthCharge"));
-                }
-                else if (collision.gameObject.name == "Currency(Clone)")
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/money"));
-                break;
             default:
                 break;
         }

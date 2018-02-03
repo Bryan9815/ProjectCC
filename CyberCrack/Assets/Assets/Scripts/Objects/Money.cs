@@ -34,6 +34,7 @@ public class Money : MonoBehaviour
         {
             GameController.instance.ModMoney(moneyToAdd);
             GameData.instance.UpdateData("totalMoney", (GameData.instance.totalMoney + moneyToAdd));
+            PlayerCharacter.instance.PlaySound("money");
             Destroy(gameObject);
         }
     }

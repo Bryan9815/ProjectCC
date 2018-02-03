@@ -39,10 +39,10 @@ GameObject:
   - component: {fileID: 212470522961602340}
   - component: {fileID: 61066563362882404}
   - component: {fileID: 50916857555206544}
-  - component: {fileID: 114865357823617192}
   - component: {fileID: 82547464568006340}
+  - component: {fileID: 114899389188314452}
   m_Layer: 0
-  m_Name: Speed
+  m_Name: MultiShot
   m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114865357823617192
+--- !u!114 &114899389188314452
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -311,11 +311,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1864472389956204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d83cc3ca8f7bb4d42b249b22ade9155b, type: 3}
+  m_Script: {fileID: 11500000, guid: 943e3e94a7f93f542b222deec15b66e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   price: 0
-  speedMod: 0.5
 --- !u!212 &212470522961602340
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -351,7 +350,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b2cb8be13a9e4c349a1a5656394d7074, type: 3}
-  m_Color: {r: 0.5019608, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

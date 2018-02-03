@@ -18,6 +18,7 @@ public class RecoverHP : MonoBehaviour
             if (PlayerCharacter.instance.GetHP() < PlayerCharacter.instance.GetMaxHP())
             {
                 PlayerCharacter.instance.ModifyHP(healthToAdd);
+                PlayerCharacter.instance.PlaySound("healthCharge");
                 Destroy(gameObject);
             }
         }

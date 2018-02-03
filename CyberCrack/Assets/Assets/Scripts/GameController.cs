@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Transform bossHPBar;
     [HideInInspector]
-    public GameObject pausePanel, deathPanel, victoryPanel;
+    public GameObject pausePanel, deathPanel, victoryPanel, usableIcon;
     [HideInInspector]
     public RoomInstance currentRoom;
     [HideInInspector]
@@ -58,6 +58,8 @@ public class GameController : MonoBehaviour
         miniMap = gameplayCanvas.GetChild(0).transform;
         mmOriginal = miniMap.localPosition;
         uiCanvas = GameObject.Find("UI_Canvas").transform;
+        usableIcon = uiCanvas.GetChild(0).GetChild(2).gameObject;
+        usableIcon.SetActive(false);
 
         bossHPBar = uiCanvas.Find("BossHP");
         bossHPBar.gameObject.SetActive(false);
