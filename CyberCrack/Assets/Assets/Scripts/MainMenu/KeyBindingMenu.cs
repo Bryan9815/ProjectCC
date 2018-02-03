@@ -24,9 +24,16 @@ public class KeyBindingMenu : MonoBehaviour
         changingKeyBinding = false;
         RefreshKeyBindingText();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void OnEnable()
+    {
+        selectNum = 0;
+        UpdateSelectorPosition();
+        RefreshKeyBindingText();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         if (!changingKeyBinding)
         {

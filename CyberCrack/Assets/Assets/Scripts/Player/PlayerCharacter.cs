@@ -290,63 +290,6 @@ public class PlayerCharacter : Entity
                     }
                 }
                 break;
-            case 2: // Triple Shot
-                {
-                    GameObject bullet = Instantiate(Resources.Load<GameObject>("Prefabs/PC_Projectile"), transform.parent);
-                    sound.PlayOneShot(Resources.Load<AudioClip>("Audio/playerShot"));
-
-                    Vector3 direction = (target.GetChild(0).position - transform.position) * projectileSpeed;
-
-                    bullet.GetComponent<PC_Projectile>().Init(target.GetChild(0).position, target.GetChild(0).rotation, direction, damage, 1.0f);
-
-                    // Parent the bullet to the room
-                    bullet.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
-
-                    yield return new WaitForSeconds(0.05f);
-
-                    GameObject bulletL = Instantiate(bullet, bullet.transform);
-                    GameObject bulletR = Instantiate(bullet, bullet.transform);
-
-                    Vector3 posL = new Vector3();
-                    Vector3 posR = new Vector3();
-                    switch (tempFireStyle)
-                    {
-                        case "Horizontal":
-                            posL = new Vector3(bullet.transform.position.x, bullet.transform.position.y - 0.5f * 15, 0);
-                            posR = new Vector3(bullet.transform.position.x, bullet.transform.position.y + 0.5f * 15, 0);
-                            break;
-                        case "Vertical":
-                            posL = new Vector3(bullet.transform.position.x - 0.5f * 15, bullet.transform.position.y, 0);
-                            posR = new Vector3(bullet.transform.position.x + 0.5f * 15, bullet.transform.position.y, 0);
-                            break;
-                        case "Diagonal_LtR":
-                            posL = new Vector3(bullet.transform.position.x - 0.33f * 15, bullet.transform.position.y + 0.33f * 15, 0);
-                            posR = new Vector3(bullet.transform.position.x + 0.33f * 15, bullet.transform.position.y - 0.33f * 15, 0);
-                            break;
-                        case "Diagonal_RtL":
-                            posL = new Vector3(bullet.transform.position.x + 0.33f * 15, bullet.transform.position.y + 0.33f * 15, 0);
-                            posR = new Vector3(bullet.transform.position.x - 0.33f * 15, bullet.transform.position.y - 0.33f * 15, 0);
-                            break;
-                    }
-                    //Debug.Log("tempFireStyle: " + tempFireStyle);
-
-                    bulletL.transform.position = posL;
-                    bulletL.transform.localScale = new Vector3(1, 1, 1);
-                    bulletL.transform.parent = bullet.transform.parent;
-                    bulletL.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
-
-                    // Parent the bullet to the room
-                    bulletL.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
-
-                    bulletR.transform.position = posR;
-                    bulletR.transform.localScale = new Vector3(1, 1, 1);
-                    bulletR.transform.parent = bullet.transform.parent;
-                    bulletR.GetComponent<Rigidbody2D>().velocity = bullet.GetComponent<Rigidbody2D>().velocity;
-
-                    // Parent the bullet to the room
-                    bulletR.transform.parent = GameController.instance.gameplayCanvas.GetChild(1);
-                }
-                break;
         }        
         
         yield return new WaitForSeconds(5/fireRate);
@@ -356,24 +299,9 @@ public class PlayerCharacter : Entity
     public void ActivateTripleShot()
     {
         shotStyle += 1;
-        if (shotStyle > 2)
+        if (shotStyle > 1)
         {
             shotStyle = 0;
-        }
-        else
-        {
-            if(target.childCount > 1)
-            {
-                Destroy(target.GetChild(1).gameObject);
-                Destroy(target.GetChild(2).gameObject);
-            }
-            GameObject projectileSpawnL = Instantiate<GameObject>(target.gameObject, target);
-            Vector3 spawnLpos = new Vector3(-1.25f, target.GetChild(0).localPosition.y, 0);
-            projectileSpawnL.transform.localPosition = spawnLpos;
-
-            GameObject projectileSpawnR = Instantiate<GameObject>(target.gameObject, target);
-            Vector3 spawnRpos = new Vector3(1.25f, target.GetChild(0).localPosition.y, 0);
-            projectileSpawnR.transform.localPosition = spawnRpos;
         }
     }
 

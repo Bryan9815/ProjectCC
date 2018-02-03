@@ -21,8 +21,14 @@ public class RandPowerUp : MonoBehaviour
 	}
 
     void SpawnRandPowerUp()
-    {        
-        GameObject newPowerUp = Instantiate(powerUpList[Random.Range(0, powerUpList.Count)], transform.position, transform.rotation, transform.parent);
+    {
+        GameObject newPowerUp;
+
+        //if (GameController.instance.GetCurrentLevel() == 1)
+        //    newPowerUp = Instantiate(Resources.Load<GameObject>("Prefabs/PowerUps/MultiShot"), transform.position, transform.rotation, transform.parent);
+        //else
+            newPowerUp = Instantiate(powerUpList[Random.Range(0, powerUpList.Count)], transform.position, transform.rotation, transform.parent);
+
         if (transform.parent.tag == "Object")
         {
             newPowerUp.transform.localPosition = Vector3.zero;

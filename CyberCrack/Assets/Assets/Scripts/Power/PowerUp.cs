@@ -29,6 +29,7 @@ public class PowerUp : MonoBehaviour
 
         // Enable text
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.localRotation = Quaternion.identity;
     }
 
     public virtual void ActivateEffect(){}

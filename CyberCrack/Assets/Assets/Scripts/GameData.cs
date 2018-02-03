@@ -41,6 +41,12 @@ public class GameData : MonoBehaviour
         LoadKeySettings();
     }
 
+    public void ClearAllData()
+    {
+        ResetKeySettings();
+        ResetHighScoreStats();        
+    }
+
     public void LoadHighScoreStats()
     {
         killRecord = SaveGame.Load("killRecord", 0);
@@ -51,6 +57,18 @@ public class GameData : MonoBehaviour
         totalRunsCompleted = SaveGame.Load("totalRunsCompleted", 0);
         totalRunsFailed = SaveGame.Load("totalRunsFailed", 0);
         totalRunsQuit = SaveGame.Load("totalRunsQuit", 0);
+    }
+
+    void ResetHighScoreStats()
+    {
+        SaveGame.Save("killRecord", 0);
+        SaveGame.Save("totalKills", 0);
+        SaveGame.Save("totalRooms", 0);
+        SaveGame.Save("totalPowerUps", 0);
+        SaveGame.Save("totalMoney", 0);
+        SaveGame.Save("totalRunsCompleted", 0);
+        SaveGame.Save("totalRunsFailed", 0);
+        SaveGame.Save("totalRunsQuit", 0);
     }
 
     public void UpdateData(string name, int data)

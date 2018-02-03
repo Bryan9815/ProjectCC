@@ -79,9 +79,9 @@ public class GameOptions : MonoBehaviour
                     ResetGameSettings();
                     break;
                 case 5: // Erase Game Data
-                    BayatGames.SaveGameFree.SaveGame.Clear();
-                    GameData.instance.LoadAllData();
                     ResetGameSettings();
+                    GameData.instance.ClearAllData();
+                    GameData.instance.LoadAllData();
                     transform.GetChild(selectNum).GetComponent<TextMeshProUGUI>().text = "Data reset!";
                     transform.GetChild(selectNum).GetComponent<TextMeshProUGUI>().color = Color.red;
                     break;
@@ -174,6 +174,7 @@ public class GameOptions : MonoBehaviour
     void ResetGameSettings()
     {
         volume = 1;
+        BayatGames.SaveGameFree.SaveGame.Save<float>("Volume", volume);
         resolutionNum = 5;
         windowMode = 0;
         UpdateVolumeText();
